@@ -1,0 +1,54 @@
+footer {
+    /* position: fixed;  Ensure the footer stays at the bottom of the page */
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: white;  /* Adjust color */
+    color: white;
+    text-align: center;
+    padding: 10px 0;
+    z-index: 1000;  /* Ensures it's on top of other content */
+    box-shadow: 0 -4px 6px rgba(0, 0, 0, 0.1);  /* Top shadow */
+}
+
+
+  .Admin_footer p{
+    color:black;
+    text-shadow: 0px 3px 6px rgba(175, 48, 48, 0.75); /* Shadow applied only to the bottom */
+    font-size: 1.5rem;
+    /* background: transparent; */
+  }
+
+  @media (min-width: 768px) and (max-width :1000px) {
+    footer {
+        padding: 8px 0;
+        width: 100vh;
+       
+        display: flex;
+        justify-content: center; /* Centers content horizontally */
+        align-items: center; /* Centers content vertically */
+        flex-wrap: wrap;
+    }
+
+    .Admin_footer p {
+        font-size: 14px;
+        
+    }
+}
+
+@media (min-width: 300px) and (max-width:768px) {
+    footer {
+        padding: 6px 0;
+       
+       
+        display: flex;
+        justify-content: center; /* Centers content horizontally */
+        align-items: center; /* Centers content vertically */
+        flex-wrap: wrap;
+    }
+
+    .Admin_footer p {
+        font-size: 12px;
+    }
+}
+ 

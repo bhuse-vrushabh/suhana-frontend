@@ -1,0 +1,139 @@
+#unique-review-feedback-page {
+  margin: auto;
+  padding: 20px;
+  margin-top: 80px;
+  max-width: 800px;
+  width: 110%;
+}
+
+.feedback-page {
+  background-color: #FEFAEE;
+}
+
+#unique-feedback-title {
+  text-align: center;
+  background: linear-gradient(to right, #3498db, #9b59b6, #e74c3c, #f39c12);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  color: transparent;
+  font-size: 3rem;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+  color: #555;
+}
+
+textarea {
+  width: 100%; /* Make textarea responsive */
+  height: 91px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 25px;
+  resize: none;
+  font-size: 16px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.4); /* Soft box shadow */
+}
+
+input[type="checkbox"] {
+  margin-right: 10px;
+}
+
+#unique-submit-button {
+  width: 100%;
+  padding: 10px;
+  background-color: #F3741E;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s;
+}
+
+#unique-submit-button:hover {
+  background-color: white;
+  color: black;
+  border: 2px solid black;
+}
+
+#unique-success-message {
+  margin-top: 20px;
+  color: green;
+  text-align: center;
+  font-weight: bold;
+}
+
+.feedBackbutton {
+  background-color: #3498db;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  width: 150px;
+}
+
+
+
+
+/* Responsive Design */
+
+/* For tablet devices (768px and below) */
+@media (max-width: 768px) {
+  #unique-review-feedback-page {
+    padding: 10px;
+    height: 100vh;
+    background-color: #FEFAEE;
+  }
+
+  textarea {
+    height: 100px;
+    width: 100vw; /* Full screen width on smaller devices */
+  }
+
+  #unique-submit-button {
+    font-size: 14px; 
+    padding: 12px; /* Slightly larger padding for touch devices */
+  }
+
+  #unique-feedback-title {
+    font-size: 2rem;
+  }
+
+  .feedback-page {
+    width: 100%;
+  }
+}
+
+/* For mobile devices (480px and below) */
+@media (max-width: 480px) {
+  #unique-review-feedback-page {
+    padding: 5px; /* Further reduce padding on mobile */
+    height: 100vh;
+  }
+
+  textarea {
+    height: 80px;
+    padding: 8px;
+  }
+
+  #unique-submit-button {
+    font-size: 14px;
+    padding: 12px;
+  }
+
+  #unique-feedback-title {
+    font-size: 1.8rem; /* Increase a bit for better visibility */
+  }
+
+  .feedback-page {
+    width: 100%;
+  }
+}
