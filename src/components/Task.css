@@ -1,0 +1,153 @@
+/* Task.css */
+
+/* General styles for the tasks section */
+.tasks-section {
+    max-width: 100%; /* Full width of the page */
+    margin: 20px auto;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: white; /* White background */
+    box-sizing: border-box; /* Ensures padding and borders are included in the width */
+    height: 100vh; /* Full height of the viewport */
+    overflow-y: auto; /* Vertical scrollbar for the section */
+}
+
+/* Customize the scrollbar */
+.tasks-section::-webkit-scrollbar {
+    width: 10px; /* Width of the scrollbar */
+}
+
+.tasks-section::-webkit-scrollbar-thumb {
+    background-color: #c0392b; /* Dark red scrollbar thumb */
+    border-radius: 5px;
+}
+
+.tasks-section::-webkit-scrollbar-track {
+    background-color: #f1f1f1; /* Light background for scrollbar track */
+}
+
+/* Heading */
+
+
+/* Table styling */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+    overflow-x: auto; /* Enable horizontal scroll for tables */
+    /* display: block; Ensure the table acts as a block element for scrolling */
+}
+
+/* Scrollbar for table */
+table::-webkit-scrollbar {
+    height: 8px; /* Horizontal scrollbar height */
+}
+
+table::-webkit-scrollbar-thumb {
+    background-color: #c0392b; /* Dark red scrollbar thumb */
+    border-radius: 4px;
+}
+
+table::-webkit-scrollbar-track {
+    background-color: #f1f1f1; /* Light background for scrollbar track */
+}
+
+th, td {
+    border: 1px solid #ddd;
+    padding: 12px;
+    text-align: left;
+    font-size: 1rem; /* Adjust for readability */
+}
+
+th {
+    background-color: #e74c3c; /* Light red background for table header */
+    color: white; /* White text for headers */
+}
+
+/* tbody tr:hover {
+    background-color: #f1c40f; /* Light yellow for hover effect */
+/* } */ */
+
+/* Form elements: input, select, textarea */
+input, select, textarea {
+    width: 100%; /* Full width of the parent */
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-sizing: border-box; /* Ensures proper padding */
+}
+
+/* Button styling */
+
+
+/* Responsive Design */
+
+/* For tablets (portrait and landscape) */
+@media (max-width: 1024px) {
+    .tasks-section {
+        padding: 15px;
+    }
+
+    th, td {
+        font-size: 0.9rem; /* Adjust text size for smaller screens */
+        padding: 10px;
+    }
+
+    h2 {
+        font-size: 1.75rem; /* Adjust heading size for tablets */
+    }
+
+    button {
+        font-size: 0.9rem;
+        padding: 8px 12px;
+    }
+}
+
+/* For smaller tablets and phones */
+@media (max-width: 768px) {
+    .tasks-section {
+        padding: 10px;
+    }
+
+    h2 {
+        font-size: 1.5rem; /* Smaller heading for mobile */
+    }
+
+    th, td {
+        font-size: 0.85rem;
+        padding: 8px;
+    }
+
+    button {
+        font-size: 0.85rem;
+        padding: 8px 10px;
+    }
+
+    input, select, textarea {
+        width: 100%; /* Ensure inputs take full width */
+    }
+}
+
+/* For very small devices (mobile phones) */
+@media (max-width: 480px) {
+    .tasks-section {
+        padding: 5px;
+        border: none; /* Remove borders to maximize space */
+    }
+
+    h2 {
+        font-size: 1.25rem; /* Smaller heading */
+    }
+
+    th, td {
+        font-size: 0.8rem; /* Smaller font size for mobile */
+        padding: 6px;
+    }
+
+    button {
+        font-size: 0.8rem;
+        padding: 6px 8px;
+    }
+}

@@ -1,0 +1,146 @@
+.form-section {
+  background: #ffffff;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+}
+
+.form-card {
+  margin-top: 15px;
+}
+
+/* Form styling */
+.goal-form {
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+h2 {
+  text-align: center;
+  color:#D5661A;
+ 
+  margin-bottom: 20px;
+}
+.form-group {
+  margin-bottom: 15px;
+}
+
+.form-group-inline {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.form-group label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.form-group input[type="date"],
+.form-group select,
+.form-group textarea {
+  width: 100%;
+
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
+  
+}
+
+textarea {
+  resize: vertical;
+  height: 80px;
+  box-sizing: border-box;
+}
+
+.error-message {
+  color: red;
+  margin-top: -10px;
+  margin-bottom: 10px;
+}
+
+.tranining-button-container {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 20px;
+}
+
+.training-submit-btn {
+  background: #D5661A;
+  color: #fff;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  width: 150px; /* Set a fixed width for the button */
+  margin: 10px auto; /* Center the button horizontally */
+  display: block; /* Make the button a block element to center */
+  text-align: center; /* Center the text inside the button */
+  transition: background-color 0.3s; /* Smooth transition for background color */
+}
+
+
+/* Table styling */
+.assigned-programs-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+  background-color: white;
+}
+
+.assigned-programs-table th,
+.assigned-programs-table td {
+  padding: 12px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+.assigned-programs-table th {
+  background-color:red;
+  font-weight: bold;
+}
+
+.assigned-programs-table tr:hover {
+  background-color: #f1f1f1;
+}
+
+/* Action buttons */
+.action-buttons {
+  display: flex;
+  gap: 10px;
+}
+
+.edit-button,
+.delete-button {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  color: #333;
+}
+
+.edit-button:hover {
+  color: #4CAF50;
+}
+
+.delete-button:hover {
+  color: #f44336;
+}
+/* Responsive Styles */
+@media (max-width: 768px) {
+  .form-group-inline {
+      flex-direction: column; /* Stack fields on smaller screens */
+  }
+
+  .form-group {
+      margin-right: 0;
+      margin-bottom: 15px;
+  }
+
+  .tranining-button-container {
+      justify-content: center; /* Center button on smaller screens */
+  }
+}

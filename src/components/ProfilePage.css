@@ -1,0 +1,166 @@
+/* Full-screen manager profile */
+.manager-profile {
+    padding: 30px;
+    background-color: #fff;
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    max-width: 100%; /* Full width */
+    margin: 0; /* Remove margin to take full width */
+    font-family: 'Arial', sans-serif;
+    min-height: 100vh; /* Ensure it takes the full height of the screen */
+    box-sizing: border-box; /* Ensures padding and border are included in element's total width and height */
+    overflow-y: auto; /* Add scroll if the content exceeds screen height */
+}
+
+/* Title centered with red color */
+.manager-profile h2 {
+    color:black;
+    text-align: center;
+    margin-bottom: 25px;
+    font-size: 2rem;
+    border-bottom: 2px solid black;
+    padding-bottom: 10px;
+}
+
+/* Section styling */
+.section {
+    margin-bottom: 30px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.section:last-child {
+    border-bottom: none;
+}
+
+/* Red title for each section */
+.section h3 {
+    margin-bottom: 15px;
+    font-size: 1.5rem;
+    color: #d90606;
+    border-left: 5px solid #d90606;
+    padding-left: 10px;
+}
+
+.section p,
+.section li {
+    margin: 8px 0;
+    font-size: 1rem;
+    color: #555;
+}
+
+/* List styles */
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+ul li {
+   
+    padding: 15px;
+    margin-bottom: 10px;
+    border-radius: 10px;
+    transition: background-color 0.3s ease;
+}
+
+
+ul li p {
+    margin: 5px 0;
+    font-size: 1rem;
+}
+
+strong {
+    color: #333;
+    font-weight: bold;
+}
+
+/* Task Status Styles */
+.section.tasks li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.section.tasks li p {
+    flex: 1;
+    margin-right: 10px;
+}
+
+.section.tasks li .status {
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 0.9rem;
+}
+
+/* Status Colors */
+.section.tasks li .status.completed {
+    background-color: #28a745;
+    color: #fff;
+}
+
+.section.tasks li .status.in-progress {
+    background-color: #ffc107;
+    color: #333;
+}
+
+/* Performance History List */
+.section.performance-history li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.section.performance-history li p {
+    margin-right: 10px;
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+    .manager-profile {
+        padding: 20px;
+        max-width: 100%;
+        margin: 0; /* Ensure full-width on smaller screens */
+    }
+
+    .manager-profile h2 {
+        font-size: 1.7rem; /* Slightly smaller font for title */
+    }
+
+    .section h3 {
+        font-size: 1.3rem; /* Smaller font for section headers */
+    }
+
+    .section p,
+    .section li {
+        font-size: 0.95rem; /* Adjust paragraph and list item font size */
+    }
+
+    ul li {
+        padding: 12px;
+    }
+}
+
+@media (max-width: 600px) {
+    .manager-profile {
+        padding: 20px;
+        max-width: 100%;
+        margin: 0;
+    }
+
+    .manager-profile h2 {
+        font-size: 1.5rem; /* Smaller title font on smaller screens */
+    }
+
+    .section h3 {
+        font-size: 1.2rem; /* Adjusted section headers */
+    }
+
+    .section p,
+    .section li {
+        font-size: 0.9rem; /* Smaller font for text and lists */
+    }
+
+    ul li {
+        padding: 10px;
+    }
+}

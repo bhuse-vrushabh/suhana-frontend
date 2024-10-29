@@ -1,0 +1,115 @@
+Main container for the policies section
+.policies-section {
+    background-color: #ffffff; /* White background for clarity */
+    padding: 40px; /* Increased padding for better spacing */
+    border-radius: 8px; /* Rounded corners */
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow effect */
+    max-width: 1200px; /* Increased max width for larger screens */
+    margin: 20px auto; /* Centering the section */
+    min-height: 80vh; /* Ensure it takes up most of the viewport height */
+}
+
+/* Centered main title with red color */
+.policies-section h2 {
+    text-align: center;
+    border-bottom: 2px solid black;
+    color: black; /* Red color for emphasis */
+    margin-bottom: 20px;
+    font-size: 2rem; /* Larger font size for title */
+    margin-top: 20px;
+}
+
+/* Sub-headings with underline */
+.policies-section h3 {
+    color: #d9534f; /* Red color for headings */
+    margin-top: 30px; 
+    margin-left: 15px;
+    padding-bottom: 5px;
+    font-size: 1.5rem; /* Increase size for sub-headings */
+}
+
+/* Paragraphs with improved readability */
+.policies-section p {
+    color: #333; /* Dark grey for text for better readability */
+    line-height: 1.8; /* Improved line spacing */
+    margin-bottom: 15px;
+    margin-left: 20px;
+    border-bottom: 1px solid #575757;
+    font-size: 1.1rem; /* Slightly larger text for readability */
+}
+
+/* Sub-sub-headings */
+.policies-section h4 {
+    color: #d9534f; /* Red color for subheadings */
+    margin-top: 15px;
+    font-size: 1.5rem;
+}
+.p{
+    margin-left: 20px;
+}
+/* Lists and list items */
+.policies-section ul {
+    list-style-type: disc;
+    border-bottom: 1px solid #575757;
+    padding-left: 20px;
+}
+
+.policies-section ul li {
+    margin-bottom: 10px;
+    font-size: 1.1rem; /* Larger text for list items */
+}
+
+/* Responsive design for smaller screens */
+@media (max-width: 768px) {
+    .policies-section {
+        padding: 20px; /* Reduce padding on smaller screens */
+        max-width: 95%; /* Allow it to fill more of the screen */
+    }
+
+    .policies-section h2 {
+        font-size: 1.8rem; /* Slightly smaller heading */
+    }
+
+    .policies-section h3 {
+        font-size: 1.3rem; /* Smaller sub-heading */
+    }
+
+    .policies-section p {
+        font-size: 1rem; /* Adjust text size for readability */
+    }
+
+    .policies-section h4 {
+        font-size: 1.2rem;
+    }
+
+    .policies-section ul li {
+        font-size: 1rem; /* Adjust list item size */
+    }
+}
+
+@media (max-width: 480px) {
+    .policies-section {
+        padding: 15px; /* Further reduce padding */
+        max-width: 100%; /* Fill the entire width on mobile */
+    }
+
+    .policies-section h2 {
+        font-size: 1.6rem;
+    }
+
+    .policies-section h3 {
+        font-size: 1.2rem;
+    }
+
+    .policies-section p {
+        font-size: 0.95rem;
+    }
+
+    .policies-section h4 {
+        font-size: 1.1rem;
+    }
+
+    .policies-section ul li {
+        font-size: 0.95rem;
+    }
+}

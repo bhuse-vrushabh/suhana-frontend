@@ -1,0 +1,127 @@
+.goal-management {
+  margin: 20px;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Form Title */
+.form-title {
+  text-align: center; /* Centered titles */
+  margin-bottom: 20px; /* Space below titles */
+  font-size: 24px; /* Title font size */
+  color: #333; /* Darker text color */
+}
+
+.goal-form {
+  background-color: #fff; /* White background for the form */
+  border-radius: 8px; /* Rounded corners */
+  padding: 20px; /* Padding inside the form */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+}
+
+.form-row {
+  display: flex; /* Flexbox for form rows */
+  justify-content: space-between; /* Space out items */
+  margin-bottom: 15px; /* Space between rows */
+}
+
+.form-group {
+  flex: 1; /* Each group takes equal space */
+  margin-right: 10px; /* Space between form groups */
+}
+
+.form-group:last-child {
+  margin-right: 0; /* Remove right margin for the last group */
+}
+
+label {
+  display: block; /* Block-level labels */
+  margin-bottom: 5px; /* Space below labels */
+  font-weight: bold; /* Bold font for labels */
+}
+
+input[type="text"],
+input[type="number"],
+input[type="date"],
+select {
+  width: 100%; /* Full width inputs */
+  padding: 10px; /* Padding inside inputs */
+  border: 1px solid #ccc; /* Light gray border */
+  border-radius: 4px; /* Rounded corners */
+  box-sizing: border-box; /* Include padding and border in width */
+  transition: border 0.3s; /* Transition for border */
+}
+
+input[type="text"]:focus,
+input[type="number"]:focus,
+input[type="date"]:focus,
+select:focus {
+  border: 1px solid #007bff; /* Change border color on focus */
+  outline: none; /* Remove default outline */
+}
+
+.button-group {
+  text-align: center; /* Center the button group */
+}
+
+.goal-submit-btn {
+  background: #D5661A;
+  color: #fff; /* White text */
+  border: none; /* Remove border */
+  border-radius: 4px; /* Rounded corners */
+  padding: 10px 15px; /* Padding inside the button */
+  cursor: pointer; /* Pointer cursor */
+  font-size: 16px; /* Button font size */
+  transition: background-color 0.3s; /* Transition for background color */
+}
+
+
+
+.goals-table-section {
+  margin-top: 20px; /* Space above the table section */
+}
+
+.goals-table {
+  width: 100%; /* Full width table */
+  border-collapse: collapse; /* Remove space between table cells */
+  margin-top: 10px; /* Space above the table */
+  background-color: #fff; /* White background for the table */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow for the table */
+}
+
+.goals-table th,
+.goals-table td {
+  padding: 12px; /* Padding inside cells */
+  border: 1px solid #ddd; /* Light gray border */
+  text-align: left; /* Left-align text */
+}
+
+.goals-table th {
+  background-color:red; /* Light gray background for the header */
+}
+
+.actions-cell {
+  display: flex; /* Flexbox for action buttons */
+  gap: 10px; /* Space between action buttons */
+}
+
+.edit-btn,
+.delete-btn {
+  background: none; /* No background */
+  border: none; /* No border */
+  cursor: pointer; /* Pointer cursor */
+  color: #007bff; /* Blue color for buttons */
+}
+
+.edit-btn:hover,
+.delete-btn:hover {
+  color: #0056b3; /* Darker blue on hover */
+}
+
+.error-message {
+  color: red; /* Red text for error messages */
+  font-size: 14px; /* Smaller font for error messages */
+  margin-top: 10px; /* Space above error message */
+}
