@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-  faUser,
+  faUser, // Profile icon for registration
   faHome,
   faClipboardList,
   faComments,
@@ -59,16 +59,6 @@ const Sidebar = () => {
       </div>
 
       <ul className="sidebar-nav">
-        {/* <li className="sidebar-item" onClick={() => navigate("/AdminLogin")}>
-          <div>
-            <a href="#" className="sidebar-link">
-              <FontAwesomeIcon icon={faUser} className="icon-black login-logo" />
-              <span className="icon-text">Login</span>
-            </a>
-            <p>Login</p>
-          </div>
-        </li> */}
-
         <li className="sidebar-item" onClick={() => navigate("/Admin_Dash")}>
           <div>
             <a href="#" className="sidebar-link">
@@ -106,6 +96,17 @@ const Sidebar = () => {
               <span className="icon-text">Feedback And Review</span>
             </a>
             <p>Feedback</p>
+          </div>
+        </li>
+
+        {/* Registration Item with Profile Icon */}
+        <li className="sidebar-item" onClick={() => navigate("/Registraion")}>
+          <div>
+            <a href="#" className="sidebar-link">
+              <FontAwesomeIcon icon={faUser} className="icon-black" /> {/* Profile icon for registration */}
+              <span className="icon-text">Registration</span>
+            </a>
+            <p>Register</p>
           </div>
         </li>
       </ul>
