@@ -1,0 +1,130 @@
+/* Basic styles for the navbar */
+.navbar {
+  width: 100%;
+  padding: 0px 20px;
+  background-color: #FFFFFF; /* Background color */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Shadow for depth */
+  position: fixed; /* Fixed positioning */
+  top: 0; /* Align to top */
+  right: 0; /* Align to right */
+  z-index: 9999; /* High z-index */
+  display: flex; /* Use flexbox for layout */
+  justify-content: space-between; /* Space between logo and icons */
+  align-items: center; /* Center items vertically */
+}
+
+/* Logo styling */
+.nav_logo img {
+  height: 60px; /* Adjust height of the logo */
+}
+
+.nav_logo {
+  margin-left: 22px; /* Margin for logo */
+  display: flex; /* Use flexbox for logo container */
+}
+
+/* Container for icons (bell and user) */
+.nav-icons {
+  display: flex; /* Use flexbox for icon alignment */
+  align-items: center; /* Center items vertically */
+  gap: 20px; /* Space between icons */
+}
+
+/* Notification button and panel */
+.notification-wrapper {
+  position: relative; /* Position relative for dropdown */
+}
+
+.notification-btn {
+  background-color: #FFEDB8; /* Notification button background */
+  color: #FEDB1A; /* Notification button text color */
+  border: none; /* Remove button border */
+  /* padding: 7px 22px; Padding for button */
+  border-radius: 30px; /* Rounded corners */
+  cursor: pointer; /* Pointer cursor on hover */
+  display: flex; /* Align icon and text */
+  align-items: center; /* Center items vertically */
+}
+
+.notification-panel {
+  position: absolute; /* Dropdown positioning */
+  top: 40px; /* Position below button */
+  right: 0; /* Align to right */
+  width: 250px; /* Width of the dropdown */
+  padding: 10px; /* Padding for dropdown */
+  background-color: white; /* Background color */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Shadow for dropdown */
+  border-radius: 5px; /* Rounded corners */
+  z-index: 1000; /* Ensure dropdown is above other content */
+}
+
+.notification-panel h4 {
+  margin: 0 0 10px 0; /* Margin for header */
+  font-size: 16px; /* Font size for header */
+}
+
+/* User dropdown button and menu */
+.dropdown-wrapper {
+  position: relative; /* Position relative for dropdown */
+}
+
+.user-btn {
+  background-color: #b8942a; /* Background color for user button */
+  color: black; /* Text color for user button */
+  border: none; /* Remove button border */
+  padding: 12px 30px; /* Padding for button */
+  border-radius: 5px; /* Rounded corners */
+  display: flex; /* Use flexbox for layout */
+  align-items: center; /* Center items vertically */
+  cursor: pointer; /* Pointer cursor on hover */
+}
+
+.dropdown-menu {
+  position: absolute; /* Position absolute for dropdown */
+  top: 40px; /* Position below button */
+  right: 0; /* Align to right */
+  width: 150px; /* Width of dropdown */
+  padding: 10px; /* Padding for dropdown */
+  background-color: white; /* Background color */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Shadow for dropdown */
+  border-radius: 5px; /* Rounded corners */
+  z-index: 1000; /* Ensure dropdown is above other content */
+}
+
+/* Media queries for responsive design */
+@media (max-width: 768px) {
+  .navbar {
+    flex-direction: column; /* Stack items vertically */
+    padding: 10px; /* Adjust padding */
+  }
+
+  .nav-icons {
+    justify-content: center; /* Center icons */
+    width: 100%; /* Full width */
+    margin-top: 10px; /* Space above icons */
+  }
+
+  .notification-btn,
+  .user-btn {
+    padding: 6px 12px; /* Smaller padding for buttons */
+    font-size: 14px; /* Adjust font size */
+  }
+
+  .notification-panel,
+  .dropdown-menu {
+    width: 90%; /* Adjust width for dropdowns */
+    right: 5%; /* Align to right with margin */
+  }
+}
+
+@media (max-width: 480px) {
+  .nav_logo img {
+    height: 50px; /* Smaller logo for mobile */
+  }
+
+  .notification-btn,
+  .user-btn {
+    padding: 5px 10px; /* Even smaller padding */
+    font-size: 12px; /* Smaller font size */
+  }
+}

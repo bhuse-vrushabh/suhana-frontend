@@ -1,0 +1,464 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box; /* Ensure padding is included in width and height */
+    margin: 0; /* Remove default margin */
+    padding: 0; /* Remove default padding */
+}
+
+a {
+    text-decoration: none; /* Remove underline from links */
+}
+
+li {
+    list-style: none; /* Remove bullets from lists */
+}
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
+/* * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+} */
+
+body {
+    font-family: 'Poppins', sans-serif;
+}
+
+a {
+    text-decoration: none;
+}
+
+li {
+    list-style: none;
+}
+
+#sidebar {
+    width: 190px;
+    z-index: 1000;
+    transition: all 0.25s ease-in-out;
+    display: flex;
+    background-color: #F3741E;
+    height: 100vh; /* Full height */
+    position: sticky;
+    top: 0;
+    justify-content: center;
+    margin-top: 65px;
+    border-radius: 20px;
+    
+    
+}
+
+/* #sidebar.expand {
+    width: 260px;
+} */
+
+.sidebar-nav {
+    padding: 2rem 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.sidebar-item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    padding: 5px;
+    cursor: pointer;
+    width: 80%;
+}
+
+.sidebar-link {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    text-decoration: none;
+    color: #FFF;
+    padding: 0px 0;
+}
+
+.sidebar-link img {
+    width: 30px;
+    height: 30px;
+}
+
+.icon-text {
+    margin-top: 10px;
+    font-size: 16px;
+    text-align: center;
+}
+
+.sidebar-item p {
+    font-size: 14px;
+    color: #FFF;
+    text-align: center;
+}
+
+#sidebar.expand .sidebar-link img {
+    margin: 0 auto;
+}
+
+#sidebar.expand .icon-text {
+    display: inline-block;
+}
+
+#sidebar.collapsed .icon-text {
+    display: none;
+}
+
+#toggle-btn {
+    background-color: transparent;
+    cursor: pointer;
+    border: 0;
+    padding: 1rem 1.5rem;
+}
+
+.close-btn-symbol {
+    font-size: 20px;
+    color: #f8f5f5;
+    font-weight: bold;
+}
+
+.sidebar-logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 2rem;
+}
+
+.sidebar-logo a {
+    color: #FFF;
+    font-size: 1.15rem;
+    font-weight: 600;
+}
+
+
+.login-logo{
+    width: 25px;
+    height: 25px;
+}
+
+/* Hover effect (optional) */
+/* .sidebar-item:hover {
+    background-color: #f4d1bd;
+    border-radius: 15px;
+} */
+
+/* Media queries for smaller screens */
+@media (max-width: 768px) {
+    #sidebar {
+        width: 80px;
+        height: auto;
+    }
+
+    #sidebar.expand {
+        width: 180px;
+    }
+
+    .icon-text {
+        font-size: 14px;
+    }
+
+    .sidebar-link img {
+        width: 25px;
+        height: 25px;
+    }
+}
+
+h1 {
+    font-weight: 600;
+    font-size: 1.5rem; /* Base font size for headings */
+}
+
+body {
+    font-family: 'Poppins', sans-serif; /* Set font family */
+    margin: 0; /* Remove body margin */
+    padding: 0; /* Remove body padding */
+}
+
+/* Wrapper layout */
+.wrapper {
+    display: flex; /* Use flexbox for layout */
+}
+
+/* Main content styles */
+.main {
+    min-height: 100vh; /* Ensure main content takes full height */
+    width: calc(100% - 70px); /* Adjust width to account for sidebar */
+    overflow: hidden; /* Prevent overflow */
+    transition: all 0.35s ease-in-out; /* Smooth transition for changes */
+    background-color: #fafbfe; /* Background color for main content */
+    margin-left: 70px; /* Leave space for the sidebar */
+    padding: 20px; /* Padding around content */
+}
+
+/* Sidebar styling */
+#sidebar {
+    width: 70px; /* Width of the sidebar */
+    min-width: 70px; /*Minimum width */
+    z-index: 1000; /* Ensure sidebar is on top */
+    display: flex; /* Use flexbox for layout */
+    flex-direction: column; /* Stack items vertically */
+    background-color: #D5661A; /* Background color */
+    transition: all 0.25s ease-in-out; /* Smooth transition for width changes */
+    height: 100vh; /* Full height */
+    position: fixed; /* Fixed positioning on the left */
+    top: 0; /* Align to the top */
+    left: 0; /* Align to the left */
+    gap: 0; /* No gap between items */
+    border-radius: 0 20px 20px 0; /* Rounded corners on the right */
+}
+
+#sidebar.expand {
+    width: 260px; /* Expanded width */
+    min-width: 260px; /* Minimum expanded width */
+}
+
+#toggle-btn {
+    background-color: transparent; /* Transparent background */
+    cursor: pointer; /* Pointer cursor on hover */
+    border: none; /* No border */
+    padding: 1rem 1.5rem; /* Padding */
+}
+
+#toggle-btn i {
+    font-size: 1.5rem; /* Icon size */
+    color: #fff; /* Icon color */
+}
+
+.sidebar-logo a {
+    color: #FFF; /* Logo link color */
+    font-size: 1.15rem; /* Logo font size */
+    font-weight: 600; /* Logo font weight */
+}
+
+#sidebar:not(.expand) .sidebar-logo,
+#sidebar:not(.expand) a.sidebar-link span {
+    display: none; /* Hide text in collapsed mode */
+}
+
+/* Sidebar navigation styling */
+.sidebar-nav {
+    padding: 2rem 0; /* Padding for sidebar navigation */
+    flex: 1; /* Allow nav to grow */
+}
+
+a.sidebar-link {
+    padding: 0.625rem 1.625rem; /* Padding for sidebar links */
+    color: #FFF; /* Link color */
+    display: block; /* Block display */
+    font-size: 0.9rem; /* Font size for links */
+    white-space: nowrap; /* Prevent text wrapping */
+    border-left: 3px solid transparent; /* Left border for active link */
+    transition: all 0.2s ease; /* Smooth transition */
+}
+
+.sidebar-link i {
+    font-size: 1.1rem; /* Icon size */
+    margin-right: 0.75rem; /* Space between icon and text */
+}
+
+/* a.sidebar-link:hover {
+    background-color: rgba(255, 255, 255, 0.075); 
+    border-left: 3px solid #3b7ddd; 
+} */
+
+/* Sidebar dropdown styles */
+.sidebar-item {
+    position: relative; /* Relative positioning for dropdown */
+}
+
+#sidebar:not(.expand) .sidebar-item .sidebar-dropdown {
+    position: absolute; /* Position dropdown */
+    top: 0; /* Align to top */
+    left: 70px; /* Align next to sidebar */
+    background-color: #0e2238; /* Dropdown background color */
+    padding: 0; /* No padding */
+    min-width: 15rem; /* Minimum width */
+    display: none; /* Hide dropdown */
+}
+
+#sidebar:not(.expand) .sidebar-item:hover .has-dropdown + .sidebar-dropdown {
+    display: block; /* Show dropdown on hover */
+    max-height: 15em; /* Max height */
+    width: 100%; /* Full width */
+    opacity: 1; /* Full opacity */
+}
+
+#sidebar.expand .sidebar-link[data-bs-toggle="collapse"]::after {
+    border: solid; /* Create arrow effect */
+    border-width: 0 0.075rem 0.075rem 0; /* Arrow shape */
+    content: ""; /* Arrow content */
+    display: inline-block; /* Inline display */
+    padding: 2px; /* Padding for arrow */
+    position: absolute; /* Position absolute for arrow */
+    right: 1.5rem; /* Align to the right */
+    top: 1.4rem; /* Align to the top */
+    transform: rotate(-135deg); /* Arrow direction */
+    transition: all 0.2s ease-out; /* Smooth transition */
+}
+
+#sidebar.expand .sidebar-link[data-bs-toggle="collapse"].collapsed::after {
+    transform: rotate(45deg); /* Rotate arrow when collapsed */
+    transition: all 0.2s ease-out; /* Smooth transition */
+}
+
+/* Close button symbol */
+.close-btn-symbol {
+    font-size: 20px; /* Size for close button */
+    color: #f8f5f5; /* Close button color */
+    font-weight: bold; /* Bold text */
+}
+
+.icon-text {
+    margin-left: 10px; /* Space for text next to icons */
+}
+
+/* Custom textarea height */
+.textarea-custom-height {
+    height: 3px; /* Custom height for textarea */
+}
+
+/* Sidebar content styling */
+.sidebar-content {
+    background-color: #D5661A; /* Sidebar background */
+    color: white; /* Text color */
+}
+
+/* Sidebar navigation link styling */
+.sidebar-nav a {
+    color: white; /* Link color */
+}
+
+/* Sidebar navigation hover effect */
+/* .sidebar-nav a:hover {
+     background-color: #333; 
+} */
+
+/* Edit container position */
+.edit-con {
+    z-index: 1000; /* Ensure edit container is on top */
+    position: fixed; /* Fixed position */
+    left: 260px; /* Position based on expanded sidebar */
+    top: 10.6em; /* Position from top */
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+    #sidebar {
+        width: 60px; /* Sidebar width for smaller screens */
+        min-width: 60px; /* Minimum width */
+    }
+
+    #sidebar.expand {
+        width: 200px; /* Expanded width for smaller screens */
+        min-width: 200px; /* Minimum expanded width */
+    }
+
+    .sidebar-link i {
+        margin-right: 0.5rem; /* Reduce margin for icons */
+    }
+
+    .icon-text {
+        margin-left: 5px; /* Reduce margin for text */
+    }
+
+    .edit-con {
+        left: 15rem; /* Adjust left position for edit container */
+    }
+
+    .main {
+        padding: 15px; /* Adjust padding for smaller screens */
+        margin-left: 60px; /* Adjust margin to accommodate sidebar */
+    }
+}
+
+@media (max-width: 480px) {
+    #sidebar {
+        width: 50px; /* Sidebar width for mobile */
+        min-width: 50px; /* Minimum width */
+    }
+
+    #sidebar.expand {
+        width: 160px; /* Expanded width for mobile */
+        min-width: 160px; /* Minimum expanded width */
+    }
+
+    .sidebar-link i {
+        margin-right: 0.3rem; /* Further reduce margin for icons */
+    }
+
+    .edit-con {
+        left: 10rem; /* Adjust left position for edit container */
+    }
+
+    .main {
+        padding: 10px; /* Further adjust padding for mobile */
+        margin-left: 50px; /* Adjust margin for mobile view */
+    }
+
+    h1 {
+        font-size: 1.2rem; /* Reduce heading size for mobile */
+    }
+
+    .sidebar-nav {
+        padding: 1rem 0; /* Reduce padding for sidebar navigation */
+    }
+}
+
+/* Additional styles for larger screens */
+@media (min-width: 769px) {
+    #sidebar {
+        width: 70px; /* Sidebar width for larger screens */
+        min-width: 70px; /* Minimum width */
+    }
+
+    #sidebar.expand {
+        width: 260px; /* Expanded width for larger screens */
+        min-width: 260px; /* Minimum expanded width */
+    }
+
+    .main {
+        padding: 20px; /* Restore padding for larger screens */
+        margin-left: 70px; /* Restore margin for sidebar */
+    }
+}
+
+#sidebar {
+    width: 90px; /* Minimum width when collapsed */
+    /*min-width: 70px; /* Ensures it doesn't shrink too much */
+    transition: all 0.25s ease-in-out;
+}
+
+#sidebar.expand {
+    width: 260px; /* Expanded width */
+}
+
+.icon-text {
+    margin-left: 10px; /* Space for text next to icons */
+}
+
+#sidebar:not(.expand) .icon-text {
+    display: none; /* Hide text when collapsed */
+}
+
+.sidebar-item {
+    padding: 10px 0; /* More vertical padding */
+}
+
+.sidebar-link {
+    display: flex;
+    align-items: center; /* Center icon and text vertically */
+}
+
+.sidebar-link i {
+    font-size: 1.2rem; /* Adjust icon size if needed */
+    margin-right: 10px; /* Space between icon and text */
+}

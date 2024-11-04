@@ -1,0 +1,47 @@
+/* General styling for the footer */
+.Employee_footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%; /* Ensures the footer spans the entire width */
+  background-color: white; /* Updated background color */
+  color: black; /* Black text for contrast */
+  text-align: center; /* Center-align the text */
+  padding: 15px 0; /* Adds vertical padding for spacing */
+  z-index: 1000; /* Ensures the footer stays on top of other content */
+  box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+  font-family: Arial, sans-serif; /* Adding a default font family for consistency */
+  background-color: #FEFAEE;
+}
+
+/* Styling for the paragraph text inside the footer */
+.Employee_footer p {
+  /* color: black; Ensure text is visible */
+  /* font-size: 1rem; Default font size */
+  margin: 0; /* Remove default margin */
+  line-height: 1.5; /* Improve readability */
+  text-shadow: 0px 3px 6px rgba(175, 48, 48, 0.75); /* Shadow applied only to the bottom */
+  font-size: 1.5rem;
+}
+
+/* Medium screen adjustments (tablets and smaller desktops) */
+@media (max-width: 768px) {
+  .Employee_footer {
+    padding: 12px 0; /* Adjust padding for medium screens */
+  }
+
+  .Employee_footer p {
+    font-size: 0.875rem; /* Slightly smaller text for readability */
+  }
+}
+
+/* Small screen adjustments (mobile devices) */
+@media (max-width: 480px) {
+  .Employee_footer {
+    padding: 10px 0; /* Further reduce vertical padding for mobile */
+  }
+
+  .Employee_footer p {
+    font-size: 0.75rem; /* Smaller font size for mobile devices */
+  }
+}

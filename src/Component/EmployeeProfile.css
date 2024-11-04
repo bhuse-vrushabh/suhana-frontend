@@ -1,0 +1,152 @@
+/* Employee Profile Styling */
+.employee-profile {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  padding: 20px;
+  background-color: #FEFAEE; /* Light background for contrast */
+  margin-bottom: 90px;
+}
+
+.main-content {
+  flex: 1;
+  padding: 20px;
+  margin-top: 90px;
+  background-color: #fff; /* White background for content */
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Soft shadow for depth */
+}
+
+/* Title styling */
+.title {
+  font-size: 32px; /* Increased font size */
+  font-weight: bold;
+  color: #A30A36; /* Darker red for a more polished look */
+  margin-bottom: 20px;
+}
+
+/* Section styling */
+.section {
+  margin-bottom: 25px; /* Added more space between sections */
+  background-color: #ffffff;
+  padding: 20px;
+  border-radius: 10px; /* Rounded corners for a modern look */
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1); /* Slightly deeper shadow */
+}
+
+/* Input field styling */
+.input-field {
+  margin-bottom: -18px; /* Increased margin between inputs */
+}
+
+.input-field input,
+.input-field select {
+  width: 100%;
+  padding: 12px; /* Increased padding for better UX */
+  border: 1px solid #FEFAEE;
+  border-radius: 6px; /* Slightly larger border-radius */
+  margin-top: 5px;
+  background-color: #f9f9f9; /* Light background for inputs */
+  font-size: 16px; /* Increased font size for readability */
+}
+
+/* Table styling */
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px; /* Added top margin */
+}
+
+.table th,
+.table td {
+  padding: 12px; /* Increased padding for more breathing room */
+  border-bottom: 1px solid #ddd;
+  text-align: left;
+  font-size: 16px; /* Font size for readability */
+}
+
+.table th {
+  background-color: #f4f4f4;
+  font-weight: bold;
+}
+
+/* Button container */
+.button-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 10px; /* Space above the button container */
+  margin-bottom: 90px;
+  padding: auto;
+}
+
+/* Button styling */
+button {
+  padding: 12px 30px; /* Increased padding for a larger button */
+  background-color: #D5661A; /* Updated red to match the theme */
+  color: white;
+  border: none;
+  border-radius: 50px; /* Rounded button */
+  cursor: pointer;
+  font-size: 16px; /* Larger font for better readability */
+  transition: background-color 0.3s ease; /* Smooth hover transition */
+}
+
+button:hover {
+  background-color: #c81e4d; /* Slightly lighter shade on hover */
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+  .employee-profile {
+    flex-direction: column; /* Stack columns on smaller screens */
+    padding: 10px; /* Reduced padding for small screens */
+  }
+
+  .main-content {
+    margin-left: 0;
+    margin-right: 0;
+    margin-top: 20px; /* Added top margin when stacked */
+  }
+
+  .input-field input,
+  .input-field select {
+    width: 100%;
+  }
+
+  .table th, .table td {
+    padding: 10px; /* Reduced padding on smaller screens */
+    font-size: 14px; /* Smaller text for mobile */
+  }
+
+  button {
+    width: 100%; /* Full-width button on mobile */
+    padding: 15px; /* Increased padding for touch targets */
+  }
+}
+
+@media (max-width: 480px) {
+  .main-content {
+    margin-top: 10px; /* Reduced top margin on extra small screens */
+    padding: 15px; /* Reduce padding on smaller screens */
+  }
+
+  .title {
+    font-size: 24px; /* Adjust title size for mobile */
+  }
+
+  .input-field input,
+  .input-field select {
+    padding: 10px; /* Slightly reduced padding for mobile */
+    font-size: 14px; /* Smaller font size */
+  }
+
+  button {
+    padding: 12px; /* Slightly reduced button padding */
+    font-size: 14px; /* Smaller button text */
+  }
+
+  .table th, .table td {
+    padding: 8px; /* Tighter table spacing */
+    font-size: 12px; /* Smaller font for tight spaces */
+  }
+}

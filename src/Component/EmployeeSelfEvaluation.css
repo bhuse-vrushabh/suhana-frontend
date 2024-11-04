@@ -1,0 +1,11 @@
+@media (max-width: 768px) {
+    h1 {
+      font-size: 1.5rem; /* Reduce title size */
+    }
+  
+    .catalogItemStyle {
+      flex: 1 1 100%; /* Full width on smaller screens */
+      margin: '5px'; /* Adjust margin */
+    }
+  }
+  

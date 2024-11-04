@@ -12,7 +12,7 @@ import {
 import { createBrowserHistory } from "history";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import './Sidebarr.css';
+import './Sidebar.css';
 
 const history = createBrowserHistory();
 
@@ -48,8 +48,10 @@ const Sidebar = () => {
   const toggleSideBar = () => {
     document.querySelector("#sidebar").classList.toggle("expand");
     setOpen(!open);
-  };
+};
 
+
+  
   return (
     <aside id="sidebar" className="collapsed">
       <div className="d-flex">
@@ -59,7 +61,7 @@ const Sidebar = () => {
       </div>
 
       <ul className="sidebar-nav">
-        {/* <li className="sidebar-item" onClick={() => navigate("/AdminLogin")}>
+        {/* <li className="sidebar-item" onClick={() => navigate("/EmployeeLogin")}>
           <div>
             <a href="#" className="sidebar-link">
               <FontAwesomeIcon icon={faUser} className="icon-black login-logo" />
@@ -69,7 +71,8 @@ const Sidebar = () => {
           </div>
         </li> */}
 
-        <li className="sidebar-item" onClick={() => navigate("/Admin_Dash")}>
+
+        <li className="sidebar-item" onClick={() => navigate("/Dashboard")}>
           <div>
             <a href="#" className="sidebar-link">
               <FontAwesomeIcon icon={faDashboard} className="icon-black" />
@@ -79,27 +82,36 @@ const Sidebar = () => {
           </div>
         </li>
 
-        <li className="sidebar-item" onClick={() => navigate("/HomePage")}>
+        <li className="sidebar-item" onClick={() => navigate("/EmployeeSelfEvaluation")}>
           <div>
             <a href="#" className="sidebar-link">
               <FontAwesomeIcon icon={faHome} className="icon-black" />
-              <span className="icon-text">Home</span>
+              <span className="icon-text">Evaluation</span>
             </a>
-            <p>Home</p>
+            <p>Evaluation</p>
           </div>
         </li>
 
-        <li className="sidebar-item" onClick={() => navigate("/Admin_attendance")}>
+        <li className="sidebar-item" onClick={() => navigate("/TrainingAndDevelopment")}>
           <div>
             <a href="#" className="sidebar-link">
               <FontAwesomeIcon icon={faClipboardList} className="icon-black" />
-              <span className="icon-text">Admin Management</span>
+              <span className="icon-text">Training</span>
             </a>
-            <p>Checklist</p>
+            <p>Training</p>
+          </div>
+        </li>
+        <li className="sidebar-item" onClick={() => navigate("/ReportsAnalytics")}>
+          <div>
+            <a href="#" className="sidebar-link">
+              <FontAwesomeIcon icon={faClipboardList} className="icon-black" />
+              <span className="icon-text">Analytics</span>
+            </a>
+            <p>Analytics</p>
           </div>
         </li>
 
-        <li className="sidebar-item" onClick={() => navigate("/A_feedback")}>
+        <li className="sidebar-item" onClick={() => navigate("/Feedback")}>
           <div>
             <a href="#" className="sidebar-link">
               <FontAwesomeIcon icon={faComments} className="icon-black" />
@@ -108,6 +120,17 @@ const Sidebar = () => {
             <p>Feedback</p>
           </div>
         </li>
+
+        <li className="sidebar-item" onClick={() => navigate("/EmployeeProfile")}>
+          <div>
+            <a href="#" className="sidebar-link">
+              <FontAwesomeIcon icon={faUser} className="icon-black login-logo" />
+              <span className="icon-text">Profile</span>
+            </a>
+            <p>Profile</p>
+          </div>
+        </li>
+
       </ul>
     </aside>
   );
