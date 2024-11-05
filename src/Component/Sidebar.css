@@ -1,19 +1,19 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
 
-*,
+/* *,
 *::before,
 *::after {
-    box-sizing: border-box; /* Ensure padding is included in width and height */
-    margin: 0; /* Remove default margin */
-    padding: 0; /* Remove default padding */
-}
+    box-sizing: border-box; 
+    margin: 0; 
+    padding: 0; 
+} */
 
 a {
-    text-decoration: none; /* Remove underline from links */
+    text-decoration: none; 
 }
 
 li {
-    list-style: none; /* Remove bullets from lists */
+    list-style: none;
 }
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
 

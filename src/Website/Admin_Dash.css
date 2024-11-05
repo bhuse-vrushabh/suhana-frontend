@@ -17,7 +17,7 @@
   font-size: 3rem;
 }
 
-.dashboard-wrapper {
+.A_dashboard-wrapper {
   flex: 1;
   display: flex;
 }
@@ -29,7 +29,7 @@
 }
 
 /* Grid Layout Styles */
-.kpi-cards-container {
+.A_kpi-cards-container {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   /* Four equal columns */
@@ -37,7 +37,7 @@
   /* Space between grid items */
 }
 
-.kpi-card-item {
+.A_kpi-card-item {
   display: flex;
   justify-content: center;
   /* Center content inside grid item */
@@ -45,7 +45,7 @@
 }
 
 /* Card Styles */
-.kpi-card {
+.A_kpi-card{
   border: none;
   border-radius: 8px;
   color: #FEFAEE;
@@ -56,16 +56,16 @@
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
 
-.kpi-card:hover {
+.A_kpi-card:hover {
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
 }
 
 /* Button Styles */
-.button-container {
+.A_button-container {
   margin-bottom: 20px;
 }
 
-.btn-download {
+.A_btn-download {
   background-color: #F3741E;
   /* Button color */
   color: white;
@@ -75,8 +75,15 @@
   border-radius: 5px;
   cursor: pointer;
   transition: background-color 0.3s;
-  margin: 0px 10px;
+  margin: 10px 10px;
 }
+
+.card-content-A {
+  box-sizing: content-box;
+  margin: unset;
+  padding: unset;
+}
+
 
 /* .btn-download:hover {
   background-color: #2980b9; 
@@ -84,7 +91,7 @@
 
 /* Responsive Styles */
 @media (max-width: 768px) {
-  .kpi-cards-container {
+  .A_kpi-cards-container {
     grid-template-columns: repeat(2, 1fr);
     /* Two columns on small screens */
     width: 100vw;
@@ -110,7 +117,7 @@
 }
 
 @media (max-width: 480px) {
-  .kpi-cards-container {
+  .A_kpi-cards-container {
     grid-template-columns: 1fr;
     /* Single column on very small screens */
     width: 100vw;

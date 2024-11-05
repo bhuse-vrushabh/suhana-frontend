@@ -14,7 +14,8 @@ button:hover {
 
 .nav_logo img{
   height:60px; 
- 
+  margin-bottom: 20px;
+  width: 100%;
 }
 
 .nav_logo{
@@ -22,7 +23,7 @@ button:hover {
   justify-content: left;
   /* margin-right: 1150px; */
   position: sticky;
-  margin-left: 120px;
+  margin-left: 30px;
   
 }
 
@@ -35,21 +36,19 @@ button:hover {
 } */
 
 /* Basic styles for the navbar */
-.A_navbar {
+.navbar {
   width: 100%;
-  padding: 10px 20px;
+  padding: 5px 20px;
   background-color: #FFFFFF;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   position: fixed;
   top: 0;
   right: 0;
   z-index: 9999;
-  /* display: flex; */
+  
   justify-content: flex-end;
   align-items: center;
-  flex-wrap: wrap;
-  
-  /* height: 143px; */
+  height: 60px;
 }
  
 /* Container for icons (bell and user) */
@@ -72,22 +71,24 @@ button:hover {
   position: relative;
 }
  
-.A_notification-btn{
+.notification-btn {
   /* background-color: #dc3545;   here change the notificaton backhround colore */
   background-color: transparent; /* Remove background color */
-
+  height: 0;
   color: white;
   border: none;
-  padding: 7px 22px;
+  padding: 5px 22px;
   border-radius: 5px;
   display: flex;
   align-items: center;
   cursor: pointer;
+  margin-top: 7px;
+  
 }
 
-.A_notification-btn img{
+.notification-btn img{
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.5); /* Adds a subtle shadow around the image */
-  border-radius: 25px; /* Optional: Adds slight rounding to the corners of the image */
+  border-radius: 35px; /* Optional: Adds slight rounding to the corners of the image */
 
 }
  
@@ -131,8 +132,8 @@ button:hover {
 }
 
  
-.A_user-btn {
-  background-color: #edc213;
+.user-btn {
+  background-color: #b8942a;
   color: black;
   border: none;
   padding: 12px 30px;
@@ -142,9 +143,10 @@ button:hover {
   cursor: pointer;
   flex-direction: column; /* Stack name and icon vertically */
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.5); /* Add shadow */
+  margin-top: -15px;
 }
  
-.A_dropdown-menu {
+.dropdown-menu {
   position: absolute;
   top: 40px;
   right: 0;
@@ -169,28 +171,25 @@ button:hover {
  
 .dropdown-menu ul li a {
   text-decoration: none;
-  color: #333;
+  
 }
- 
-.dropdown-menu ul li a:hover {
-  color: #dc3545;
-}
- 
  
 
-@media (min-width: 200px) and (max-width:300px){
+ 
+
+@media (max-width: 768px){
 
   .nav_logo img{
     height:60px; 
-   
+   width: 50px;
   }
   
   .nav_logo{
-    display: flex;
+   
     justify-content: left;
     /* margin-right: 1150px; */
     position: sticky;
-    margin-left: 120px;
+   
     
   }
   
@@ -203,19 +202,18 @@ button:hover {
   } */
   
   /* Basic styles for the navbar */
-  .A_navbar {
-    width: 100vw;
-    padding: 10px 20px;
+  .navbar {
+    width: 100%;
+    padding: 2px 20px;
     background-color: #FFFFFF;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     position: fixed;
     top: 0;
     right: 0;
     z-index: 9999;
-    /* display: flex; */
+ 
     justify-content: flex-end;
     align-items: center;
-    flex-wrap: wrap;
   }
    
   /* Container for icons (bell and user) */
@@ -232,8 +230,8 @@ button:hover {
     position: relative;
   }
    
-  .A_notification-btn {
-    /* background-color: #dc3545;   here change the notificaton backhround colore */
+  .notification-btn {
+     /*  here change the notificaton backhround colore*/
     color: white;
     border: none;
     padding: 6px 12px;
@@ -241,6 +239,7 @@ button:hover {
     display: flex;
     align-items: center;
     cursor: pointer;
+    margin-top: -7px;
   }
    
   .notification-btn span {
@@ -273,7 +272,7 @@ button:hover {
   .notification-panel ul li {
     padding: 5px 0;
     font-size: 14px;
-    border-bottom: 1px solid #ddd;
+    
   }
    
   /* User dropdown button and menu */
@@ -281,18 +280,19 @@ button:hover {
     position: relative;
   }
    
-  .A_user-btn {
-    background-color: #6c757d;
+  .user-btn {
+   
     color: white;
     border: none;
-    padding: 6px 12px;
+    padding: 4px 12px;
     border-radius: 5px;
     display: flex;
     align-items: center;
     cursor: pointer;
+    
   }
    
-  .A_dropdown-menu {
+  .dropdown-menu {
     position: absolute;
     top: 40px;
     right: 0;
@@ -319,8 +319,5 @@ button:hover {
     text-decoration: none;
     color: #333;
   }
-   
-  .dropdown-menu ul li a:hover {
-    color: #dc3545;
-  }
+ 
 }

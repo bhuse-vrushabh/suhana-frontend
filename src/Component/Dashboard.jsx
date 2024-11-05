@@ -107,7 +107,7 @@ const KpiCards = () => {
         </div>
 
         {/* Conditionally Render the Chart */}
-        <div className="chart-container">
+        <div className="chart-container-emp">
           {selectedCard === 'attendance' && (
             <div className="chart">
               <h3>Attendance Trend</h3>
