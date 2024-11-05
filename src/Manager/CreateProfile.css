@@ -1,0 +1,125 @@
+/* Employee form container styling */
+.employee-form-container {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+}
+
+.employee-form-container h2 {
+  margin-bottom: 20px;
+  color: #333;
+}
+
+/* Form styling */
+.employee-form-Manager{
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group-Manager {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  margin-bottom: 20px;
+}
+
+.form-group-Manager label {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  font-size: 14px;
+  color: #555;
+}
+
+.form-group-Manager input[type="text"],
+.form-group-Manager input[type="email"],
+.form-group-Manager input[type="tel"],
+.form-group-Manager input[type="date"],
+.form-group-Manager select {
+  padding: 10px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin-top: 5px;
+  outline: none;
+  transition: border-color 0.3s ease;
+}
+
+.form-group-Manager input[type="text"]:focus,
+.form-group-Manager input[type="email"]:focus,
+.form-group-Manager input[type="tel"]:focus,
+.form-group-Manager input[type="date"]:focus,
+.form-group-Manager select:focus {
+  border-color: #3085d6;
+}
+
+/* Submit button styling */
+.submit-btn-Manager {
+  background: #D5661A;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  padding: 10px 15px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s;
+  width: 100px;
+  margin: 0 auto; /* Centering the button */
+  display: block; /* Ensures margin auto works */
+}
+
+
+
+
+/* Employee table styling */
+.employee-table-Manager {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+  background-color: #fff;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.employee-table-Manager thead {
+  background-color: #3085d6;
+  color: #fff;
+}
+
+.employee-table-Manager th,
+.employee-table-Manager td {
+  padding: 12px 15px;
+  text-align: left;
+  font-size: 14px;
+  border-bottom: 1px solid #eee;
+}
+
+.employee-table-Manager tbody tr:hover {
+  background-color: #f1f7ff;
+}
+
+/* Action buttons styling */
+.action-btn {
+  padding: 8px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.edit-btn-Manager {
+  background-color: #4caf50;
+  color: white;
+  margin-right: 5px;
+}
+
+
+
+.delete-btn-Manager {
+  background-color: #f44336;
+  color: white;
+}
+
