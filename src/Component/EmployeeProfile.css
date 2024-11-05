@@ -2,10 +2,10 @@
 .employee-profile {
   display: flex;
   flex-direction: row;
-  width: 100%;
+  width: 80%;
   padding: 20px;
   background-color: #FEFAEE; /* Light background for contrast */
-  margin-bottom: 90px;
+  margin-bottom: 200px;
 }
 
 .main-content {
@@ -41,7 +41,7 @@
 
 .input-field input,
 .input-field select {
-  width: 100%;
+  width: 80%;
   padding: 12px; /* Increased padding for better UX */
   border: 1px solid #FEFAEE;
   border-radius: 6px; /* Slightly larger border-radius */
@@ -52,7 +52,7 @@
 
 /* Table styling */
 .table {
-  width: 100%;
+  width: 80%;
   border-collapse: collapse;
   margin-top: 20px; /* Added top margin */
 }
@@ -62,6 +62,7 @@
   padding: 12px; /* Increased padding for more breathing room */
   border-bottom: 1px solid #ddd;
   text-align: left;
+
   font-size: 16px; /* Font size for readability */
 }
 
@@ -92,7 +93,7 @@ button {
 }
 
 button:hover {
-  background-color: #c81e4d; /* Slightly lighter shade on hover */
+  background-color: #D5661A; /* Slightly lighter shade on hover */
 }
 
 /* Responsive Styles */
