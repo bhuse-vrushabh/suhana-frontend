@@ -1,11 +1,11 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
 
-::after,
+/* ::after,
 ::before {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
-}
+} */
 
 a {
     text-decoration: none;
@@ -20,11 +20,11 @@ h1 {
     font-size: 1.5rem;
 }
 
-body {
+/* body {
     font-family: 'Poppins', sans-serif;
     margin: 0;
     padding: 0;
-}
+} */
 
 /* Wrapper layout for sidebar and main content */
 .wrapper {

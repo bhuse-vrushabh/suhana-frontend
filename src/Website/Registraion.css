@@ -36,6 +36,18 @@
     flex-wrap: wrap;
 }
 
+.parent_form-row-roll{
+    display: flex;
+    justify-content: center; /* Centers horizontally */
+    align-items: center;    /* Centers vertically */
+}
+
+.form-row-roll{
+   
+    width: 50%;
+    flex-wrap: wrap;
+}
+
 .form-row label {
     display: flex;
     flex-direction: column;
@@ -43,7 +55,7 @@
 }
 
 .form-row input,
-.form-row select {
+.form-row-roll select {
     padding: 12px;
     margin-top: 5px;
     width: 100%;
@@ -80,6 +92,10 @@
     .form-row label {
         width: 100%;
     }
+
+    .form-row-roll{
+        width: 100%;
+    } 
 
     .create-btn {
         width: 100%;
