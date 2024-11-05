@@ -1,0 +1,109 @@
+General styling for the dashboard
+.dashboard {
+  display: flex;
+  height: 100vh; /* Full viewport height */
+  background-color: #FEFAEE; /* Soft background color */
+}
+
+/* Container for the main content area */
+.content {
+  flex-grow: 1; /* Takes up the remaining space */
+  padding: 20px;
+margin-left: 60px;  /* Adds space around the content */
+  overflow-y: auto; /* Enables scrolling when content overflows */
+}
+
+/* Container for KPI cards */
+.kpi-cards-container {
+  display: flex;
+  justify-content: space-between; /* Distribute space between cards */
+  align-items: flex-start; /* Align items to the top */
+  flex-wrap: wrap; /* Allow cards to wrap to the next line */
+  gap: 20px; /* Space between cards */
+  margin-top: 90px;
+  margin-bottom: 0px; /* Top margin for spacing */
+  margin-left: 20px;
+  
+}
+
+/* Styling for individual KPI cards */
+.kpi-card {
+  cursor: pointer;
+  flex: 1; /* Allow cards to grow */
+  min-width: 220px; /* Minimum width for responsive behavior */
+  height: 250px; /* Fixed height for cards */
+  perspective: 1000px; /* 3D perspective for card flipping */
+  transition: transform 0.3s ease-in-out; /* Smooth transition */
+  margin-right: 10px; /* Space to the right for the last card */
+  padding-top: 20px; /* Padding at the top of the card */
+}
+
+/* Remove margin for the last card */
+.kpi-card:last-child {
+  margin-right: 0; /* No margin for the last card */
+}
+
+.kpi-card-inner {
+  position: relative;
+  width: 100%;
+  height: calc(100% - 20px); /* Adjust height to account for padding */
+  text-align: center;
+  transition: transform 0.6s ease; /* Smooth flipping transition */
+  transform-style: preserve-3d; /* Preserve 3D transformation */
+}
+
+.kpi-card:hover .kpi-card-inner {
+  transform: rotateY(180deg); /* Flip card on hover */
+}
+
+
+
+.kpi-card-front {
+   /* Light background for the front */
+  color: black; /* Black text for front */
+  text-align: center;
+  height: 226px;
+}
+
+.kpi-card-back {
+  background-color: #E5C02C; /* Bright yellow background for the back */
+  color: white; /* White text for the back */
+  transform: rotateY(180deg); /* Flip the back face */
+}
+
+/* Icon styling inside KPI cards */
+.icon {
+  font-size: 50px; /* Size of icons */
+  margin-bottom: 10px; /* Space below icons */
+}
+
+/* KPI value styling */
+.kpi-value {
+  font-size: 24px; /* Bold KPI value size */
+  font-weight: bold;
+  color: #333; /* Darker color for better contrast */
+ 
+}
+
+/* Container for charts */
+.chart-container-emp {
+  margin-top: 40px; /* Space above the charts */
+  display: flex;
+  margin-bottom: 40px;
+  justify-content: center; /* Center charts horizontally */
+  align-items: center; /* Center charts vertically */
+  flex-wrap: wrap; /* Allow multiple charts to wrap */
+  gap: 20px; /* Gap between charts */
+}
+
+/* Styling for individual charts */
+.chart {
+  margin-top: 40;
+  margin-bottom: 40;
+  width: 100vh; /* Fixed width for charts */
+  padding: 20px; /* Padding inside charts */
+  background-color: #fff; /* White background for charts */
+  border-radius: 10px; /* Rounded corners for charts */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Light shadow for charts */
+  
+}

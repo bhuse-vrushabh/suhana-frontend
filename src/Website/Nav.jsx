@@ -209,7 +209,7 @@ function Nav({ user }) {
   };
 
   return (
-    <nav className="navbar">
+    <nav className="A_navbar">
       <div className="nav-icons">
         <div className='nav_logo'>
           <img src={myImage} alt="Suhana logo" />
@@ -218,7 +218,7 @@ function Nav({ user }) {
         <div className='notification_user'>
           {/* Notification button */}
           <div className="notification-wrapper">
-            <button className="notification-btn" onClick={toggleNotification}>
+            <button className="A_notification-btn" onClick={toggleNotification}>
               <img src={bellIcon} alt="Notifications" />
             </button>
             {isNotificationOpen && (
@@ -239,12 +239,12 @@ function Nav({ user }) {
 
           {/* User Dropdown */}
           <div className="dropdown-wrapper">
-            <button className="user-btn" onClick={toggleDropdown}>
-              {getUserIcon(userRole)}
-              <div>{userName}</div>
+            <button className="A_user-btn" onClick={toggleDropdown}>
+              {getUserIcon(userRole)} {/* Display the user icon based on the role */}
+              <div>{userName}</div> {/* Show user name */}
             </button>
             {isDropdownOpen && (
-              <div className="dropdown-menu">
+              <div className="A_dropdown-menu">
                 <ul>
                   <li><a href="#/my-account">My Account</a></li>
                   <li onClick={handleLogout}>Logout</li>

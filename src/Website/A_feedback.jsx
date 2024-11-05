@@ -37,7 +37,7 @@
 
 import React, { useState } from 'react';
 import './FeedbackPage.css';
-import Sidebar from "./Sidebar";
+import Sidebar from "./Sidebar_A";
 import Nav from "./Nav";
 
 const A_feedback = () => {
@@ -63,7 +63,7 @@ const A_feedback = () => {
       <div className="wrapper">
         <Sidebar />
         
-        <div className="review-feedback-page" id="unique-review-feedback-page">
+        <div className="A-review-feedback-page" id="unique-review-feedback-page">
           <h1 id="unique-feedback-title">Employee Feedback</h1>
           <form onSubmit={handleSubmit}>
             <div className="form-group_A" id="unique-colleague-feedback">
@@ -102,9 +102,11 @@ const A_feedback = () => {
             <div className="form-group_A" id="unique-anonymous-checkbox">
               <label>
                 <input
+                
                   type="checkbox"
                   checked={anonymous}
                   onChange={(e) => setAnonymous(e.target.checked)}
+                  className='Acheckbox'
                 />
                 Submit anonymously
               </label>
