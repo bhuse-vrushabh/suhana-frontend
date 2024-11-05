@@ -1,0 +1,178 @@
+/* Dashboard.css */
+
+/* Main wrapper styles */
+.main-wrapper {
+  display: flex;
+  min-height: 100vh;
+  margin-top: 76px;
+}
+
+/* Sidebar styles */
+.main-wrapper_n {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  background: #FEFAEE;
+
+}
+.kpi-cards {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap; /* Cards will wrap on smaller screens */
+  margin-bottom: 20px;
+  width: 100%;
+  max-width: 1200px;
+}
+
+/* Individual KPI Card */
+.kpi-card {
+  background-color: #fff;
+  padding: 20px;
+  margin: 10px;
+  border-radius: 10px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); /* Soft shadow */
+  cursor: pointer;
+  text-align: center;
+  flex: 1; /* Equal space distribution for cards */
+  max-width: 220px; /* Maximum width of each card */
+  min-width: 180px; /* Ensures cards don’t shrink too much */
+  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+  margin-top: 20px;
+}
+
+.kpi-card:hover {
+  background: #F6EBC9;
+  transform: translateY(-5px); /* Lift effect on hover */
+  box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.15); /* Stronger shadow on hover */
+}
+
+/* KPI Value and Label */
+.kpi-value {
+  font-size: 28px;
+  font-weight: bold;
+  color: #D5661A;
+  margin-bottom: 10px;
+}
+
+.kpi-label {
+  font-size: 14px;
+  color:black;
+  font-weight: 500;
+  font-weight: bold;
+}
+
+/* KPI Icon Styling */
+.kpi-icon {
+  width: 50px;
+  height: 50px;
+  margin-bottom: 10px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto; /* Center the icon */
+}
+
+/* Chart Section */
+.chart-section {
+  width: 100%;
+  max-width: 1200px;
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  margin-top: 20px;
+}
+
+.chart-section h4 {
+  font-size: 18px;
+  color: #444;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+/* Heatmap Container */
+.heatmap-container {
+  padding: 40px;
+  margin: 0 auto;
+  max-width: 500px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background: #F6EBC9;
+  box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Heatmap Grid Cell */
+.heatmap-grid-cell {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 14px;
+  color: #fff;
+  border: 1px solid #fff;
+  text-align: right;
+}
+
+/* Bar Chart Container */
+.bar-chart-container {
+  height: 400px;
+  width: 300vuh;
+  background: #F6EBC9;
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+  /* Stack KPI Cards on smaller screens */
+  .kpi-cards {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .kpi-card {
+    max-width: 100%; /* Cards take full width */
+    min-width: 100%;
+  }
+
+  /* Adjust chart heights for smaller screens */
+  .heatmap-container {
+    max-width: 100%;
+    padding: 10px;
+  }
+
+  .heatmap-container h4 {
+    font-size: 18px;
+  }
+
+  .heatmap-grid-cell {
+    font-size: 12px;
+  }
+
+  .bar-chart-container {
+    height: 300px;
+  }
+
+  .chart-section {
+    padding: 15px;
+  }
+}
+
+@media (max-width: 480px) {
+  /* Smaller KPI values on mobile */
+  .kpi-value {
+    font-size: 24px;
+  }
+
+  .kpi-label {
+    font-size: 12px;
+  }
+
+  /* Smaller chart container on mobile */
+  .heatmap-container,
+  .bar-chart-container {
+    height: 250px;
+  }
+
+  /* Reduce icon size on smaller screens */
+  .kpi-icon {
+    width: 40px;
+    height: 40px;
+  }
+}

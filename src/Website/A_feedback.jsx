@@ -37,7 +37,7 @@
 
 import React, { useState } from 'react';
 import './FeedbackPage.css';
-import Sidebar from "./Sidebar";
+import Sidebar from "./Sidebar_A";
 import Nav from "./Nav";
 
 const A_feedback = () => {
@@ -63,10 +63,10 @@ const A_feedback = () => {
       <div className="wrapper">
         <Sidebar />
         
-        <div className="review-feedback-page" id="unique-review-feedback-page">
+        <div className="A-review-feedback-page" id="unique-review-feedback-page">
           <h1 id="unique-feedback-title">Employee Feedback</h1>
           <form onSubmit={handleSubmit}>
-            <div className="form-group" id="unique-colleague-feedback">
+            <div className="form-group_A" id="unique-colleague-feedback">
               <label htmlFor="colleagueFeedback">Feedback for Colleagues:</label>
               <textarea
                 id="colleagueFeedback"
@@ -77,7 +77,7 @@ const A_feedback = () => {
               />
             </div>
 
-            <div className="form-group" id="unique-manager-feedback">
+            <div className="form-group_A" id="unique-manager-feedback">
               <label htmlFor="managerFeedback">Feedback for Manager:</label>
               <textarea
                 id="managerFeedback"
@@ -88,7 +88,7 @@ const A_feedback = () => {
               />
             </div>
 
-            <div className="form-group" id="unique-direct-reports-feedback">
+            <div className="form-group_A" id="unique-direct-reports-feedback">
               <label htmlFor="directReportsFeedback">Feedback for Direct Reports:</label>
               <textarea
                 id="directReportsFeedback"
@@ -99,18 +99,20 @@ const A_feedback = () => {
               />
             </div>
 
-            <div className="form-group" id="unique-anonymous-checkbox">
+            <div className="form-group_A" id="unique-anonymous-checkbox">
               <label>
                 <input
+                
                   type="checkbox"
                   checked={anonymous}
                   onChange={(e) => setAnonymous(e.target.checked)}
+                  className='Acheckbox'
                 />
                 Submit anonymously
               </label>
             </div>
 
-            <div className="form-group" id="unique-overall-review">
+            <div className="form-group_A" id="unique-overall-review">
               <label htmlFor="overallReview">Overall Review:</label>
               <textarea
                 id="overallReview"

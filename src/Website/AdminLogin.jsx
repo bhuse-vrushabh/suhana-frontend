@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2"; // Import SweetAlert2
 import './AdminLogin.css';
-import Sidebar from "./Sidebar";
+import Sidebar from "./Sidebar_A";
 import Nav from "./Nav";
 import axios from 'axios';  // Make sure to import axios
 

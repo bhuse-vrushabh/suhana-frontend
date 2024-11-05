@@ -141,43 +141,45 @@
 
 
 
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import './Nav.css';
-import axios from 'axios'; // Import axios
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBell, faUser } from '@fortawesome/free-solid-svg-icons';
-import myImage from './Assets/suhanaui.png';
-import bellIcon from './Assets/bell.svg';
-import { useNavigate } from 'react-router-dom';
+import { faBell, faUser, faHome, faSignOutAlt, faCog ,faUserCircle} from '@fortawesome/free-solid-svg-icons';
+import logo from "./logo.jpeg"// Ensure this path is correct
+import bell from "../Manager/bell.svg";
+import Swal from 'sweetalert2';
+import { Link, useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 function Nav({ user }) {
   const [isNotificationOpen, setIsNotificationOpen] = useState(false);
+  const [notifications, setNotifications] = useState([]);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  const [notifications, setNotifications] = useState([]); // State for notifications
-  const navigate = useNavigate();
+  const navigate = useNavigate(); // Call the hook function
 
-  // Fetch notifications from the API with Axios and authentication
-  useEffect(() => {
-    const fetchNotifications = async () => {
-      try {
-        const response = await axios.get('http://127.0.0.1:8000/api/performance/notifications/', {
+
+  const fetchNotifications = async () => {
+    try {
+      const token = localStorage.getItem("accessToken");
+  
+      const response = await axios.get(
+        'http://127.0.0.1:8000/api/performance/notifications/',
+        {
           headers: {
-            Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzMyMjUyNjI1LCJpYXQiOjE3Mjk2NjA2MjUsImp0aSI6IjVhODdhNGFmNmU4YjQ2ODJhNzI5NDc0YjliZTYwYmZiIiwidXNlcl9pZCI6M30.rzZp4IhtsJCLpKaUUSPuQtsITxCBmDuiPweBjgAfefk`, // Use token from localStorage
+            Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzMyMjUyNjI1LCJpYXQiOjE3Mjk2NjA2MjUsImp0aSI6IjVhODdhNGFmNmU4YjQ2ODJhNzI5NDc0YjliZTYwYmZiIiwidXNlcl9pZCI6M30.rzZp4IhtsJCLpKaUUSPuQtsITxCBmDuiPweBjgAfefk`,
           },
-        });
-        setNotifications(response.data);
-      } catch (error) {
-        console.error("Error fetching notifications:", error);
-      }
-    };
-
-    fetchNotifications();
-  }, []);
-
-  // Toggle notification panel
+        }
+      );
+      setNotifications(response.data);
+    } catch (error) {
+      console.error("Error fetching notifications:", error);
+    }
+  };
   const toggleNotification = () => {
     setIsNotificationOpen(!isNotificationOpen);
+    if (!isNotificationOpen) fetchNotifications();
   };
+  
 
   // Toggle user dropdown
   const toggleDropdown = () => {
@@ -185,8 +187,8 @@ function Nav({ user }) {
   };
 
   // Fallback for user if not provided
-  const userName = user?.name || 'Admin';
-  const userRole = user?.role || 'Admin';
+  const userName = user?.name || 'Manager';
+  const userRole = user?.role || 'Manager';
 
   // Function to render user icon based on role
   const getUserIcon = (role) => {
@@ -202,24 +204,38 @@ function Nav({ user }) {
     }
   };
 
-  // Function to handle logout
+  // Logout function with SweetAlert and redirection
   const handleLogout = () => {
-    localStorage.removeItem('token'); // Clear token on logout
-    navigate('/AdminLogin');
+    Swal.fire({
+      title: 'Are you sure you want to logout?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Yes, logout!',
+      cancelButtonText: 'Cancel',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        Swal.fire('Logged out!', 'You have been logged out successfully.', 'success').then(() => {
+          
+          navigate('/');
+        });
+      }
+    });
   };
 
   return (
-    <nav className="A_navbar">
+    <nav className="navbar">
       <div className="nav-icons">
         <div className='nav_logo'>
-          <img src={myImage} alt="Suhana logo" />
+          <img src={logo} alt="Suhana logo" />
         </div>
 
         <div className='notification_user'>
           {/* Notification button */}
           <div className="notification-wrapper">
-            <button className="A_notification-btn" onClick={toggleNotification}>
-              <img src={bellIcon} alt="Notifications" />
+            <button className="notification-btn" onClick={toggleNotification}>
+              {/* <FontAwesomeIcon icon={faBell} /> */}
+              <img src={bell} alt="" />
+              {/* <span>Notifications</span> */}
             </button>
             {isNotificationOpen && (
               <div className="notification-panel">
@@ -239,15 +255,28 @@ function Nav({ user }) {
 
           {/* User Dropdown */}
           <div className="dropdown-wrapper">
-            <button className="A_user-btn" onClick={toggleDropdown}>
-              {getUserIcon(userRole)} {/* Display the user icon based on the role */}
-              <div>{userName}</div> {/* Show user name */}
+          <button className="user-btn" onClick={toggleDropdown}>
+              {getUserIcon(userRole)}
+              <div>{userName}</div>
             </button>
             {isDropdownOpen && (
-              <div className="A_dropdown-menu">
-                <ul>
-                  <li><a href="#/my-account">My Account</a></li>
-                  <li onClick={handleLogout}>Logout</li>
+              <div className="dropdown-menu">
+                   <ul>
+                  {userRole === 'Manager' && (
+                    <li>
+                   Welcome
+                    </li>
+                  )}
+                  <li>
+                    <Link to ="/createprofile">
+                    <FontAwesomeIcon icon={faUserCircle} size="2x" /> My Account
+                    </Link>
+                  </li>
+                  <li>
+                    <a onClick={handleLogout}>
+                      <FontAwesomeIcon icon={faSignOutAlt} /> Logout
+                    </a>
+                  </li>
                 </ul>
               </div>
             )}

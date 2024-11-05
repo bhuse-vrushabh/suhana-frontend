@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import './Admin_attendance.css';
-import Sidebar from "./Sidebar";
+import Sidebar from "./Sidebar_A";
 import Nav from "./Nav";
 
 const Admin_attendance = () => {

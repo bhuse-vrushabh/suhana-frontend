@@ -12,11 +12,11 @@ import {
 import { createBrowserHistory } from "history";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import './Sidebarr.css';
+import './Sidebarr_A.css';
 
 const history = createBrowserHistory();
 
-const Sidebar = () => {
+const Sidebar_A= () => {
   const [open, setOpen] = useState(true);
   const navigate = useNavigate();
   const URL = "http://54.176.214.232:8000/";
@@ -51,62 +51,62 @@ const Sidebar = () => {
   };
 
   return (
-    <aside id="sidebar" className="collapsed">
+    <aside id="sidebar_A" className="collapsed">
       <div className="d-flex">
         <div className="sidebar-logo">
           <a href="#"></a>
         </div>
       </div>
 
-      <ul className="sidebar-nav">
-        <li className="sidebar-item" onClick={() => navigate("/Admin_Dash")}>
+      <ul className="sidebar-nav_A">
+        <li className="sidebar-item_A" onClick={() => navigate("/Admin_Dash")}>
           <div>
-            <a href="#" className="sidebar-link">
+            <a href="#" className="sidebar-link_A">
               <FontAwesomeIcon icon={faDashboard} className="icon-black" />
-              <span className="icon-text">Dashboard</span>
+              <span className="icon-text-A">Dashboard</span>
             </a>
-            <p>Dashboard</p>
+            {/* <p>Dashboard</p> */}
           </div>
         </li>
 
-        <li className="sidebar-item" onClick={() => navigate("/HomePage")}>
+        <li className="sidebar-item_A" onClick={() => navigate("/HomePage")}>
           <div>
-            <a href="#" className="sidebar-link">
+            <a href="#" className="sidebar-link_A">
               <FontAwesomeIcon icon={faHome} className="icon-black" />
-              <span className="icon-text">Home</span>
+              <span className="icon-text-A">Home</span>
             </a>
-            <p>Home</p>
+            {/* <p>Home</p> */}
           </div>
         </li>
 
-        <li className="sidebar-item" onClick={() => navigate("/Admin_attendance")}>
+        <li className="sidebar-item_A" onClick={() => navigate("/Admin_attendance")}>
           <div>
-            <a href="#" className="sidebar-link">
+            <a href="#" className="sidebar-link_A">
               <FontAwesomeIcon icon={faClipboardList} className="icon-black" />
-              <span className="icon-text">Admin Management</span>
+              <span className="icon-text-A">Checklist</span>
             </a>
-            <p>Checklist</p>
+            {/* <p>Checklist</p> */}
           </div>
         </li>
 
-        <li className="sidebar-item" onClick={() => navigate("/A_feedback")}>
+        <li className="sidebar-item_A" onClick={() => navigate("/A_feedback")}>
           <div>
-            <a href="#" className="sidebar-link">
+            <a href="#" className="sidebar-link_A">
               <FontAwesomeIcon icon={faComments} className="icon-black" />
-              <span className="icon-text">Feedback And Review</span>
+              <span className="icon-text-A">Feedback</span>
             </a>
-            <p>Feedback</p>
+            {/* <p>Feedback</p> */}
           </div>
         </li>
 
         {/* Registration Item with Profile Icon */}
-        <li className="sidebar-item" onClick={() => navigate("/Registraion")}>
+        <li className="sidebar-item_A" onClick={() => navigate("/Registraion")}>
           <div>
-            <a href="#" className="sidebar-link">
+            <a href="#" className="sidebar-link_A">
               <FontAwesomeIcon icon={faUser} className="icon-black" /> {/* Profile icon for registration */}
-              <span className="icon-text">Registration</span>
+              <span className="icon-text-A">Registration</span>
             </a>
-            <p>Register</p>
+            {/* <p>Register</p> */}
           </div>
         </li>
       </ul>
@@ -114,4 +114,4 @@ const Sidebar = () => {
   );
 };
 
-export default Sidebar;
+export default Sidebar_A;
