@@ -36,7 +36,7 @@
 }
 
 .notification-btn {
-  background-color: #FFEDB8; /* Notification button background */
+  /* Notification button background */
   color: #FEDB1A; /* Notification button text color */
   border: none; /* Remove button border */
   /* padding: 7px 22px; Padding for button */
