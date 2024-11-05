@@ -182,6 +182,7 @@ function Registraion() {
                                 required
                             />
                         </label>
+                        
                         <label>
                             Date of Joining:
                             <input
