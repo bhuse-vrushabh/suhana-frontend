@@ -118,7 +118,7 @@ function App() {
   const location = useLocation();
 
   // Check if the current path is the login page
-  const isLoginPage = location.pathname === "/AdminLogin";
+  const isLoginPage = location.pathname === "/AdminLogin" || location.pathname === "/EmployeeLogin" || location.pathname === "/ManagerLogin";
 
   return (
     <div>
@@ -138,7 +138,7 @@ function App() {
         <Route path="/Registraion" element={<Registraion />} />
 
         {/* Employee Route */}
-        <Route path="" element={<EmployeeLogin />} />
+        <Route path="/" element={<EmployeeLogin />} />
         <Route path="/Dashboard" element={<Dashboard />} />
         <Route path="/EmployeeLogin" element={<EmployeeLogin />} />
         <Route path="/Sidebar" element={<Sidebar />} />
