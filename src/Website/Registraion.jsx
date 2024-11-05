@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEdit, faTrash } from "@fortawesome/free-solid-svg-icons";
 import Swal from "sweetalert2";
 import './Registraion.css';
-import Sidebar from "./Sidebar";
+import Sidebar from "./Sidebar_A";
 
 function Registraion() {
     const [employees, setEmployees] = useState([]);
@@ -182,7 +182,9 @@ function Registraion() {
                                 required
                             />
                         </label>
+
                         <label>
+                            
                             Date of Joining:
                             <input
                                 type="date"

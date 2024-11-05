@@ -37,7 +37,7 @@
 
 import React, { useState } from 'react';
 import './FeedbackPage.css';
-import Sidebar from "./Sidebar";
+import Sidebar from "./Sidebar_A";
 import Nav from "./Nav";
 
 const A_feedback = () => {
@@ -63,11 +63,11 @@ const A_feedback = () => {
       <div className="wrapper">
         <Sidebar />
         
-        <div className="review-feedback-page" id="unique-review-feedback-page">
+        <div className="A-review-feedback-page" id="unique-review-feedback-page">
           <h1 id="unique-feedback-title">Employee Feedback</h1>
           <form onSubmit={handleSubmit}>
             <div className="form-group" id="unique-colleague-feedback">
-              <label htmlFor="colleagueFeedback">Feedback for Colleagues:</label>
+              <label htmlFor="colleagueFeedback" className='A-feedlabel'>Feedback for Colleagues:</label>
               <textarea
                 id="colleagueFeedback"
                 value={colleagueFeedback}
@@ -78,7 +78,7 @@ const A_feedback = () => {
             </div>
 
             <div className="form-group" id="unique-manager-feedback">
-              <label htmlFor="managerFeedback">Feedback for Manager:</label>
+              <label htmlFor="managerFeedback" className='A-feedlabel'>Feedback for Manager:</label>
               <textarea
                 id="managerFeedback"
                 value={managerFeedback}
@@ -89,7 +89,7 @@ const A_feedback = () => {
             </div>
 
             <div className="form-group" id="unique-direct-reports-feedback">
-              <label htmlFor="directReportsFeedback">Feedback for Direct Reports:</label>
+              <label htmlFor="directReportsFeedback" className='A-feedlabel'>Feedback for Direct Reports:</label>
               <textarea
                 id="directReportsFeedback"
                 value={directReportsFeedback}
@@ -100,18 +100,20 @@ const A_feedback = () => {
             </div>
 
             <div className="form-group" id="unique-anonymous-checkbox">
-              <label>
+              <label className='A-feedlabel' id='A-checkbox-feedback' >
                 <input
+                
                   type="checkbox"
                   checked={anonymous}
                   onChange={(e) => setAnonymous(e.target.checked)}
+                  className='Acheckbox'
                 />
                 Submit anonymously
               </label>
             </div>
 
             <div className="form-group" id="unique-overall-review">
-              <label htmlFor="overallReview">Overall Review:</label>
+              <label htmlFor="overallReview" className='A-feedlabel'>Overall Review:</label>
               <textarea
                 id="overallReview"
                 value={overallReview}
