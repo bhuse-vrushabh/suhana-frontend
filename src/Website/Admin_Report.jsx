@@ -69,7 +69,7 @@
 
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import Sidebar from "./Sidebar";
+import Sidebar from "./Sidebar_A";
 import Nav from "./Nav";
 import { Line, Bar, Doughnut } from 'react-chartjs-2'; // Import chart components
 import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, BarElement, Title, Tooltip, Legend, ArcElement } from 'chart.js';

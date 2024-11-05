@@ -86,7 +86,7 @@ margin-left: 60px;  /* Adds space around the content */
 }
 
 /* Container for charts */
-.chart-container {
+.chart-container-emp {
   margin-top: 40px; /* Space above the charts */
   display: flex;
   margin-bottom: 40px;

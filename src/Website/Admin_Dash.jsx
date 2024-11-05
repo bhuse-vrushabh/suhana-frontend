@@ -157,7 +157,7 @@ import {
   Legend,
   ResponsiveContainer,
 } from "recharts";
-import Sidebar from "./Sidebar"; // Your sidebar component
+import Sidebar from "./Sidebar_A"; // Your sidebar component
 import { FaUsers, FaUserClock, FaUserCheck, FaPercent } from 'react-icons/fa'; // Import icons
 import './Admin_Dash.css'; // Your custom CSS
 import att from './Assets/attendance_overviewdash.svg'
@@ -360,7 +360,7 @@ const Admin_Dash = () => {
 
   return (
     <div className="admin-dashboard">
-      <div className="dashboard-wrapper">
+      <div className="A_dashboard-wrapper">
         <Sidebar />
         <div className="admin-content p-3">
           <div className="text-center">
@@ -368,15 +368,15 @@ const Admin_Dash = () => {
           </div>
 
           {/* KPI Cards */}
-          <div className="kpi-cards-container"> {/* Use CSS grid to align cards in one row */}
+          <div className="A_kpi-cards-container"> {/* Use CSS grid to align cards in one row */}
             {kpiData.map((data, index) => (
-              <div key={index} className={`kpi-card-item ${data.className}`}> {/* Unique class name for card */}
+              <div key={index} className={`A_kpi-card-item ${data.className}`}> {/* Unique class name for card */}
                 <div
-                  className={`kpi-card ${data.className}`}
+                  className={`A_kpi-card ${data.className}`}
                   onClick={() => setActiveChart(data.chart)} // Click handler to set active chart
                   style={{ background: data.backgroundColor }} // Use linear gradient background
                 >
-                  <div className="card-content">
+                  <div className="card-content-A">
                     {data.icon}
                     <h3>{data.label}</h3>
                     <p>{data.value}</p>
@@ -388,9 +388,9 @@ const Admin_Dash = () => {
           </div>
 
           {/* Button Container */}
-          <div className="button-container text-center mb-3">
-            <button onClick={downloadPDF} className="btn-download">Download as PDF</button>
-            <button onClick={downloadExcel} className="btn-download">Download as Excel</button>
+          <div className="A_button-container text-center mb-3">
+            <button onClick={downloadPDF} className="A_btn-download">Download as PDF</button>
+            <button onClick={downloadExcel} className="A_btn-download">Download as Excel</button>
           </div>
 
           {/* Chart Display */}

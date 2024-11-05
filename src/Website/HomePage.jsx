@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import './HomePage.css';
-import Sidebar from "./Sidebar";
+import Sidebar from "./Sidebar_A";
 import { FaUsers, FaUserCheck, FaUserTimes } from 'react-icons/fa';
 import total_employee from './homelog/totalemp.svg'
 import active_employee from './homelog/activeemp.svg'

@@ -92,7 +92,7 @@ import { Routes, Route, useLocation } from 'react-router-dom';
 
 // Website imports
 import AdminLogin from './Website/AdminLogin';
-import Sidebar from './Website/Sidebar';
+import Sidebar from './Website/Sidebar_A';
 import Nav from './Website/Nav';
 import Admin_attendance from './Website/Admin_attendance';
 import Admin_Report from './Website/Admin_Report';
