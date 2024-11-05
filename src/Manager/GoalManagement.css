@@ -1,0 +1,174 @@
+.goal-management {
+  margin: 20px;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Form Title */
+.form-title {
+  text-align: center; /* Centered titles */
+  margin-bottom: 20px; /* Space below titles */
+  font-size: 24px; /* Title font size */
+  color: #333; /* Darker text color */
+}
+
+.goal-form-m {
+  background-color: #fff;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* Form Rows */
+.form-row-m {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 15px;
+}
+
+.form-group-m {
+  flex: 1;
+  margin-right: 10px;
+}
+
+.form-group-m:last-child {
+  margin-right: 0;
+}
+
+label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+input[type="text"],
+input[type="number"],
+input[type="date"],
+select {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  transition: border 0.3s;
+}
+
+input[type="text"]:focus,
+input[type="number"]:focus,
+input[type="date"]:focus,
+select:focus {
+  border: 1px solid #007bff;
+  outline: none;
+}
+
+/* Button Group */
+.button-group-m {
+  text-align: center;
+}
+
+.goal-submit-btn-m {
+  background: #D5661A;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  padding: 10px 15px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s;
+}
+
+/* Goals Table */
+.goals-table-section-m {
+  margin-top: 20px;
+}
+
+.goals-table-m {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+  background-color: #fff;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.goals-table-m th,
+.goals-table-m td {
+  padding: 12px;
+  border: 1px solid #ddd;
+  text-align: left;
+}
+
+.goals-table-m th {
+  background-color: red;
+}
+
+.actions-cell-m {
+  display: flex;
+  gap: 10px;
+}
+
+.edit-btn-m,
+.delete-btn-m {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: black;
+}
+
+.error-message {
+  color: red;
+  font-size: 14px;
+  margin-top: 10px;
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+  .form-row-m {
+    flex-direction: column;
+  }
+
+  .form-group-m {
+    margin-right: 0;
+    margin-bottom: 15px;
+  }
+
+  .goal-submit-btn-m {
+    width: 100%;
+  }
+
+  .goals-table-m th,
+  .goals-table-m td {
+    font-size: 14px;
+  }
+
+  .actions-cell-m {
+    flex-direction: column;
+    gap: 5px;
+  }
+}
+
+@media (max-width: 480px) {
+  .form-title {
+    font-size: 20px;
+  }
+
+  .goal-form-m {
+    padding: 15px;
+  }
+
+  .goal-submit-btn-m {
+    font-size: 14px;
+  }
+
+  .goals-table-m th,
+  .goals-table-m td {
+    font-size: 12px;
+    padding: 10px;
+  }
+
+  .goal-management {
+    margin: 10px;
+    padding: 10px;
+  }
+}

@@ -66,8 +66,8 @@ const A_feedback = () => {
         <div className="A-review-feedback-page" id="unique-review-feedback-page">
           <h1 id="unique-feedback-title">Employee Feedback</h1>
           <form onSubmit={handleSubmit}>
-            <div className="form-group" id="unique-colleague-feedback">
-              <label htmlFor="colleagueFeedback" className='A-feedlabel'>Feedback for Colleagues:</label>
+            <div className="form-group_A" id="unique-colleague-feedback">
+              <label htmlFor="colleagueFeedback">Feedback for Colleagues:</label>
               <textarea
                 id="colleagueFeedback"
                 value={colleagueFeedback}
@@ -77,8 +77,8 @@ const A_feedback = () => {
               />
             </div>
 
-            <div className="form-group" id="unique-manager-feedback">
-              <label htmlFor="managerFeedback" className='A-feedlabel'>Feedback for Manager:</label>
+            <div className="form-group_A" id="unique-manager-feedback">
+              <label htmlFor="managerFeedback">Feedback for Manager:</label>
               <textarea
                 id="managerFeedback"
                 value={managerFeedback}
@@ -88,8 +88,8 @@ const A_feedback = () => {
               />
             </div>
 
-            <div className="form-group" id="unique-direct-reports-feedback">
-              <label htmlFor="directReportsFeedback" className='A-feedlabel'>Feedback for Direct Reports:</label>
+            <div className="form-group_A" id="unique-direct-reports-feedback">
+              <label htmlFor="directReportsFeedback">Feedback for Direct Reports:</label>
               <textarea
                 id="directReportsFeedback"
                 value={directReportsFeedback}
@@ -99,8 +99,8 @@ const A_feedback = () => {
               />
             </div>
 
-            <div className="form-group" id="unique-anonymous-checkbox">
-              <label className='A-feedlabel' id='A-checkbox-feedback' >
+            <div className="form-group_A" id="unique-anonymous-checkbox">
+              <label>
                 <input
                 
                   type="checkbox"
@@ -112,8 +112,8 @@ const A_feedback = () => {
               </label>
             </div>
 
-            <div className="form-group" id="unique-overall-review">
-              <label htmlFor="overallReview" className='A-feedlabel'>Overall Review:</label>
+            <div className="form-group_A" id="unique-overall-review">
+              <label htmlFor="overallReview">Overall Review:</label>
               <textarea
                 id="overallReview"
                 value={overallReview}

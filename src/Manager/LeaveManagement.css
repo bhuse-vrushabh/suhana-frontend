@@ -1,0 +1,125 @@
+/* Global Styles */
+/* body {
+    display: flex; */
+    /* justify-content: center;  
+    align-items: flex-start;    */
+    /* min-height: 100vh;         
+    margin: 0;                
+    background-color: #f8f8f8; 
+    padding: 20px;           
+    box-sizing: border-box;    
+} */
+
+/* Leave Management Section */
+.leave-management-section {
+    background-color: white;
+    color: black;
+    padding: 30px;
+    border: 1px solid #000000; /* Black border */
+    border-radius: 10px;       /* Slightly larger border radius */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Soft shadow */
+    margin: 20px;
+    width: 100%;               /* Full width by default */
+    max-width: 550px;          /* Max width for larger screens */
+    box-sizing: border-box;     /* Ensure padding is included in width/height calculations */
+}
+
+.leave-management-section h2 {
+    color: #ff0000;            /* Red for heading */
+    text-align: center;        /* Center align the heading */
+    margin-bottom: 20px;       /* Space below heading */
+}
+
+.leave-management-section table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;       /* Space below the table */
+}
+
+.leave-management-section th,
+.leave-management-section td {
+    border: 1px solid #000000; /* Black borders */
+    padding: 10px;
+    text-align: left;
+}
+
+.leave-management-section th {
+    background-color: #ffcccc; /* Light red for header background */
+}
+
+/* Responsive Button */
+.leave-management-section button {
+    background-color: #ff0000; /* Red for button */
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;         /* Bold text */
+    transition: background-color 0.3s; /* Smooth transition */
+    width: 100%;               /* Full width button */
+    margin-top: 10px;          /* Space above button */
+}
+
+/* .leave-management-section button:hover {
+    background-color: #cc0000; /* Darker red on hover */
+ */
+
+/* Responsive Form Elements */
+.leave-management-section select,
+.leave-management-section input,
+.leave-management-section textarea {
+    width: calc(100% - 20px);  /* Adjust width for padding */
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #000000; /* Black borders */
+    border-radius: 5px;
+    transition: border-color 0.3s; /* Smooth transition */
+}
+
+.leave-management-section input,
+.leave-management-section textarea {
+    box-sizing: border-box; /* Include padding and border in the element's total width and height */
+}
+
+.leave-management-section select:focus,
+.leave-management-section input:focus,
+.leave-management-section textarea:focus {
+    outline: none;
+    border-color: #333333; /* Darker black on focus */
+}
+
+/* Placeholder Styling for Accessibility */
+.leave-management-section input::placeholder,
+.leave-management-section textarea::placeholder {
+    color: #999;            /* Light gray for placeholder text */
+}
+
+/* Custom Dropdown Arrow */
+.leave-management-section select {
+    appearance: none;       /* Remove default arrow for a cleaner look */
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 10 10"><polygon points="0,0 5,5 10,0" fill="%23000000"/></svg>'); /* Custom black arrow */
+    background-repeat: no-repeat;
+    background-position: right 10px center; /* Position the arrow */
+    background-size: 10px; /* Size of the arrow */
+}
+
+/* Responsive Layout for Small Screens */
+@media (max-width: 768px) {
+    .leave-management-section {
+        padding: 20px;
+        width: 100%;         /* Make the form take the full width on smaller screens */
+        margin: 10px;        /* Smaller margin on mobile */
+    }
+
+    body {
+        align-items: flex-start; /* Align content to the top for smaller screens */
+        padding: 10px;           /* Adjust padding on smaller screens */
+    }
+}
+
+@media (max-width: 480px) {
+    .leave-management-section {
+        padding: 15px;           /* Reduce padding on very small screens */
+    }
+}

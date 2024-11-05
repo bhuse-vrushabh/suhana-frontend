@@ -1,0 +1,149 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
+::after,
+::before {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+a {
+    text-decoration: none;
+}
+
+li {
+    list-style: none;
+}
+
+h1 {
+    font-weight: 600;
+    font-size: 1.5rem;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+/* Wrapper layout for sidebar and main content */
+.wrapper {
+    display: flex;
+    flex-direction: row;
+    min-height: 100vh;
+}
+
+/* Main content styles */
+.main {
+    width: 100%;
+    background: #FEFAEE;
+    
+    padding: 20px;
+    transition: all 0.35s ease-in-out;
+    overflow-y: hidden;
+    margin-top: 76px;
+ 
+}
+
+/* Sidebar container styling */
+#sidebar_M {
+    width:105px;
+    background-color: #D25E12; /* Orange background */
+  
+    padding: 15px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px; /* Space between items */
+    border: 2px solid #e07a5f; /* Border with a matching tone */
+    box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.1); 
+    margin-top: -5px;
+    position: sticky;
+    border-radius: 15px; /* Add rounded corners */
+   
+    
+}
+.sidebar-nav_M {
+    padding: 2rem 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+}
+  
+  /* Sidebar item - icon in box */
+  .sidebar-item {
+    margin-bottom: 20px;
+    text-align: center;
+    cursor: pointer;
+  }
+  
+  .sidebar-link {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-decoration: none;
+    color: white; /* White text */
+  }
+  
+  /* Icon style */
+  .icon {
+    font-size: 24px;
+    
+ /* Brownish box for icon */
+    padding: 15px;
+    border-radius: 12px; /* Rounded corners for the icon box */
+    width: 20px;
+    height: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white; /* White icon color */
+  }
+  
+  /* Text below the icon */
+  .icon-text {
+    margin-top: 8px;
+    font-size: 12px;
+    color: white; /* White text */
+    margin-top: 1%;
+  }
+  
+  /* Hover effect for icon */
+  /* .sidebar-item:hover .icon {
+    background-color: #ff7f50; /* Change background color on hover */
+   */
+  
+  .sidebar-item:hover .icon-text {
+    color: #fff; /* Text hover effect */
+  }
+  
+@media (max-width: 768px) {
+    .wrapper {
+        flex-direction: column;
+    }
+
+    #sidebar {
+        width: 80px;
+        margin-left: -3%;
+        margin-top: -23px;
+    }
+
+    #sidebar.expand {
+        width: 200px;
+    }
+
+    .sidebar-content, .sidebar-nav a {
+        font-size: 0.8rem;
+    }
+
+    .container {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .schedules, .departments, .employee, .userandmembers {
+        flex: none;
+        width: 100%;
+    }
+}
