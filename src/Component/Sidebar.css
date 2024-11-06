@@ -251,13 +251,14 @@ body {
 }
 
 a.sidebar-link {
-    padding: 0.625rem 1.625rem; /* Padding for sidebar links */
-    color: #FFF; /* Link color */
-    display: block; /* Block display */
-    font-size: 0.9rem; /* Font size for links */
-    white-space: nowrap; /* Prevent text wrapping */
-    border-left: 3px solid transparent; /* Left border for active link */
-    transition: all 0.2s ease; /* Smooth transition */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    text-decoration: none;
+    color: #FFF;
+    padding: 0px 0;
 }
 
 .sidebar-link i {

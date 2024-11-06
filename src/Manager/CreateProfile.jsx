@@ -4,7 +4,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEdit, faTrash } from "@fortawesome/free-solid-svg-icons";
 import Swal from "sweetalert2";
 import Sidebarr from "./Sidebarr";
-import Nav from "./Nav";
+import Nav_M from "./Nav_M";
+
 
 const CreateProfile = () => {
   const [employees, setEmployees] = useState([]);
@@ -90,7 +91,7 @@ const CreateProfile = () => {
     <div className="main-wrapper">
       <Sidebarr />
       <div className="main-wrapper_n">
-        <Nav />
+        < Nav_M/>
 
         <div className="employee-form-container">
           <h2>Employee Profile</h2>

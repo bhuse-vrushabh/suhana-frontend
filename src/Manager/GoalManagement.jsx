@@ -2,11 +2,12 @@ import React, { useState } from 'react';
 import './GoalManagement.css';
 import './Sidebarr.css';
 import Sidebarr from './Sidebarr';
-import Nav from './Nav';
+
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEdit, faTrash } from '@fortawesome/free-solid-svg-icons';
 import Swal from 'sweetalert2'; // Import SweetAlert2
 import axios from 'axios';
+import Nav_M from './Nav_M';
 
 const GoalManagement = () => {
   const [formData, setFormData] = useState({
@@ -41,7 +42,37 @@ const GoalManagement = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const today = new Date();
+    today.setHours(0, 0, 0, 0); // Set to start of today to compare dates accurately
   
+    // Validate weightage
+    if (isNaN(formData.weightage) || formData.weightage <= 0 || formData.weightage > 10) {
+      setError("Weightage must be a number between 1 and 10.");
+      return;
+    }
+  
+    // Validate start date to be today or later
+    if (formData.startDate) {
+      const start = new Date(formData.startDate);
+      if (start < today) {
+        setError("Start Date cannot be in the past.");
+        return;
+      }
+    }
+  
+    // Validate that end date is after start date
+    if (formData.startDate && formData.endDate) {
+      const start = new Date(formData.startDate);
+      const end = new Date(formData.endDate);
+      if (end < start) {
+        setError("End Date should be later than Start Date.");
+        return;
+      }
+    }
+  
+    setError(""); // Clear errors if all validations pass
+  
+
     const formattedData = {
       employee: formData.employee,
       description: formData.description,
@@ -144,7 +175,7 @@ const GoalManagement = () => {
       <div className="main-wrapper">
         <Sidebarr />
         <div className="main-wrapper_n">
-          <Nav />
+          <Nav_M/>
           <div>
             <h2 className="form-title">{isEditing ? 'Edit Employee Task' : 'Employee Task'}</h2>
             <form className="goal-form-m" onSubmit={handleSubmit}>

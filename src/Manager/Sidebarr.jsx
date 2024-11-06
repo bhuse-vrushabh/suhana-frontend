@@ -71,15 +71,15 @@ const Sidebarr = () => {
       </Link> */}
 
       {/* Dashboard */}
-      <Link to="/Dashboard">
+      <Link to="/Manager_Dashboard">
         <div
-          className="sidebar-item"
-          onMouseEnter={() => setHoveredItem("Dashboard")}
+          className="sidebar-item_M"
+          onMouseEnter={() => setHoveredItem("Manager_Dashboard")}
           onMouseLeave={() => setHoveredItem(null)}
         >
-          <a href="#" className="sidebar-link">
-            <FontAwesomeIcon icon={faGauge} className="icon" />
-            <span className="icon-text">Dashboard</span>
+          <a href="#" className="sidebar-link_M">
+            <FontAwesomeIcon icon={faGauge} className="icon_M" />
+            <span className="icon-text_M">Dashboard</span>
           </a>
         </div>
       </Link>
@@ -100,13 +100,13 @@ const Sidebarr = () => {
       {/* Task (Goal Management) */}
       <Link to="/GoalManagement">
         <div
-          className="sidebar-item"
+          className="sidebar-item_M"
           onMouseEnter={() => setHoveredItem("GoalManagement")}
           onMouseLeave={() => setHoveredItem(null)}
         >
-          <a href="#" className="sidebar-link">
-            <FontAwesomeIcon icon={faTasks} className="icon" />
-            <span className="icon-text">Task</span>
+          <a href="#" className="sidebar-link_M">
+            <FontAwesomeIcon icon={faTasks} className="icon_M" />
+            <span className="icon-text_M">Task</span>
           </a>
         </div>
       </Link>
@@ -114,13 +114,13 @@ const Sidebarr = () => {
       {/* Manager Evaluation */}
       <Link to="/manager-evaluation">
         <div
-          className="sidebar-item"
+          className="sidebar-item_M"
           onMouseEnter={() => setHoveredItem("ManagerEvaluation")}
           onMouseLeave={() => setHoveredItem(null)}
         >
-          <a href="#" className="sidebar-link">
-            <FontAwesomeIcon icon={faCheckCircle} className="icon" />
-            <span className="icon-text"> Evaluation</span>
+          <a href="#" className="sidebar-link_M">
+            <FontAwesomeIcon icon={faCheckCircle} className="icon_M" />
+            <span className="icon-text_M"> Evaluation</span>
           </a>
         </div>
       </Link>
@@ -128,13 +128,13 @@ const Sidebarr = () => {
       {/* Training */}
       <Link to="/Training">
         <div
-          className="sidebar-item"
+          className="sidebar-item_M"
           onMouseEnter={() => setHoveredItem("Training")}
           onMouseLeave={() => setHoveredItem(null)}
         >
-          <a href="#" className="sidebar-link">
-            <FontAwesomeIcon icon={faBook} className="icon" />
-            <span className="icon-text">Training</span>
+          <a href="#" className="sidebar-link_M">
+            <FontAwesomeIcon icon={faBook} className="icon_M" />
+            <span className="icon-text_M">Training</span>
           </a>
         </div>
       </Link>
@@ -142,13 +142,13 @@ const Sidebarr = () => {
       {/* Feedback */}
       <Link to="/M_feedback">
         <div
-          className="sidebar-item"
+          className="sidebar-item_M"
           onMouseEnter={() => setHoveredItem("M_Feedback")}
           onMouseLeave={() => setHoveredItem(null)}
         >
-          <a href="#" className="sidebar-link">
-            <FontAwesomeIcon icon={faCommentDots } className="icon" />
-            <span className="icon-text">Feedback</span>
+          <a href="#" className="sidebar-link_M">
+            <FontAwesomeIcon icon={faCommentDots } className="icon_M" />
+            <span className="icon-text_M">Feedback</span>
           </a>
         </div>
       </Link>

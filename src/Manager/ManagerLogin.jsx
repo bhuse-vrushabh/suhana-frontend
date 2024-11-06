@@ -48,7 +48,7 @@ const ManagerLogin = () => {
           localStorage.setItem('role', res.data.role);
  
           setTimeout(() => {
-            navigate("/Manager_Dashboard"); // Navigate to the admin dashboard
+            navigate("/"); // Navigate to the admin dashboard
           }, 1500); // Wait for the alert to disappear before redirecting
         } else {
           // If tokens are missing, trigger error

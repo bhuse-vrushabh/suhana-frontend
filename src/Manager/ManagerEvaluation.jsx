@@ -4,11 +4,12 @@ import "./ManagerEvaluation.css";
 import "./Sidebarr.css";
 import Sidebarr from "./Sidebarr";
 
-import "./Nav.css";
+
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEdit, faTrash } from "@fortawesome/free-solid-svg-icons";
 import Swal from 'sweetalert2';
-import Nav from "./Nav";
+import Nav_M from "./Nav_M";
+
 
 const ManagerEvaluation = () => {
   const employeeList = [
@@ -210,13 +211,13 @@ const ManagerEvaluation = () => {
     <div className="main-wrapper">
       <Sidebarr />
       <div className="main-wrapper_n">
-     <Nav/>
+     <Nav_M/>
 
         <div>
           <div className="card-header">
             <h2>{editMode ? "Edit Evaluation" : "Add Evaluation"}</h2>
           </div>
-          <div className="card">
+          <div className="card-M">
             <form onSubmit={addOrUpdateEmployee}>
               <div className="form-row_m three-column">
                 <div className="form-group_m">
