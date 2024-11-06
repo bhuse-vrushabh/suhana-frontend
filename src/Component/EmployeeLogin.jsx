@@ -195,7 +195,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import './EmployeeLogin.css';
-import Navbar from "./Navbar";
+// import Navbar from "./Navbar";
 import axios from 'axios';
 
 const EmployeeLogin = () => {
@@ -331,7 +331,7 @@ const EmployeeLogin = () => {
     <div>
       <div className="container-fluid">
         <div className="row Profile_info_row mb-1"></div>
-      <Navbar />
+      {/* <Navbar /> */}
               </div>
       <div className="wrapper">
         <div className="auth-wrapper">

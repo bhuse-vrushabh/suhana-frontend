@@ -142,7 +142,7 @@
 
 
 import React, { useState } from 'react';
-import './Nav.css';
+import "./Nav_M.css";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBell, faUser, faHome, faSignOutAlt, faCog ,faUserCircle} from '@fortawesome/free-solid-svg-icons';
 import logo from "./logo.jpeg"// Ensure this path is correct
@@ -151,7 +151,7 @@ import Swal from 'sweetalert2';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
-function Nav({ user }) {
+function Nav_M({ user }) {
   const [isNotificationOpen, setIsNotificationOpen] = useState(false);
   const [notifications, setNotifications] = useState([]);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -223,22 +223,22 @@ function Nav({ user }) {
   };
 
   return (
-    <nav className="navbar">
-      <div className="nav-icons">
-        <div className='nav_logo'>
+    <nav className="navbar-M">
+      <div className="nav-icons-M">
+        <div className='nav_logo-M'>
           <img src={logo} alt="Suhana logo" />
         </div>
 
-        <div className='notification_user'>
+        <div className='notification_user-M'>
           {/* Notification button */}
-          <div className="notification-wrapper">
-            <button className="notification-btn" onClick={toggleNotification}>
+          <div className="notification-wrapper-M">
+            <button className="notification-btn-M" onClick={toggleNotification}>
               {/* <FontAwesomeIcon icon={faBell} /> */}
               <img src={bell} alt="" />
               {/* <span>Notifications</span> */}
             </button>
             {isNotificationOpen && (
-              <div className="notification-panel">
+              <div className="notification-panel-M">
                 <h4>Notifications</h4>
                 <ul>
                   {notifications.length > 0 ? (
@@ -254,13 +254,13 @@ function Nav({ user }) {
           </div>
 
           {/* User Dropdown */}
-          <div className="dropdown-wrapper">
-          <button className="user-btn" onClick={toggleDropdown}>
+          <div className="dropdown-wrapper-M">
+          <button className="user-btn-M" onClick={toggleDropdown}>
               {getUserIcon(userRole)}
               <div>{userName}</div>
             </button>
             {isDropdownOpen && (
-              <div className="dropdown-menu">
+              <div className="dropdown-menu-M">
                    <ul>
                   {userRole === 'Manager' && (
                     <li>
@@ -287,5 +287,5 @@ function Nav({ user }) {
   );
 }
 
-export default Nav;
+export default Nav_M;
 

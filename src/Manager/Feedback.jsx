@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import "./Feedback.css";
 import Sidebarr from './Sidebarr';
-import Nav from './Nav';
+import Nav_M from './Nav_M';
+
 
 const M_feedback = () => {
   const [feedbackData, setFeedbackData] = useState([]);
@@ -75,14 +76,14 @@ const M_feedback = () => {
       <div className="main-wrapper">
         <Sidebarr />
         <div className="main-wrapper_n">
-          <Nav />
-          <div className="admin-head mt-4" id="Admin_attendance">
-            <div className="Admin_attendance">
-              <h2 className="admin-management-title">Feedback</h2>
+          <Nav_M/>
+          <div className="manager-head mt-4" id="manager_attendance">
+            <div className="manager_attendance">
+              <h2 className="manager-management-title">Feedback</h2>
 
-              <div className="admin-feedback-section mt-4">
+              <div className="manager-feedback-section mt-4">
                 <h3 className="text-center mb-4 text-secondary">Training Feedback Details</h3>
-                <div className="admin-table-container">
+                <div className="manager-table-container">
                   {currentItems.length === 0 ? (
                     <p>No feedback data available</p>
                   ) : (
@@ -124,7 +125,7 @@ const M_feedback = () => {
                 </button>
               </div>
 
-              <div className="admin-record-count mt-4 text-sm text-center text-muted">
+              <div className="manager-record-count mt-4 text-sm text-center text-muted">
                 Showing {currentItems.length} out of {feedbackData.length} training feedback entries.
               </div>
             </div>

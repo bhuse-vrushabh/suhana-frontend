@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import './ProfilePage.css'; // Import CSS for styling
-import Nav from './Nav';
+
 import Sidebarr from "./Sidebarr";
 import './Sidebarr.css';
-import './Nav.css';
+
 
 const ProfilePage = () => {
   const [managerData, setManagerData] = useState(null);
@@ -59,7 +59,7 @@ const ProfilePage = () => {
     <div className="main-wrapper">
       <Sidebarr />
       <div className="main-wrapper_n">
-        <Nav />
+    
     <div className="manager-profile">
       <h2>Manager Profile</h2>
 

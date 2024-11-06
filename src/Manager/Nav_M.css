@@ -12,13 +12,13 @@ button:hover {
 } */
 
 
-.nav_logo img{
+.nav_logo-M img{
   height:60px; 
   margin-bottom: 20px;
   width: 100%;
 }
 
-.nav_logo{
+.nav_logo-M{
   display: flex;
   justify-content: left;
   /* margin-right: 1150px; */
@@ -36,7 +36,7 @@ button:hover {
 } */
 
 /* Basic styles for the navbar */
-.navbar {
+.navbar-M {
   width: 100%;
   padding: 5px 20px;
   background-color: #FFFFFF;
@@ -52,7 +52,7 @@ button:hover {
 }
  
 /* Container for icons (bell and user) */
-.nav-icons {
+.nav-icons-M {
   display: flex;
   align-items: center;
  
@@ -61,17 +61,17 @@ button:hover {
 
   
 }
-.notification_user{
+.notification_user-M{
   display: flex; 
   gap: 20px;
 }
  
 /* Notification button and panel */
-.notification-wrapper {
+.notification-wrapper-M {
   position: relative;
 }
  
-.notification-btn {
+.notification-btn-M {
   /* background-color: #dc3545;   here change the notificaton backhround colore */
   background-color: transparent; /* Remove background color */
   height: 0;
@@ -86,17 +86,17 @@ button:hover {
   
 }
 
-.notification-btn img{
+.notification-btn-M img{
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.5); /* Adds a subtle shadow around the image */
   border-radius: 35px; /* Optional: Adds slight rounding to the corners of the image */
 
 }
  
-.notification-btn span {
+.notification-btn-M span {
   margin-left: 8px;
 }
  
-.notification-panel {
+.notification-panel-M {
   position: absolute;
   top: 40px;
   right: 0;
@@ -108,31 +108,31 @@ button:hover {
   z-index: 1000;
 }
  
-.notification-panel h4 {
+.notification-panel-M h4 {
   margin: 0 0 10px 0;
   font-size: 16px;
 }
  
-.notification-panel ul {
+.notification-panel-M ul {
   list-style-type: none;
   padding: 0;
   margin: 0;
 }
  
-.notification-panel ul li {
+.notification-panel-M ul li {
   padding: 5px 0;
   font-size: 14px;
   border-bottom: 1px solid #ddd;
 }
  
 /* User dropdown button and menu */
-.dropdown-wrapper {
+.dropdown-wrapper-M {
   position: relative;
   /* box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.6);  */
 }
 
  
-.user-btn {
+.user-btn-M {
   background-color: #b8942a;
   color: black;
   border: none;
@@ -146,7 +146,7 @@ button:hover {
   margin-top: -15px;
 }
  
-.dropdown-menu {
+.dropdown-menu-M {
   position: absolute;
   top: 40px;
   right: 0;
@@ -158,18 +158,18 @@ button:hover {
   z-index: 1000;
 }
  
-.dropdown-menu ul {
+.dropdown-menu-M ul {
   list-style-type: none;
   padding: 0;
   margin: 0;
 }
  
-.dropdown-menu ul li {
+.dropdown-menu-M ul li {
   padding: 5px 0;
   font-size: 14px;
 }
  
-.dropdown-menu ul li a {
+.dropdown-menu-M ul li a {
   text-decoration: none;
   
 }
@@ -179,12 +179,12 @@ button:hover {
 
 @media (max-width: 768px){
 
-  .nav_logo img{
+  .nav_logo-M img{
     height:60px; 
    width: 50px;
   }
   
-  .nav_logo{
+  .nav_logo-M{
    
     justify-content: left;
     /* margin-right: 1150px; */
@@ -193,7 +193,7 @@ button:hover {
     
   }
   
-  
+}
   
   /* .img{
     height:60px;
@@ -202,7 +202,7 @@ button:hover {
   } */
   
   /* Basic styles for the navbar */
-  .navbar {
+  /* .navbar {
     width: 100%;
     padding: 2px 20px;
     background-color: #FFFFFF;
@@ -216,7 +216,7 @@ button:hover {
     align-items: center;
   }
    
-  /* Container for icons (bell and user) */
+ 
   .nav-icons {
     display: flex;
     align-items: center;
@@ -225,13 +225,13 @@ button:hover {
     
   }
    
-  /* Notification button and panel */
+  
   .notification-wrapper {
     position: relative;
   }
    
   .notification-btn {
-     /*  here change the notificaton backhround colore*/
+    
     color: white;
     border: none;
     padding: 6px 12px;
@@ -273,10 +273,10 @@ button:hover {
     padding: 5px 0;
     font-size: 14px;
     
-  }
+  } */
    
   /* User dropdown button and menu */
-  .dropdown-wrapper {
+  /* .dropdown-wrapper {
     position: relative;
   }
    
@@ -320,4 +320,4 @@ button:hover {
     color: #333;
   }
  
-}
+} */
