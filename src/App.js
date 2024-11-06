@@ -22,8 +22,6 @@ import Footer from './Website/Admin_footer';
 
 
 import ManagerEvaluation from './Manager/ManagerEvaluation';
-
-
 import GoalManagement from './Manager/GoalManagement';
 import TrainingDevelopmentPage from './Manager/Training';
 // import A_feedback from './components/Feedback';
@@ -44,6 +42,7 @@ import EmployeeProfile from './Component/EmployeeProfile';
 import ReportsAnalytics from './Component/ReportsAnalytics';
 import TrainingAndDevelopment from './Component/TrainingAndDevelopment';
 import Navbar from './Component/Navbar';
+import PersonalDetailsForm from './Component/EMyAccount';
 
 function App() {
   const location = useLocation();
@@ -92,6 +91,7 @@ function App() {
         <Route path="/TrainingAndDevelopment" element={<TrainingAndDevelopment />} />
         <Route path="/ReportsAnalytics" element={<ReportsAnalytics />} />
         <Route path="/Feedback" element={<Feedback />} />
+        <Route path="/PersonalDetailsForm" element={<PersonalDetailsForm/>}/>
       </Routes>
       {!isLoginPage && <Footer />} {/* Only render Footer if it's not the login page */}
     </div>
