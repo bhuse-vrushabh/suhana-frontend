@@ -2,15 +2,14 @@ import React from 'react'
 import './Policies.css'
 import './Sidebarr.css';
 import Sidebarr from './Sidebarr';
-import Nav from './Nav';
-import './Nav';
+
 
 function Policies() {
   return (
     <div className="main-wrapper">
     <Sidebarr />
     <div className="main-wrapper_n">
-    <Nav/>
+    
 
     
       <div className="section policies-section">

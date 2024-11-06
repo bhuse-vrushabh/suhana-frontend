@@ -1,19 +1,12 @@
-.admin-container-fluid {
-  background-color: #f4f6f9;
-}
+
  
-.admin-wrapper {
-  display: flex;
-  flex-direction: row;
-}
- 
-#Admin_attendance {
+#manager_attendance {
   flex-grow: 1;
   padding: 20px;
 }
  
 /* Page title */
-#admin-management-title {
+#manager-management-title {
   font-size: 24px;
   font-weight: bold;
   color: #D5661A;
@@ -114,7 +107,7 @@
   }
 }
  
-#admin-management-title {
+#manager-management-title {
   margin-top: 75px;
   text-align: center; /* Center the text horizontally */
   width: 100%; /* Ensure it takes full width of the container */

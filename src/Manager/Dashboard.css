@@ -15,7 +15,7 @@
   background: #FEFAEE;
 
 }
-.kpi-cards {
+.kpi-cards-M {
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap; /* Cards will wrap on smaller screens */
@@ -25,7 +25,7 @@
 }
 
 /* Individual KPI Card */
-.kpi-card {
+.kpi-card-M {
   background-color: #fff;
   padding: 20px;
   margin: 10px;
@@ -40,21 +40,21 @@
   margin-top: 20px;
 }
 
-.kpi-card:hover {
+.kpi-card-M:hover {
   background: #F6EBC9;
   transform: translateY(-5px); /* Lift effect on hover */
   box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.15); /* Stronger shadow on hover */
 }
 
 /* KPI Value and Label */
-.kpi-value {
+.kpi-value-M {
   font-size: 28px;
   font-weight: bold;
   color: #D5661A;
   margin-bottom: 10px;
 }
 
-.kpi-label {
+.kpi-label-M {
   font-size: 14px;
   color:black;
   font-weight: 500;
@@ -62,7 +62,7 @@
 }
 
 /* KPI Icon Styling */
-.kpi-icon {
+.kpi-icon-M {
   width: 50px;
   height: 50px;
   margin-bottom: 10px;
@@ -72,7 +72,7 @@
 }
 
 /* Chart Section */
-.chart-section {
+.chart-section-M {
   width: 100%;
   max-width: 1200px;
   background-color: #fff;
@@ -82,7 +82,7 @@
   margin-top: 20px;
 }
 
-.chart-section h4 {
+.chart-section-M h4 {
   font-size: 18px;
   color: #444;
   margin-bottom: 20px;
@@ -90,7 +90,7 @@
 }
 
 /* Heatmap Container */
-.heatmap-container {
+.heatmap-container-M {
   padding: 40px;
   margin: 0 auto;
   max-width: 500px;
@@ -101,7 +101,7 @@
 }
 
 /* Heatmap Grid Cell */
-.heatmap-grid-cell {
+.heatmap-grid-cell-M {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -112,7 +112,7 @@
 }
 
 /* Bar Chart Container */
-.bar-chart-container {
+.bar-chart-container-M {
   height: 400px;
   width: 300vuh;
   background: #F6EBC9;
@@ -121,57 +121,57 @@
 /* Mobile Responsiveness */
 @media (max-width: 768px) {
   /* Stack KPI Cards on smaller screens */
-  .kpi-cards {
+  .kpi-cards-M {
     flex-direction: column;
     align-items: center;
   }
 
-  .kpi-card {
+  .kpi-card-M{
     max-width: 100%; /* Cards take full width */
     min-width: 100%;
   }
 
   /* Adjust chart heights for smaller screens */
-  .heatmap-container {
+  .heatmap-container-M {
     max-width: 100%;
     padding: 10px;
   }
 
-  .heatmap-container h4 {
+  .heatmap-container-M h4 {
     font-size: 18px;
   }
 
-  .heatmap-grid-cell {
+  .heatmap-grid-cell-M {
     font-size: 12px;
   }
 
-  .bar-chart-container {
+  .bar-chart-container-M {
     height: 300px;
   }
 
-  .chart-section {
+  .chart-section-M {
     padding: 15px;
   }
 }
 
 @media (max-width: 480px) {
   /* Smaller KPI values on mobile */
-  .kpi-value {
+  .kpi-value-M {
     font-size: 24px;
   }
 
-  .kpi-label {
+  .kpi-label-M {
     font-size: 12px;
   }
 
   /* Smaller chart container on mobile */
-  .heatmap-container,
-  .bar-chart-container {
+  .heatmap-container-M,
+  .bar-chart-container-M {
     height: 250px;
   }
 
   /* Reduce icon size on smaller screens */
-  .kpi-icon {
+  .kpi-icon-M {
     width: 40px;
     height: 40px;
   }

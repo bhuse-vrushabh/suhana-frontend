@@ -23,9 +23,9 @@ li {
     padding: 0;
 } */
 
-body {
+/* body {
     font-family: 'Poppins', sans-serif;
-}
+} */
 
 a {
     text-decoration: none;
@@ -177,11 +177,11 @@ h1 {
     font-size: 1.5rem; /* Base font size for headings */
 }
 
-body {
-    font-family: 'Poppins', sans-serif; /* Set font family */
-    margin: 0; /* Remove body margin */
-    padding: 0; /* Remove body padding */
-}
+/* body {
+    font-family: 'Poppins', sans-serif; 
+    margin: 0; 
+    padding: 0; 
+} */
 
 /* Wrapper layout */
 .wrapper {
@@ -251,13 +251,14 @@ body {
 }
 
 a.sidebar-link {
-    padding: 0.625rem 1.625rem; /* Padding for sidebar links */
-    color: #FFF; /* Link color */
-    display: block; /* Block display */
-    font-size: 0.9rem; /* Font size for links */
-    white-space: nowrap; /* Prevent text wrapping */
-    border-left: 3px solid transparent; /* Left border for active link */
-    transition: all 0.2s ease; /* Smooth transition */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    text-decoration: none;
+    color: #FFF;
+    padding: 0px 0;
 }
 
 .sidebar-link i {

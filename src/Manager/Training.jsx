@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import Sidebarr from './Sidebarr';
-import Nav from './Nav';
+
 import "./Sidebarr";
 import "./Training.css";
 import { faEdit, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Swal from 'sweetalert2';
 import axios from 'axios';
+import Nav_M from './Nav_M';
 
 function TrainingDevelopmentPage() {
     const [programs] = useState([
@@ -220,7 +221,7 @@ function TrainingDevelopmentPage() {
             <div className="main-wrapper">
                 <Sidebarr />
                 <div className="main-wrapper_n">
-                    <Nav />
+                    <Nav_M/>
                     <div>
                         <section id="assign">
                             <h2>Training to Employees</h2>

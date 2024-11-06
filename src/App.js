@@ -42,10 +42,27 @@ import EmployeeProfile from './Component/EmployeeProfile';
 import ReportsAnalytics from './Component/ReportsAnalytics';
 import TrainingAndDevelopment from './Component/TrainingAndDevelopment';
 import Navbar from './Component/Navbar';
+<<<<<<< HEAD
 import PersonalDetailsForm from './Component/EMyAccount';
+=======
+import Sidebarr from './Manager/Sidebarr';
+>>>>>>> 52ea8baeffef6c3ca5e24548de94cf176502d512
 
 function App() {
   const location = useLocation();
+  const adminPaths = [
+    "/Admin_attendance",
+    "/Admin_Report",
+    "/Admin_Dash",
+    "/A_FeedbackForm",
+    "/A_feedback",
+    "/ReviewList",
+    "/Registraion",
+    "/HomePage"
+  ];
+
+   // Check if the current path is an admin page
+   const isAdminPage = adminPaths.includes(location.pathname);
 
   // Check if the current path is the login page
 
@@ -54,7 +71,7 @@ function App() {
 
   return (
     <div>
-      {!isLoginPage && <Nav />} {/* Only render Nav if it's not the login page */}
+          {isAdminPage && <Nav />} {/* Only render Nav if it's an admin page */}
       <Routes>
         <Route path="/AdminLogin" element={<AdminLogin />} />
         <Route path="/Sidebar" element={<Sidebar />} />
@@ -72,7 +89,7 @@ function App() {
         <Route path='/managerlogin' element={<ManagerLogin/>} />
          
           <Route path='/manager-evaluation' element={<ManagerEvaluation />} />
-       
+          <Route path='/Sidebarr' element={<Sidebarr/>}/>
         
           <Route path='/Manager_Dashboard' element={<Manager_Dashboard/>}/>
           <Route path='/GoalManagement' element={<GoalManagement/>}/>
@@ -94,6 +111,7 @@ function App() {
         <Route path="/PersonalDetailsForm" element={<PersonalDetailsForm/>}/>
       </Routes>
       {!isLoginPage && <Footer />} {/* Only render Footer if it's not the login page */}
+      
     </div>
   );
 }

@@ -90,7 +90,7 @@ function Registraion() {
                 <h2>Create Admin Profile</h2>
                 <form onSubmit={handleSubmit} className="employee-form">
                     <div className="form-row">
-                        <label>
+                        {/* <label>
                             Username:
                             <input
                                 type="text"
@@ -99,7 +99,7 @@ function Registraion() {
                                 onChange={handleInputChange}
                                 required
                             />
-                        </label>
+                        </label> */}
                         <label>
                             Email:
                             <input
@@ -110,8 +110,6 @@ function Registraion() {
                                 required
                             />
                         </label>
-                    </div>
-                    <div className="form-row">
                         <label>
                             Password:
                             <input
@@ -122,6 +120,10 @@ function Registraion() {
                                 required
                             />
                         </label>
+                    </div>
+                    <div className="parent_form-row-roll">               
+                     <div className="form-row-roll">
+                      
                         <label>
                             Role:
                             <select
@@ -139,7 +141,9 @@ function Registraion() {
                             </select>
                         </label>
                     </div>
-                    <div className="form-row">
+                    </div>
+
+                    {/* <div className="form-row">
                         <label>
                             Gender:
                             <select
@@ -170,8 +174,8 @@ function Registraion() {
                                 ))}
                             </select>
                         </label>
-                    </div>
-                    <div className="form-row">
+                    </div> */}
+                    {/* <div className="form-row">
                         <label>
                             Position:
                             <input
@@ -195,7 +199,7 @@ function Registraion() {
                                 required
                             />
                         </label>
-                    </div>
+                    </div> */}
                     <button type="submit" className="create-btn">
                         {editIndex !== null ? "Update" : "Create"}
                     </button>

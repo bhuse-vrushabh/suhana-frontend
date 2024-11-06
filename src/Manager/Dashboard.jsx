@@ -14,14 +14,15 @@ import {
 } from 'chart.js';
 import { faChartLine, faUsers, faCheckCircle, faPercent } from '@fortawesome/free-solid-svg-icons'; // FontAwesome icons
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import Nav from './Nav';
+
 import './Dashboard.css';
 import './Sidebarr.css';
-import './Nav.css';
+
 import Teamattendence from "./Teamattendence.png"
 import Performance from "./Performance.png";
 import Rating from "./Rating.png";
 import Training from "./Training.png";
+import Nav_M from './Nav_M';
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
 function  Manager_Dashboard() {
@@ -93,29 +94,29 @@ function  Manager_Dashboard() {
     <div className="main-wrapper">
       <Sidebarr />
       <div className="main-wrapper_n">
-        <Nav />
+        <Nav_M/>
 
-        <div className="kpi-cards">
-          <div className="kpi-card" onClick={() => handleCardClick("attendance")}>
-            <img src={Teamattendence} alt="Attendance Icon" className="kpi-icon" />
-            <div className="kpi-label">Total Attendance</div>
-            <div className="kpi-value">{attendance}%</div>
+        <div className="kpi-cards-M">
+          <div className="kpi-card-M" onClick={() => handleCardClick("attendance")}>
+            <img src={Teamattendence} alt="Attendance Icon" className="kpi-icon-M" />
+            <div className="kpi-label-M">Total Attendance</div>
+            <div className="kpi-value-M">{attendance}%</div>
           </div>
-          <div className="kpi-card" onClick={() => handleCardClick("performance")}>
-            <img src={Performance} alt="Performance Icon" className="kpi-icon" />
-            <div className="kpi-label">Performance Score</div>
-            <div className="kpi-value">{avgPerformance}/5</div>
+          <div className="kpi-card-M" onClick={() => handleCardClick("performance")}>
+            <img src={Performance} alt="Performance Icon" className="kpi-icon-M" />
+            <div className="kpi-label-M">Performance Score</div>
+            <div className="kpi-value-M">{avgPerformance}/5</div>
           </div>
-          <div className="kpi-card" onClick={() => handleCardClick("training")}>
-            <img src={Training} alt="Training Icon" className="kpi-icon" />
-            <div className="kpi-label">Training Completion</div>
-            <div className="kpi-value">{trainingCompletion}%</div>
+          <div className="kpi-card-M" onClick={() => handleCardClick("training")}>
+            <img src={Training} alt="Training Icon" className="kpi-icon-M" />
+            <div className="kpi-label-M">Training Completion</div>
+            <div className="kpi-value-M">{trainingCompletion}%</div>
           </div>
         </div>
 
       <div>
           {activeChart === "attendance" && (
-            <div className="heatmap-container">
+            <div className="heatmap-container-M">
               <h4>Team Attendance Heatmap</h4>
               <HeatMap
                 xLabels={xLabels}
@@ -140,16 +141,16 @@ function  Manager_Dashboard() {
           )}
        </div>
        {activeChart !== "attendance" && (
-          <div className="chart-section">
+          <div className="chart-section-M">
             {activeChart === "performance" && (
-              <div className="bar-chart-container">
+              <div className="bar-chart-container-M">
                 <h4>Performance Rating Distribution</h4>
                 <Bar data={performanceData} options={chartOptions} />
               </div>
             )}
 
             {activeChart === "training" && (
-              <div className="bar-chart-container">
+              <div className="bar-chart-container-M">
                 <h4>Training Compliance Status</h4>
                 <Bar data={complianceData} options={chartOptions} />
               </div>
