@@ -197,32 +197,30 @@ import Swal from "sweetalert2";
 import './EmployeeLogin.css';
 import Navbar from "./Navbar";
 import axios from 'axios';
-
+ 
 const EmployeeLogin = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
-
+ 
   const handleLoginClick = (e) => {
     e.preventDefault();
     setLoading(true);
     setErrorMessage(""); // Clear previous error messages
-
+ 
     const postData = { email, password };
-
+ 
     axios.post(`http://127.0.0.1:8000/api/login/`, postData)
       .then((res) => {
         setLoading(false);
-        // Ensure status is 200 and the required data is present and valid
         if (res.status === 200 && res.data.access && res.data.refresh && res.data.role) {
           const role = res.data.role;
-
-          // Check if the role is a known role before proceeding
+ 
           if (['admin', 'manager', 'employee'].includes(role)) {
             const successMessage = `${role.charAt(0).toUpperCase() + role.slice(1)} login successful!`;
-
+ 
             Swal.fire({
               title: 'Success!',
               text: successMessage,
@@ -230,13 +228,11 @@ const EmployeeLogin = () => {
               timer: 1500,
               showConfirmButton: false
             });
-
-            // Store tokens and role in local storage
+ 
             localStorage.setItem('accessToken', res.data.access);
             localStorage.setItem('refreshToken', res.data.refresh);
             localStorage.setItem('role', role);
-
-            // Role-based redirection
+ 
             setTimeout(() => {
               switch (role) {
                 case 'admin':
@@ -253,11 +249,9 @@ const EmployeeLogin = () => {
               }
             }, 1500);
           } else {
-            // If the role is not valid, treat it as invalid credentials
             handleInvalidCredentials();
           }
         } else {
-          // Missing expected data; treat it as invalid credentials
           handleInvalidCredentials();
         }
       })
@@ -266,7 +260,6 @@ const EmployeeLogin = () => {
         if (error.response && error.response.status === 401) {
           handleInvalidCredentials();
         } else {
-          // Handle other types of errors (e.g., network issues)
           setErrorMessage("Login Failed. Please try again.");
           Swal.fire({
             title: 'Error!',
@@ -278,7 +271,7 @@ const EmployeeLogin = () => {
         }
       });
   };
-
+ 
   const handleInvalidCredentials = () => {
     setErrorMessage("Invalid email or password. Please try again.");
     Swal.fire({
@@ -289,7 +282,7 @@ const EmployeeLogin = () => {
       showConfirmButton: false
     });
   };
-
+ 
   const handleForgotPassword = () => {
     Swal.fire({
       title: 'Forgot Password',
@@ -304,15 +297,18 @@ const EmployeeLogin = () => {
           return false;
         } else {
           return axios.post(`http://127.0.0.1:8000/api/forgot_password/`, { email: inputEmail })
-            .then(() => {
-              Swal.fire({
-                title: 'Success!',
-                text: `Reset password link sent to ${inputEmail}. Please check your inbox.`,
-                icon: 'success',
-                timer: 2000,
-                showConfirmButton: false
-              });
-            })
+            // .then(() => {
+            //   Swal.fire({
+            //     title: 'Success!',
+            //     text: `Reset password link sent to ${inputEmail}. Please check your inbox.`,
+            //     icon: 'success',
+            //     timer: 2000,
+            //     showConfirmButton: false
+            //   })
+              .then(() => {
+                handleOtpAndPasswordReset(inputEmail);
+              })
+           
             .catch(() => {
               Swal.fire({
                 title: 'Error!',
@@ -326,19 +322,81 @@ const EmployeeLogin = () => {
       }
     });
   };
-
+ 
+  const handleOtpAndPasswordReset = (inputEmail) => {
+    Swal.fire({
+      title: 'Enter OTP',
+      input: 'text',
+      inputLabel: 'Please enter the OTP sent to your email',
+      inputPlaceholder: 'OTP',
+      confirmButtonText: 'Verify OTP',
+      showCancelButton: true,
+      preConfirm: (otp) => {
+        if (!otp || otp.length !== 4) { // Example OTP length validation
+          Swal.showValidationMessage('Please enter a valid 6-digit OTP');
+          return false;
+        } else {
+       
+          Swal.fire({
+            title: 'Reset Password',
+            html:
+              `<input type="password" id="newPassword" class="swal2-input" placeholder="New Password">` +
+              `<input type="password" id="confirmPassword" class="swal2-input" placeholder="Confirm Password">`,
+            confirmButtonText: 'Reset Password',
+            preConfirm: () => {
+              const newPassword = Swal.getPopup().querySelector('#newPassword').value;
+              const confirmPassword = Swal.getPopup().querySelector('#confirmPassword').value;
+ 
+              if (!newPassword || !confirmPassword) {
+                Swal.showValidationMessage('Please enter both password fields');
+              } else if (newPassword !== confirmPassword) {
+                Swal.showValidationMessage('Passwords do not match');
+              } else {
+                return axios.post(`http://127.0.0.1:8000/api/reset_password/`, {
+                  
+                    "email":"emp1@tdtl.com",
+                    "new_password":"1234567",
+                    "otp":" "
+                
+                })
+                .then(() => {
+                  Swal.fire({
+                    title: 'Success!',
+                    text: 'Your password has been successfully changed!',
+                    icon: 'success',
+                    timer: 2000,
+                    showConfirmButton: false
+                  });
+                })
+                  .catch(() => {
+                    Swal.fire({
+                      title: 'Error!',
+                      text: 'Failed to reset password. Please try again later.',
+                      icon: 'error',
+                      timer: 2000,
+                      showConfirmButton: false
+                    });
+                  });
+              }
+            }
+          });
+        }
+      }
+    });
+  };
+ 
   return (
     <div>
       <div className="container-fluid">
         <div className="row Profile_info_row mb-1"></div>
-      <Navbar />
-              </div>
+        <Navbar />
+      </div>
       <div className="wrapper">
         <div className="auth-wrapper">
           <div className="auth-inner Employee-login-inner">
             <form>
               <h1>Login</h1>
-
+ 
               <div className="mb-3">
                 <label>Email address</label>
                 <input
@@ -350,7 +408,7 @@ const EmployeeLogin = () => {
                   required
                 />
               </div>
-
+ 
               <div className="mb-3 password-input">
                 <label>Password</label>
                 <input
@@ -362,21 +420,21 @@ const EmployeeLogin = () => {
                   required
                 />
               </div>
-
+ 
               {errorMessage && <p className="text-danger">{errorMessage}</p>}
-
+ 
               <div className="mb-3" id="loginbtncenter">
                 <button
                   type="submit"
                   className="btn btn-primary btn-block"
                   id="loginbtn"
                   onClick={handleLoginClick}
-                  disabled={loading} // Disable button while loading
+                  disabled={loading}
                 >
                   {loading ? "Loading..." : "Login"}
                 </button>
               </div>
-
+ 
               <a href="#" className="loginlinks" onClick={handleForgotPassword}>
                 Forgot password?
               </a>
@@ -387,5 +445,13 @@ const EmployeeLogin = () => {
     </div>
   );
 };
-
+ 
 export default EmployeeLogin;
+ 
+ 
+
+
+
+
+
+

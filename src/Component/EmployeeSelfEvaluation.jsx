@@ -34,7 +34,7 @@ const EmployeeSelfEvaluation = () => {
         }
       } catch (error) {
         console.error('Error fetching goals:', error);
-        alert('An error occurred while fetching goals.');
+       
       }
     };
  
@@ -219,14 +219,14 @@ const EmployeeSelfEvaluation = () => {
                     <div key={index} style={{ marginBottom: '15px' }}>
                       <div style={{ fontWeight: 'bold' }}>{goal.objective}</div>
                       <label style={{ display: 'flex', alignItems: 'center' }}>
-                        Self-Rating:
+                        Self-Rating out of 5:
                         <input
                           type="number"
                           value={goal.selfRating}
                           onChange={(e) => handleRatingChange(index, e.target.value)}
-                          min="1"
+                          min="0"
                           max="5"
-                          placeholder="Rate 1 to 5"
+                          placeholder="Rate 0 to 5"
                           style={ratingInputStyle}
                         />
                       </label>

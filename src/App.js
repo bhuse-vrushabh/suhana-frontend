@@ -29,7 +29,7 @@ import TrainingDevelopmentPage from './Manager/Training';
 // import A_feedback from './components/Feedback';
 import CreateProfile from './Manager/CreateProfile';
 
-import { Feedback } from '@mui/icons-material';
+//import { Feedback } from '@mui/icons-material';//
 import M_feedback from './Manager/Feedback';
 import ManagerLogin from './Manager/ManagerLogin';
 import Manager_Dashboard from './Manager/Dashboard';
@@ -44,6 +44,9 @@ import EmployeeProfile from './Component/EmployeeProfile';
 import ReportsAnalytics from './Component/ReportsAnalytics';
 import TrainingAndDevelopment from './Component/TrainingAndDevelopment';
 import Navbar from './Component/Navbar';
+import Feedback from './Component/Feedback';
+
+// Remove any other occurrences of `import Feedback ...`
 
 function App() {
   const location = useLocation();
@@ -91,7 +94,9 @@ function App() {
         <Route path="/Navbar" element={<Navbar />} />
         <Route path="/TrainingAndDevelopment" element={<TrainingAndDevelopment />} />
         <Route path="/ReportsAnalytics" element={<ReportsAnalytics />} />
+
         <Route path="/Feedback" element={<Feedback />} />
+
       </Routes>
       {!isLoginPage && <Footer />} {/* Only render Footer if it's not the login page */}
     </div>
