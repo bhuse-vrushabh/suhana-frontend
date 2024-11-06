@@ -23,9 +23,9 @@ li {
     padding: 0;
 } */
 
-body {
+/* body {
     font-family: 'Poppins', sans-serif;
-}
+} */
 
 a {
     text-decoration: none;
@@ -177,11 +177,11 @@ h1 {
     font-size: 1.5rem; /* Base font size for headings */
 }
 
-body {
-    font-family: 'Poppins', sans-serif; /* Set font family */
-    margin: 0; /* Remove body margin */
-    padding: 0; /* Remove body padding */
-}
+/* body {
+    font-family: 'Poppins', sans-serif; 
+    margin: 0; 
+    padding: 0; 
+} */
 
 /* Wrapper layout */
 .wrapper {
