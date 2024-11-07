@@ -23,8 +23,6 @@ import Footer from './Website/Admin_footer';
 
 
 import ManagerEvaluation from './Manager/ManagerEvaluation';
-
-
 import GoalManagement from './Manager/GoalManagement';
 import TrainingDevelopmentPage from './Manager/Training';
 // import A_feedback from './components/Feedback';
@@ -47,6 +45,7 @@ import TrainingAndDevelopment from './Component/TrainingAndDevelopment';
 import Navbar from './Component/Navbar';
 // import Sidebarr from './Manager/Sidebarr';
 import FeedBackForm_M from './Manager/FeedBackForm_M';
+import PersonalDetailsForm from './Component/EMyAccount';
 import Feedback from './Component/Feedback';
 
 // Remove any other occurrences of `import Feedback ...`
@@ -78,8 +77,6 @@ function App() {
           {isAdminPage && <Nav />} {/* Only render Nav if it's an admin page */}
       <Routes>
         <Route path="/AdminLogin" element={<AdminLogin />} />
-        {/* <Route path="/Sidebar" element={<Sidebar />} /> */}
-                {/* <Route path="/Nav" element={<Nav />} /> */}
 
         <Route path="/Admin_attendance" element={<Admin_attendance />} />
         <Route path="/Admin_Report" element={<Admin_Report />} />
@@ -116,7 +113,7 @@ function App() {
         <Route path="/ReportsAnalytics" element={<ReportsAnalytics />} />
 
         <Route path="/Feedback" element={<Feedback />} />
-
+        <Route path="/PersonalDetailsForm" element={<PersonalDetailsForm/>}/>
       </Routes>
       {!isLoginPage && <Footer />} {/* Only render Footer if it's not the login page */}
       
