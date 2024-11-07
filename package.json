@@ -17,6 +17,8 @@
     "axios": "^1.7.7",
     "bootstrap": "^5.3.3",
     "chart.js": "^4.4.4",
+    "highcharts": "^11.4.8",
+    "highcharts-react-official": "^3.2.1",
     "history": "^5.3.0",
     "jspdf": "^2.5.2",
     "react": "^18.3.1",
@@ -30,7 +32,7 @@
     "react-toastify": "^10.0.6",
     "recharts": "^2.12.7",
     "styled-components": "^6.1.13",
-    "sweetalert2": "^11.14.3",
+    "sweetalert2": "^11.14.5",
     "web-vitals": "^2.1.4",
     "xlsx": "^0.18.5"
   },

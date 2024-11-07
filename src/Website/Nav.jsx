@@ -207,6 +207,10 @@ function Nav({ user }) {
     localStorage.removeItem('token'); // Clear token on logout
     navigate('/AdminLogin');
   };
+  const handlemyaccount = () => {
+    localStorage.removeItem('token'); // Clear token on logout
+    navigate('/A_profile');
+  };
 
   return (
     <nav className="A_navbar">
@@ -246,7 +250,7 @@ function Nav({ user }) {
             {isDropdownOpen && (
               <div className="A_dropdown-menu">
                 <ul>
-                  <li><a href="#/my-account">My Account</a></li>
+                  <li onClick={handlemyaccount}>My Account</li>
                   <li onClick={handleLogout}>Logout</li>
                 </ul>
               </div>

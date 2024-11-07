@@ -153,6 +153,17 @@ input[type="checkbox"]:focus {
   font-weight: bold;
   margin-top: 20px;
 }
+.star {
+  cursor: pointer;
+  font-size: 50px;
+  color: gray;
+  margin-right: 10px
+}
+
+.star.filled {
+  color: gold;
+}
+
 
 /* Media Queries for responsive design */
 @media (max-width: 768px) {
