@@ -1,11 +1,15 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEdit, faTrash } from "@fortawesome/free-solid-svg-icons";
 import Swal from "sweetalert2";
 import './Registraion.css';
 import Sidebar from "./Sidebar_A";
+import axios from 'axios';
+import { AuthContext } from "../Component/AuthContext";
 
 function Registraion() {
+    const { authData } = useContext(AuthContext);
+    console.log("this is the data passed through context",authData)
     const [employees, setEmployees] = useState([]);
     const [formData, setFormData] = useState({
         username: "",
@@ -21,6 +25,8 @@ function Registraion() {
     const roleOptions = ["manager", "employee"];
     const departmentOptions = ["HR", "Sales", "Engineering", "Marketing"];
     const today = new Date().toISOString().split("T")[0];
+
+    const token = localStorage.getItem('') // Use your token
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
@@ -81,132 +87,106 @@ function Registraion() {
         });
     };
 
+    const registerUser = async () => {
+        const { email, username, role } = formData;  // Destructure formData
+        try {
+            const response = await axios.post('http://127.0.0.1:8000/api/create_user/', {
+                email: formData.email,
+                username: formData.username,
+                role: formData.role
+            }, {
+                headers: {
+                    'Authorization': `Bearer ${authData.accessToken}`, // Include the token in the request headers
+                    'Content-Type': 'application/json',
+                  },
+            });
+
+                    // Show success message if the user is created successfully
+        Swal.fire({
+            icon: 'success',
+            title: 'Success',
+            text: 'Admin profile created/updated successfully!',
+            timer: 1500,
+            showConfirmButton: false
+        });
+
+            console.log(response.data); // handle successful response
+        } catch (error) {
+            if (error.response && error.response.status === 400) { // Check for 'user already exists' status
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: 'User already exists!'
+                });
+            } else {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: 'There was an error registering the user.'
+                });
+            }
+            console.error("There was an error registering the user:", error); // handle error
+        }
+    };
+    
+
     return (
         <>
-        <div className="registration">
-            <Sidebar />
-            <div className="registration_by">
-            <div className="employee-card">
-                <h2>Create Admin Profile</h2>
-                <form onSubmit={handleSubmit} className="employee-form">
-                    <div className="form-row">
-                        {/* <label>
-                            Username:
-                            <input
-                                type="text"
-                                name="username"
-                                value={formData.username}
-                                onChange={handleInputChange}
-                                required
-                            />
-                        </label> */}
-                        <label>
-                            Email:
-                            <input
-                                type="email"
-                                name="email"
-                                value={formData.email}
-                                onChange={handleInputChange}
-                                required
-                            />
-                        </label>
-                        <label>
-                            Username:
-                            <input
-                                type="text"
-                                name="text"
-                                // value={formData.password}
-                                // onChange={handleInputChange}
-                                // required
-                            />
-                        </label>
+            <div className="registration">
+                <Sidebar />
+                <div className="registration_by">
+                    <div className="employee-card">
+                        <h2>Create Admin Profile</h2>
+                        <form onSubmit={handleSubmit} className="employee-form">
+                            <div className="form-row">
+                                <label>
+                                    Email:
+                                    <input
+                                        type="email"
+                                        name="email"
+                                        value={formData.email}
+                                        onChange={handleInputChange}
+                                        required
+                                    />
+                                </label>
+                                <label>
+                                    Username:
+                                    <input
+                                        type="text"
+                                        name="username"
+                                        value={formData.username}
+                                        onChange={handleInputChange}
+                                        required
+                                    />
+                                </label>
+                            </div>
+                            <div className="parent_form-row-roll">
+                                <div className="form-row-roll">
+                                    <label>
+                                        Role:
+                                        <select
+                                            name="role"
+                                            value={formData.role}
+                                            onChange={handleInputChange}
+                                            required
+                                        >
+                                            <option value="">Select Role</option>
+                                            {roleOptions.map((role, index) => (
+                                                <option key={index} value={role}>
+                                                    {role}
+                                                </option>
+                                            ))}
+                                        </select>
+                                    </label>
+                                </div>
+                            </div>
+                            <button onClick={registerUser} type="submit" className="create-btn">
+                                {editIndex !== null ? "Update" : "Create"}
+                            </button>
+                        </form>
                     </div>
-                    <div className="parent_form-row-roll">               
-                     <div className="form-row-roll">
-                      
-                        <label>
-                            Role:
-                            <select
-                                name="role"
-                                value={formData.role}
-                                onChange={handleInputChange}
-                                required
-                            >
-                                <option value="">Select Role</option>
-                                {roleOptions.map((role, index) => (
-                                    <option key={index} value={role}>
-                                        {role}
-                                    </option>
-                                ))}
-                            </select>
-                        </label>
-                    </div>
-                    </div>
-
-                    {/* <div className="form-row">
-                        <label>
-                            Gender:
-                            <select
-                                name="gender"
-                                value={formData.gender}
-                                onChange={handleInputChange}
-                                required
-                            >
-                                <option value="">Select Gender</option>
-                                <option value="Male">Male</option>
-                                <option value="Female">Female</option>
-                                <option value="Other">Other</option>
-                            </select>
-                        </label>
-                        <label>
-                            Department:
-                            <select
-                                name="department"
-                                value={formData.department}
-                                onChange={handleInputChange}
-                                required
-                            >
-                                <option value="">Select Department</option>
-                                {departmentOptions.map((dept, index) => (
-                                    <option key={index} value={dept}>
-                                        {dept}
-                                    </option>
-                                ))}
-                            </select>
-                        </label>
-                    </div> */}
-                    {/* <div className="form-row">
-                        <label>
-                            Position:
-                            <input
-                                type="text"
-                                name="position"
-                                value={formData.position}
-                                onChange={handleInputChange}
-                                required
-                            />
-                        </label>
-
-                        <label>
-                            
-                            Date of Joining:
-                            <input
-                                type="date"
-                                name="dateOfJoining"
-                                value={formData.dateOfJoining}
-                                onChange={handleInputChange}
-                                min={today}
-                                required
-                            />
-                        </label>
-                    </div> */}
-                    <button type="submit" className="create-btn">
-                        {editIndex !== null ? "Update" : "Create"}
-                    </button>
-                </form>
+                </div>
             </div>
-            </div>
-        </div>
         </>
     );
 }
