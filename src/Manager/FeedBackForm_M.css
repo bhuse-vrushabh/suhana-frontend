@@ -1,0 +1,80 @@
+.manager-rating-container-Mger {
+    max-width: 500px;
+    margin: 0 auto;
+    padding: 20px;
+    border-radius: 8px;
+    background-color:white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 100%;
+  }
+  
+  .manager-rating-container-Mger h3 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #D5661A;
+  }
+  
+  .manager-rating-form-Mger {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .form-group-Mger {
+    margin-bottom: 15px;
+  }
+  
+  .form-group-Mger label {
+    font-weight: bold;
+    color: #555;
+    display: block;
+    margin-bottom: 5px;
+  }
+  
+  .form-group-Mger input,
+  .form-group-Mger select,
+  .form-group-Mger textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 16px;
+    color: #333;
+    background-color: #fff;
+    transition: border-color 0.3s ease;
+  }
+  
+  .form-group-Mger input:focus,
+  .form-group-Mger select:focus,
+  .form-group-Mger textarea:focus {
+    border-color: black;
+    outline: none;
+  }
+  .form-group-Mger textarea {
+    width: 100%;
+    padding: 12px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    resize: vertical;
+    min-height: 100px;
+    max-height: 300px;
+    outline: none;
+    transition: border-color 0.3s ease;
+    margin-left: -12px;
+  }
+  .submit-button-Mger {
+    background: #D5661A;
+    color: #fff;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 150px; /* Set a fixed width for the button */
+    margin: 10px auto; /* Center the button horizontally */
+    display: block; /* Make the button a block element to center */
+    text-align: center; /* Center the text inside the button */
+    transition: background-color 0.3s; /* Smooth transition for background color */
+  }
+  
+
+  
