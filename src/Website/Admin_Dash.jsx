@@ -165,6 +165,8 @@ import Attrition from './Assets/attrition.svg'
 import Traning_hours from './Assets/traning_hours.svg'
 import Complaints_rate from './Assets/complaints_rate.svg'
 
+
+
 const Admin_Dash = () => {
   const [activeChart, setActiveChart] = useState(null); // State to track selected KPI
 

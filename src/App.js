@@ -16,6 +16,7 @@ import A_FeedbackForm from './Website/A_FeedbackForm';
 import A_feedback from './Website/A_feedback';
 import ReviewList from './Website/ReviewList';
 import Registraion from './Website/Registraion';
+import A_profile from './Website/A_profile';
 import Footer from './Website/Admin_footer';
  
 // Manager
@@ -56,7 +57,8 @@ function App() {
     "/A_feedback",
     "/ReviewList",
     "/Registraion",
-    "/HomePage"
+    "/HomePage",
+    "/A_profile"
   ];
 
    // Check if the current path is an admin page
@@ -72,7 +74,7 @@ function App() {
           {isAdminPage && <Nav />} {/* Only render Nav if it's an admin page */}
       <Routes>
         <Route path="/AdminLogin" element={<AdminLogin />} />
-        <Route path="/Sidebar" element={<Sidebar />} />
+        {/* <Route path="/Sidebar" element={<Sidebar />} /> */}
                 {/* <Route path="/Nav" element={<Nav />} /> */}
 
         <Route path="/Admin_attendance" element={<Admin_attendance />} />
@@ -83,6 +85,8 @@ function App() {
         <Route path="/A_feedback" element={<A_feedback />} />
         <Route path="/ReviewList" element={<ReviewList />} />
         <Route path="/Registraion" element={<Registraion />} />
+        <Route path="/A_profile" element={<A_profile/>} />
+
         {/* manager */}
         <Route path='/managerlogin' element={<ManagerLogin/>} />
          

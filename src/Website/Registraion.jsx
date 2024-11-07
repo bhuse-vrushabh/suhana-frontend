@@ -18,7 +18,7 @@ function Registraion() {
         dateOfJoining: ""
     });
     const [editIndex, setEditIndex] = useState(null);
-    const roleOptions = ["Admin", "manager", "employee"];
+    const roleOptions = ["manager", "employee"];
     const departmentOptions = ["HR", "Sales", "Engineering", "Marketing"];
     const today = new Date().toISOString().split("T")[0];
 
@@ -111,13 +111,13 @@ function Registraion() {
                             />
                         </label>
                         <label>
-                            Password:
+                            Username:
                             <input
-                                type="password"
-                                name="password"
-                                value={formData.password}
-                                onChange={handleInputChange}
-                                required
+                                type="text"
+                                name="text"
+                                // value={formData.password}
+                                // onChange={handleInputChange}
+                                // required
                             />
                         </label>
                     </div>
