@@ -205,7 +205,7 @@ function Nav({ user }) {
   // Function to handle logout
   const handleLogout = () => {
     localStorage.removeItem('token'); // Clear token on logout
-    navigate('/AdminLogin');
+    navigate('/EmployeeLogin');
   };
   const handlemyaccount = () => {
     localStorage.removeItem('token'); // Clear token on logout

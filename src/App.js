@@ -47,6 +47,7 @@ import Navbar from './Component/Navbar';
 import FeedBackForm_M from './Manager/FeedBackForm_M';
 import PersonalDetailsForm from './Component/EMyAccount';
 import Feedback from './Component/Feedback';
+import { AuthProvider } from './Component/AuthContext';
 
 // Remove any other occurrences of `import Feedback ...`
 
@@ -74,6 +75,7 @@ function App() {
 
   return (
     <div>
+      <AuthProvider>
           {isAdminPage && <Nav />} {/* Only render Nav if it's an admin page */}
       <Routes>
         <Route path="/AdminLogin" element={<AdminLogin />} />
@@ -116,8 +118,9 @@ function App() {
         <Route path="/PersonalDetailsForm" element={<PersonalDetailsForm/>}/>
       </Routes>
       {!isLoginPage && <Footer />} {/* Only render Footer if it's not the login page */}
-      
+      </AuthProvider>
     </div>
+    
   );
 }
 

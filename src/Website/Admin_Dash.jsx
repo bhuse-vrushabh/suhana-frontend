@@ -144,7 +144,7 @@
 // };
 
 // export default Admin_Dash;
-import React, { useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import {
   BarChart,
   LineChart,
@@ -164,16 +164,55 @@ import att from './Assets/attendance_overviewdash.svg'
 import Attrition from './Assets/attrition.svg'
 import Traning_hours from './Assets/traning_hours.svg'
 import Complaints_rate from './Assets/complaints_rate.svg'
+import { AuthContext } from "../Component/AuthContext";
+
 
 
 
 const Admin_Dash = () => {
+  const { authData } = useContext(AuthContext);
+    console.log("this is the data passed through context",authData)
   const [activeChart, setActiveChart] = useState(null); // State to track selected KPI
+  const [attendanceData, setAttendanceData] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const fetchAttendanceData = async () => {
+      try {
+        const response = await fetch("http://127.0.0.1:8000/api/emp_stats/2024-11-06/", {
+          method: "GET",
+          headers: {
+          'Authorization': `Bearer ${authData.accessToken}`, // Include the token in the request headers  
+            "Content-Type": "application/json",
+          },
+        });
+        console.log("ths is the responce data", response    )
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+
+        const data = await response.json();
+        console.log("This is the response data:", data)
+        setAttendanceData(data);
+      } catch (error) {
+        setError(error.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchAttendanceData();
+  }, []);
+
+
+
+  
 
   const kpiData = [
     {
       label: "Attendance Overview",
-      value: "85%",
+      value: attendanceData ? `${attendanceData.total_present_employees}` : "Loading...",
       icon: <img src={att} alt="" />,
       chart: "attendance",
       cardback:
