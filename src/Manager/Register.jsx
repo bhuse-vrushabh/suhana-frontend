@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEdit, faTrash } from "@fortawesome/free-solid-svg-icons";
 import Swal from "sweetalert2";
 import Sidebarr from "./Sidebarr";
-import Nav from "./Nav";
+
 
 const Register = () => {
   const [employees, setEmployees] = useState([]);
@@ -83,7 +83,7 @@ const Register = () => {
     <div className="main-wrapper">
    
       <div className="main-wrapper_n">
-        <Nav />
+        
         <div>
           <div className="employee-card">
             <h2>Create Manager Profile</h2>

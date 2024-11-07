@@ -195,7 +195,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import './EmployeeLogin.css';
-import Navbar from "./Navbar";
+// import Navbar from "./Navbar";
 import axios from 'axios';
  
 const EmployeeLogin = () => {
@@ -354,9 +354,9 @@ const EmployeeLogin = () => {
               } else {
                 return axios.post(`http://127.0.0.1:8000/api/reset_password/`, {
                   
-                    "email":"emp1@tdtl.com",
-                    "new_password":"1234567",
-                    "otp":" "
+                    email:email,
+                    password:password,
+                    otp:otp
                 
                 })
                 .then(() => {
@@ -389,8 +389,7 @@ const EmployeeLogin = () => {
     <div>
       <div className="container-fluid">
         <div className="row Profile_info_row mb-1"></div>
-        <Navbar />
-      </div>
+              </div>
       <div className="wrapper">
         <div className="auth-wrapper">
           <div className="auth-inner Employee-login-inner">

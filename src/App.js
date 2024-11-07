@@ -43,13 +43,25 @@ import EmployeeSelfEvaluation from './Component/EmployeeSelfEvaluation';
 import EmployeeProfile from './Component/EmployeeProfile';
 import ReportsAnalytics from './Component/ReportsAnalytics';
 import TrainingAndDevelopment from './Component/TrainingAndDevelopment';
-import Navbar from './Component/Navbar';
 import Feedback from './Component/Feedback';
 
 // Remove any other occurrences of `import Feedback ...`
 
 function App() {
   const location = useLocation();
+  const adminPaths = [
+    "/Admin_attendance",
+    "/Admin_Report",
+    "/Admin_Dash",
+    "/A_FeedbackForm",
+    "/A_feedback",
+    "/ReviewList",
+    "/Registraion",
+    "/HomePage"
+  ];
+
+   // Check if the current path is an admin page
+   const isAdminPage = adminPaths.includes(location.pathname);
 
   // Check if the current path is the login page
 
@@ -58,10 +70,9 @@ function App() {
 
   return (
     <div>
-      {!isLoginPage && <Nav />} {/* Only render Nav if it's not the login page */}
+          {isAdminPage && <Nav />} {/* Only render Nav if it's an admin page */}
       <Routes>
         <Route path="/AdminLogin" element={<AdminLogin />} />
-        <Route path="/Sidebar" element={<Sidebar />} />
                 {/* <Route path="/Nav" element={<Nav />} /> */}
 
         <Route path="/Admin_attendance" element={<Admin_attendance />} />
@@ -75,9 +86,7 @@ function App() {
         {/* manager */}
         <Route path='/managerlogin' element={<ManagerLogin/>} />
          
-          <Route path='/manager-evaluation' element={<ManagerEvaluation />} />
-       
-        
+          <Route path='/manager-evaluation' element={<ManagerEvaluation />} />    
           <Route path='/Manager_Dashboard' element={<Manager_Dashboard/>}/>
           <Route path='/GoalManagement' element={<GoalManagement/>}/>
           <Route path='/Training' element={<TrainingDevelopmentPage/>}/>
@@ -88,10 +97,8 @@ function App() {
         <Route path="/" element={<EmployeeLogin />} />
         <Route path="/Dashboard" element={<Dashboard />} />
         <Route path="/EmployeeLogin" element={<EmployeeLogin />} />
-        <Route path="/Sidebar" element={<Sidebar />} />
         <Route path="/EmployeeSelfEvaluation" element={<EmployeeSelfEvaluation />} />
         <Route path="/EmployeeProfile" element={<EmployeeProfile />} />
-        <Route path="/Navbar" element={<Navbar />} />
         <Route path="/TrainingAndDevelopment" element={<TrainingAndDevelopment />} />
         <Route path="/ReportsAnalytics" element={<ReportsAnalytics />} />
 
@@ -99,6 +106,7 @@ function App() {
 
       </Routes>
       {!isLoginPage && <Footer />} {/* Only render Footer if it's not the login page */}
+      
     </div>
   );
 }
