@@ -355,10 +355,11 @@ const EmployeeLogin = () => {
                 return axios.post(`http://127.0.0.1:8000/api/reset_password/`, {
                   
                     email:email,
-                    password:password,
+                    new_password:newPassword,
                     otp:otp
                 
                 })
+                
                 .then(() => {
                   Swal.fire({
                     title: 'Success!',
@@ -383,6 +384,7 @@ const EmployeeLogin = () => {
         }
       }
     });
+    
   };
  
   return (
