@@ -4,19 +4,24 @@ import Sidebar from './Sidebar';
 import Swal from 'sweetalert2';
 import "../Component/EMyAccount.css";
 
-const InputField = ({ label, name, value, onChange, disabled = false }) => {
+const InputField = ({ label, name, value, onChange, disabled = false, containerClass }) => {
+  const handleContentChange = (e) => {
+    onChange({ target: { name, value: e.currentTarget.textContent } });
+  };
+
   return (
-    <div className="input-field">
+    <div className={containerClass}>
       <label>
         <strong>{label}:</strong>
       </label>
-      <input
-        type="text"
-        name={name}
-        value={value}
-        onChange={onChange}
-        disabled={disabled}
-      />
+      <div
+        contentEditable={!disabled}
+        onInput={handleContentChange}
+        suppressContentEditableWarning={true}
+        className="editable-div"
+      >
+        {value}
+      </div>
     </div>
   );
 };
@@ -33,7 +38,7 @@ const PersonalDetailsForm = () => {
     position: 'Accountant',
   });
 
-  const [isEditing, setIsEditing] = useState(false); // Track editing state
+  const [isEditing, setIsEditing] = useState(false);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -41,11 +46,10 @@ const PersonalDetailsForm = () => {
   };
 
   const handleToggleEdit = () => {
-    setIsEditing(!isEditing); // Toggle editing state
+    setIsEditing(!isEditing);
   };
 
   const handleSaveChanges = () => {
-    // Logic to save changes goes here, for now we just toggle off the editing mode
     Swal.fire({
       title: 'Success!',
       text: 'Personal details saved successfully!',
@@ -57,33 +61,91 @@ const PersonalDetailsForm = () => {
   };
   
   return (
-    <div>
+    <div className="personal-details-container">
       <Navbar />
-      <h2>Personal Details</h2>
-      <form>
-        <div>
-          <Sidebar />
-        <InputField label="First Name" name="name" value={employeeData.name} onChange={handleChange} disabled={!isEditing} />
-        <InputField label="Middle Name" name="middlename" value={employeeData.middlename} onChange={handleChange} disabled={!isEditing} />
-        <InputField label="Last Name" name="surname" value={employeeData.surname} onChange={handleChange} disabled={!isEditing} />
-        </div>
-        <div>
-        <InputField label="Contact Number" name="contact" value={employeeData.contact} onChange={handleChange} disabled={!isEditing} />
-        <InputField label="Email" name="email" value={employeeData.email}  />
-        <InputField label="Gender" name="gender" value={employeeData.gender} onChange={handleChange} disabled={!isEditing} />
-        </div>
-        <div>
-        <InputField label="Department" name="department" value={employeeData.department} onChange={handleChange} disabled={!isEditing} />
-        <InputField label="Position" name="position" value={employeeData.position} onChange={handleChange} disabled={!isEditing} />
-        </div>
-      </form>
-      <button
-        type="button"
-        className="save-button"
-        onClick={isEditing ? handleSaveChanges : handleToggleEdit}
-      >
-        {isEditing ? 'Save Changes' : 'Edit Personal Details'}
-      </button>
+      <div className="personal-details-main">
+        <h2 className="personal-details-heading">Personal Details</h2>
+        <Sidebar />
+        <form className="personal-details-form">
+          <div className="personal-details-row">
+            <InputField
+              label="First Name"
+              name="name"
+              value={employeeData.name}
+              onChange={handleChange}
+              disabled={!isEditing}
+              containerClass="first-name-container"
+            />
+            <InputField
+              label="Middle Name"
+              name="middlename"
+              value={employeeData.middlename}
+              onChange={handleChange}
+              disabled={!isEditing}
+              containerClass="middle-name-container"
+            />
+            <InputField
+              label="Last Name"
+              name="surname"
+              value={employeeData.surname}
+              onChange={handleChange}
+              disabled={!isEditing}
+              containerClass="last-name-container"
+            />
+          </div>
+          <div className="personal-details-row">
+            <InputField
+              label="Contact Number"
+              name="contact"
+              value={employeeData.contact}
+              onChange={handleChange}
+              disabled={!isEditing}
+              containerClass="contact-number-container"
+            />
+            <InputField
+              label="Email"
+              name="email"
+              value={employeeData.email}
+              onChange={handleChange}
+              disabled={!isEditing}
+              containerClass="email-container"
+            />
+            <InputField
+              label="Gender"
+              name="gender"
+              value={employeeData.gender}
+              onChange={handleChange}
+              disabled={!isEditing}
+              containerClass="gender-container"
+            />
+          </div>
+          <div className="personal-details-row">
+            <InputField
+              label="Department"
+              name="department"
+              value={employeeData.department}
+              onChange={handleChange}
+              disabled={!isEditing}
+              containerClass="department-container"
+            />
+            <InputField
+              label="Position"
+              name="position"
+              value={employeeData.position}
+              onChange={handleChange}
+              disabled={!isEditing}
+              containerClass="position-container"
+            />
+          </div>
+        </form>
+        <button
+          type="button"
+          className="edit-save-button"
+          onClick={isEditing ? handleSaveChanges : handleToggleEdit}
+        >
+          {isEditing ? 'Save Changes' : 'Edit Personal Details'}
+        </button>
+      </div>
     </div>
   );
 };
