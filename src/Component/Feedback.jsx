@@ -1,7 +1,9 @@
 
-import React, { useState } from 'react';
+
+ import React, { useState, useEffect } from 'react';
 import axios from 'axios'; // Import Axios
 import './Feedback.css';
+import swal from 'sweetalert2';
 import Sidebar from "./Sidebar";
 import Navbar from "./Navbar";
 
@@ -11,16 +13,21 @@ const Feedback = () => {
   const [selectedManager, setSelectedManager] = useState('');
   const [feedbackContent, setFeedbackContent] = useState('');
   const [anonymous, setAnonymous] = useState(false);
-  const [overallRating, setOverallRating] = useState('');
+  const [overallRating, setOverallRating] = useState('0');
   const [submitted, setSubmitted] = useState(false);
   const [responseMessage, setResponseMessage] = useState(''); // New state for response message
 
+  const accessToken = localStorage.getItem('accessToken');
   const handleSubmit = async (e) => {
     e.preventDefault();
     
     // Ensure all required fields are filled
-    if (!feedbackContent || !overallRating) {
-      alert("Please fill out all fields before submitting.");
+    if (!feedbackContent  || !overallRating) {
+      swal.fire({
+        icon:'error',
+        title:'Incomplete Submission',
+        text:' ',
+      });
       return;
     }
 
@@ -38,33 +45,47 @@ const Feedback = () => {
     };
 
     try {
-      // Send the POST request
-      const response = await axios.post('http://127.0.0.1:8000/api/feedback/', payload);
-      alert("Your feedback has been successfully submitted!");
-      setResponseMessage(response.data); // Store the API response
+//const response = await axios.post('http://127.0.0.1:8000/api/feedback/', payload);
+      //Authorization: `Bearer ${accessToken}`, // Include access token in headers
+  
+      //setResponseMessage(response.data);
       setSubmitted(true);
+  
+      // Show success SweetAlert message
+      swal.fire({
+        icon: 'success',
+        title: 'Feedback Submitted',
+        text: 'Your feedback has been successfully submitted!',
+        timer: 1500,
+      });
       
       // Reset the form fields after submission
       setSelectedEmployee('');
       setSelectedManager('');
       setFeedbackContent('');
       setOverallRating('');
-      setAnonymous(false);
     } catch (error) {
       console.error("There was an error submitting your feedback:", error);
-      alert("There was an error submitting your feedback. Please try again later.");
+      swal.fire({
+        icon: 'error',
+        title: 'Submission Failed',
+        text: 'There was an error submitting your feedback. Please try again later.',
+      });
     }
   };
+  const handleStarClick = (rating) => {
+    setOverallRating(rating);
+    const ratingDescriptions = ['Poor', 'Fair', 'Good', 'Very Good', 'Excellent'];
+  };
 
-  const ratingDescriptions = ['Poor', 'Fair', 'Good', 'Very Good', 'Excellent'];
-
+  
   return (
     <div className='feedback-page'>
       <Navbar />
       <div className="container">
         <Sidebar />
         <div className="review-feedback-page">
-          <h1 className="feedback-title"></h1>
+          <h1 className="feedback-title">Feedback Form</h1>
           <form onSubmit={handleSubmit} className="feedback-form">
 
             {/* Feedback Type Selection */}
@@ -77,6 +98,7 @@ const Feedback = () => {
                 required
                 className="select"
               >
+           
                 <option value="employee">Employee Feedback</option>
                 <option value="manager">Manager Feedback</option>
               </select>
@@ -148,23 +170,18 @@ const Feedback = () => {
               </>
             )}
 
-            {/* Overall Rating Section */}
+            {/* overall Rating Section */}
             <div className="form-group">
               <label>Overall Rating:</label>
-              <div className="rating-options">
-                {Array.from({ length: 5 }, (_, index) => (
-                  <label key={index} className="rating-label">
-                    <input
-                      type="radio"
-                      name="rating"
-                      value={index + 1}
-                      checked={overallRating === (index + 1).toString()}
-                      onChange={(e) => setOverallRating(e.target.value)}
-                    />
-                    <span className="rating-number" data-description={ratingDescriptions[index]}>
-                      {index + 1}
-                    </span>
-                  </label>
+              <div className="star-rating">
+                {[1, 2, 3, 4, 5].map((star) => (
+                  <span
+                    key={star}
+                    onClick={() => handleStarClick(star)}
+                    className={star <= overallRating ? 'star filled' : 'star'}
+                  >
+                    ★
+                  </span>
                 ))}
               </div>
             </div>
