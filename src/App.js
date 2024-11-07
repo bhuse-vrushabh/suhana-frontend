@@ -6,7 +6,7 @@ import { Routes, Route, useLocation } from 'react-router-dom';
 
 // Website imports
 import AdminLogin from './Website/AdminLogin';
-import Sidebar from './Website/Sidebar_A';
+// import Sidebar from './Website/Sidebar_A';
 import Nav from './Website/Nav';
 import Admin_attendance from './Website/Admin_attendance';
 import Admin_Report from './Website/Admin_Report';
@@ -23,8 +23,6 @@ import Footer from './Website/Admin_footer';
 
 
 import ManagerEvaluation from './Manager/ManagerEvaluation';
-
-
 import GoalManagement from './Manager/GoalManagement';
 import TrainingDevelopmentPage from './Manager/Training';
 // import A_feedback from './components/Feedback';
@@ -44,6 +42,10 @@ import EmployeeSelfEvaluation from './Component/EmployeeSelfEvaluation';
 import EmployeeProfile from './Component/EmployeeProfile';
 import ReportsAnalytics from './Component/ReportsAnalytics';
 import TrainingAndDevelopment from './Component/TrainingAndDevelopment';
+import Navbar from './Component/Navbar';
+// import Sidebarr from './Manager/Sidebarr';
+import FeedBackForm_M from './Manager/FeedBackForm_M';
+import PersonalDetailsForm from './Component/EMyAccount';
 import Feedback from './Component/Feedback';
 
 // Remove any other occurrences of `import Feedback ...`
@@ -75,8 +77,6 @@ function App() {
           {isAdminPage && <Nav />} {/* Only render Nav if it's an admin page */}
       <Routes>
         <Route path="/AdminLogin" element={<AdminLogin />} />
-        <Route path="/Sidebar" element={<Sidebar />} />
-                {/* <Route path="/Nav" element={<Nav />} /> */}
 
         <Route path="/Admin_attendance" element={<Admin_attendance />} />
         <Route path="/Admin_Report" element={<Admin_Report />} />
@@ -91,24 +91,29 @@ function App() {
         {/* manager */}
         <Route path='/managerlogin' element={<ManagerLogin/>} />
          
-          <Route path='/manager-evaluation' element={<ManagerEvaluation />} />    
+          <Route path='/manager-evaluation' element={<ManagerEvaluation />} />
+          {/* <Route path='/Sidebarr' element={<Sidebarr/>}/> */}
+        
           <Route path='/Manager_Dashboard' element={<Manager_Dashboard/>}/>
           <Route path='/GoalManagement' element={<GoalManagement/>}/>
           <Route path='/Training' element={<TrainingDevelopmentPage/>}/>
           <Route path="/M_feedback"element={<M_feedback/>}/>
            <Route path='/createprofile'element={<CreateProfile/>}/>
+          <Route path='/FeedBackForm_M'element={<FeedBackForm_M/>}/>
 
         {/* Employee Route */}
+        
         <Route path="/" element={<EmployeeLogin />} />
         <Route path="/Dashboard" element={<Dashboard />} />
         <Route path="/EmployeeLogin" element={<EmployeeLogin />} />
+        {/* <Route path="/Sidebar" element={<Sidebar />} /> */}
         <Route path="/EmployeeSelfEvaluation" element={<EmployeeSelfEvaluation />} />
         <Route path="/EmployeeProfile" element={<EmployeeProfile />} />
         <Route path="/TrainingAndDevelopment" element={<TrainingAndDevelopment />} />
         <Route path="/ReportsAnalytics" element={<ReportsAnalytics />} />
 
         <Route path="/Feedback" element={<Feedback />} />
-
+        <Route path="/PersonalDetailsForm" element={<PersonalDetailsForm/>}/>
       </Routes>
       {!isLoginPage && <Footer />} {/* Only render Footer if it's not the login page */}
       

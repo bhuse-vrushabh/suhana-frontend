@@ -1,0 +1,125 @@
+/* Container and Main Sections */
+.personal-details-container {
+  padding: 20px;
+  background-color: #FEFAEE;
+}
+
+.personal-details-main {
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  margin-left: 80px;
+}
+
+.personal-details-heading {
+  font-size: 24px;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+/* Row Styling */
+.personal-details-row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 15px;
+}
+
+/* Input Field Containers */
+.first-name-container, .middle-name-container, .last-name-container,
+.contact-number-container, .email-container, .gender-container,
+.department-container, .position-container {
+  display: flex;
+  flex-direction: column;
+  width: 30%;
+}
+
+.first-name-container label, .middle-name-container label, .last-name-container label,
+.contact-number-container label, .email-container label, .gender-container label,
+.department-container label, .position-container label {
+  margin-bottom: 5px;
+  font-size: 14px;
+  color: #333;
+  font-weight: bold;
+}
+
+/* Styling for input_1 fields */
+.first-name-container input_1, .middle-name-container input_1, .last-name-container input_1,
+.contact-number-container input_1, .email-container input_1, .gender-container input_1,
+.department-container input_1, .position-container input_1 {
+  height: 40px;
+  padding: 8px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  width: 100%;
+  font-size: 16px;
+  color: #333;
+}
+
+input_1:focus {
+  outline: none;
+  border-color: #D5661A;
+}
+
+input_1:disabled {
+  background-color: #f5f5f5;
+  color: #999;
+}
+
+/* Button Styling */
+.edit-save-button {
+  padding: 10px 20px;
+  border-radius: 40px;
+  border: none;
+  color: #fff;
+  background-color: #D5661A;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+  display: block;
+  margin: 20px auto;
+}
+
+.edit-save-button:hover {
+  background-color: #b44e1a;
+}
+
+.edit-save-button:focus {
+  outline: none;
+}
+
+.editable-div {
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  min-height: 40px;
+  width: 100%;
+}
+
+.editable-div[contenteditable="true"]:focus {
+  outline: 2px solid #D5661A;
+}
+
+.editable-div[contenteditable="false"] {
+  background-color: #f5f5f5;
+  color: #999;
+}
+
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  .personal-details-main {
+      margin-left: 0;
+      padding: 15px;
+  }
+  .edit-save-button {
+      width: 100%;
+      padding: 12px;
+  }
+  .first-name-container, .middle-name-container, .last-name-container,
+  .contact-number-container, .email-container, .gender-container,
+  .department-container, .position-container {
+      width: 100%;
+  }
+}

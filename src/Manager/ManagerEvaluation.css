@@ -59,7 +59,7 @@ h2 {
 
 /* Ensure all form groups are the same size */
 .form-group_m {
-  width: 48%; /* Adjust if you want some space */
+  width: 33%; /* Adjust if you want some space */
   margin-bottom: 15px; /* Space between form groups */
 }
 label {
