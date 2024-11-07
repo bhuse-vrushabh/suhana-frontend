@@ -30,10 +30,10 @@ margin-left: 60px;  /* Adds space around the content */
 .kpi-card {
   cursor: pointer;
   flex: 1; /* Allow cards to grow */
-  min-width: 220px; /* Minimum width for responsive behavior */
-  height: 250px; /* Fixed height for cards */
-  perspective: 1000px; /* 3D perspective for card flipping */
-  transition: transform 0.3s ease-in-out; /* Smooth transition */
+  min-width: 200px; /* Minimum width for responsive behavior */
+  height: 280px; /* Fixed height for cards */
+  perspective: none; /* 3D perspective for card flipping */
+  transition: none; /* Smooth transition */
   margin-right: 10px; /* Space to the right for the last card */
   padding-top: 20px; /* Padding at the top of the card */
 }
@@ -49,12 +49,12 @@ margin-left: 60px;  /* Adds space around the content */
   height: calc(100% - 20px); /* Adjust height to account for padding */
   text-align: center;
   transition: transform 0.6s ease; /* Smooth flipping transition */
-  transform-style: preserve-3d; /* Preserve 3D transformation */
+  transform-style: none; /* Preserve 3D transformation */
 }
 
-.kpi-card:hover .kpi-card-inner {
+/* .kpi-card:hover .kpi-card-inner {
   transform: rotateY(180deg); /* Flip card on hover */
-}
+
 
 
 

@@ -2,8 +2,10 @@ import React, { useState } from 'react';
 import './Navbar.css'; // Ensure this path is correct
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBell, faUser } from '@fortawesome/free-solid-svg-icons';
+
 import suhana from './Suhana1.png';
 import navbell from './Assets/navbell.svg'
+import { Link } from 'react-router-dom';
 
 function Nav() {
   const [isNotificationOpen, setIsNotificationOpen] = useState(false);
@@ -52,7 +54,11 @@ function Nav() {
           </button>
           {isDropdownOpen && (
             <div className="dropdown-menu">
-              <h4>My Account</h4>
+            <li>
+                    <Link to ="/PersonalDetailsForm">
+       My Account
+                    </Link>
+                  </li>
               <ul>
                 <li><a href="#/logout">Logout</a></li>
               </ul>
