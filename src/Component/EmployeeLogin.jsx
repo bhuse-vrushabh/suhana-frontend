@@ -191,6 +191,9 @@
 
 
 
+
+
+
 // import React, { useContext, useState } from "react";
 // import { useNavigate } from "react-router-dom";
 // import Swal from "sweetalert2";
@@ -547,7 +550,109 @@ const EmployeeLogin = () => {
       showConfirmButton: false
     });
   };
-
+  const handleForgotPassword = () => {
+    Swal.fire({
+      title: 'Forgot Password',
+      input: 'email',
+      inputLabel: 'Please enter your email address',
+      inputPlaceholder: 'Email',
+      confirmButtonText: 'Send Reset Link',
+      showCancelButton: true,
+      preConfirm: (inputEmail) => {
+        if (!inputEmail || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(inputEmail)) {
+          Swal.showValidationMessage('Please enter a valid email address');
+          return false;
+        } else {
+          return axios.post(`http://127.0.0.1:8000/api/forgot_password/`, { email: inputEmail })
+            // .then(() => {
+            //   Swal.fire({
+            //     title: 'Success!',
+            //     text: `Reset password link sent to ${inputEmail}. Please check your inbox.`,
+            //     icon: 'success',
+            //     timer: 2000,
+            //     showConfirmButton: false
+            //   })
+              .then(() => {
+                handleOtpAndPasswordReset(inputEmail);
+              })
+           
+            .catch(() => {
+              Swal.fire({
+                title: 'Error!',
+                text: 'Failed to send reset link. Please try again later.',
+                icon: 'error',
+                timer: 2000,
+                showConfirmButton: false
+              });
+            });
+        }
+      }
+    });
+  };
+ 
+  const handleOtpAndPasswordReset = (inputEmail) => {
+    Swal.fire({
+      title: 'Enter OTP',
+      input: 'text',
+      inputLabel: 'Please enter the OTP sent to your email',
+      inputPlaceholder: 'OTP',
+      confirmButtonText: 'Verify OTP',
+      showCancelButton: true,
+      preConfirm: (otp) => {
+        if (!otp || otp.length !== 4) { // Example OTP length validation
+          Swal.showValidationMessage('Please enter a valid 6-digit OTP');
+          return false;
+        } else {
+       
+          Swal.fire({
+            title: 'Reset Password',
+            html:
+              `<input type="password" id="newPassword" class="swal2-input" placeholder="New Password">` +
+              `<input type="password" id="confirmPassword" class="swal2-input" placeholder="Confirm Password">`,
+            confirmButtonText: 'Reset Password',
+            preConfirm: () => {
+              const newPassword = Swal.getPopup().querySelector('#newPassword').value;
+              const confirmPassword = Swal.getPopup().querySelector('#confirmPassword').value;
+ 
+              if (!newPassword || !confirmPassword) {
+                Swal.showValidationMessage('Please enter both password fields');
+              } else if (newPassword !== confirmPassword) {
+                Swal.showValidationMessage('Passwords do not match');
+              } else {
+                return axios.post(`http://127.0.0.1:8000/api/reset_password/`, {
+                 
+                    email:email,
+                    new_password:newPassword,
+                    otp:otp
+               
+                })
+               
+                .then(() => {
+                  Swal.fire({
+                    title: 'Success!',
+                    text: 'Your password has been successfully changed!',
+                    icon: 'success',
+                    timer: 2000,
+                    showConfirmButton: false
+                  });
+                })
+                  .catch(() => {
+                    Swal.fire({
+                      title: 'Error!',
+                      text: 'Failed to reset password. Please try again later.',
+                      icon: 'error',
+                      timer: 2000,
+                      showConfirmButton: false
+                    });
+                  });
+              }
+            }
+          });
+        }
+      }
+    });
+   
+  };
   return (
     <div>
       <div className="container-fluid">
@@ -596,6 +701,9 @@ const EmployeeLogin = () => {
                   {loading ? "Loading..." : "Login"}
                 </button>
               </div>
+              <a href="#" className="loginlinks" onClick={handleForgotPassword}>
+                Forgot password?
+              </a>
             </form>
           </div>
         </div>
@@ -605,3 +713,11 @@ const EmployeeLogin = () => {
 };
 
 export default EmployeeLogin;
+ 
+ 
+
+
+
+
+
+
