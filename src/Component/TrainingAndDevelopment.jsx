@@ -84,7 +84,7 @@ const token = localStorage.getItem('accessToken')
     fontWeight: 'bold',
     color: '#d90606',
     marginBottom: '20px',
-    marginTop: '90px',
+    marginTop: '30px',
     marginLeft: '20px',
   };
  
