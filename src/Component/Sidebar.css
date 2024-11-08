@@ -35,13 +35,13 @@ li {
     list-style: none;
 }
 
-#sidebar {
+/* #sidebar {
     width: 190px;
     z-index: 1000;
     transition: all 0.25s ease-in-out;
     display: flex;
     background-color: #F3741E;
-    height: 100vh; /* Full height */
+    height: 100vh; 
     position: sticky;
     top: 0;
     justify-content: center;
@@ -49,7 +49,7 @@ li {
     border-radius: 20px;
     
     
-}
+} */
 
 /* #sidebar.expand {
     width: 260px;
@@ -201,8 +201,8 @@ h1 {
 
 /* Sidebar styling */
 #sidebar {
-    width: 70px; /* Width of the sidebar */
-    min-width: 70px; /*Minimum width */
+    width: 105px; /* Width of the sidebar */
+    
     z-index: 1000; /* Ensure sidebar is on top */
     display: flex; /* Use flexbox for layout */
     flex-direction: column; /* Stack items vertically */
@@ -214,6 +214,10 @@ h1 {
     left: 0; /* Align to the left */
     gap: 0; /* No gap between items */
     border-radius: 0 20px 20px 0; /* Rounded corners on the right */
+ 
+    justify-content: center;
+    margin-top: 65px;
+    border-radius: 20px;
 }
 
 #sidebar.expand {
@@ -417,7 +421,7 @@ a.sidebar-link {
 /* Additional styles for larger screens */
 @media (min-width: 769px) {
     #sidebar {
-        width: 70px; /* Sidebar width for larger screens */
+        width: 105px; /* Sidebar width for larger screens */
         min-width: 70px; /* Minimum width */
     }
 
@@ -433,7 +437,7 @@ a.sidebar-link {
 }
 
 #sidebar {
-    width: 90px; /* Minimum width when collapsed */
+    width: 105px; /* Minimum width when collapsed */
     /*min-width: 70px; /* Ensures it doesn't shrink too much */
     transition: all 0.25s ease-in-out;
 }

@@ -264,17 +264,17 @@ function Nav_M({ user }) {
                    <ul>
                   {userRole === 'Manager' && (
                     <li>
-                   Welcome
+           
                     </li>
                   )}
                   <li>
                     <Link to ="/createprofile">
-                    <FontAwesomeIcon icon={faUserCircle} size="2x" /> My Account
+                     My Account
                     </Link>
                   </li>
                   <li>
                     <a onClick={handleLogout}>
-                      <FontAwesomeIcon icon={faSignOutAlt} /> Logout
+                      Logout
                     </a>
                   </li>
                 </ul>

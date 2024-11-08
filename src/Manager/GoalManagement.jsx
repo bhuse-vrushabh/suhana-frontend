@@ -204,6 +204,7 @@ const GoalManagement = () => {
                     name="description"
                     value={formData.description}
                     onChange={handleInputChange}
+                     className="input-feild-Man"
                     required
                   />
                 </div>
@@ -215,6 +216,7 @@ const GoalManagement = () => {
                     name="weightage"
                     value={formData.weightage}
                     onChange={handleInputChange}
+                     className="input-feild-Man"
                     required
                   />
                 </div>
@@ -228,6 +230,7 @@ const GoalManagement = () => {
                     name="startDate"
                     value={formData.startDate}
                     onChange={handleInputChange}
+                     className="input-feild-Man"
                     required
                   />
                 </div>
@@ -239,6 +242,7 @@ const GoalManagement = () => {
                     name="endDate"
                     value={formData.endDate}
                     onChange={handleInputChange}
+                     className="input-feild-Man"
                     required
                   />
                   {error && <div className="error-message">{error}</div>}
@@ -250,6 +254,7 @@ const GoalManagement = () => {
                     name="status"
                     value={formData.status}
                     onChange={handleInputChange}
+                     className="input-feild-Man"
                     required
                   >
                     <option value="Pending">Pending</option>

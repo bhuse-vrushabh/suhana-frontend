@@ -26,8 +26,8 @@ function A_profile() {
                         <input  className="A_profile_intp" type="email" id="email" value="admin@tdtl.com" readOnly />
 
                         {/* Static Password Field (not recommended for actual passwords, just as a static example) */}
-                        <label htmlFor="password" className='A_profile_lable'>Password</label>
-                        <input  className="A_profile_intp" type="password" id="password" value="********" readOnly />
+                        {/* <label htmlFor="password" className='A_profile_lable'>Password</label>
+                        <input  className="A_profile_intp" type="password" id="password" value="********" readOnly /> */}
 
                        
                     </div>

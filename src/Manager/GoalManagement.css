@@ -11,59 +11,48 @@
   text-align: center; /* Centered titles */
   margin-bottom: 20px; /* Space below titles */
   font-size: 24px; /* Title font size */
-  color: #333; /* Darker text color */
+ 
 }
 
 .goal-form-m {
-  background-color: #fff;
-  border-radius: 8px;
+  background-color: #ffffff;
   padding: 20px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
 }
 
-/* Form Rows */
 .form-row-m {
   display: flex;
-  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 20px;
   margin-bottom: 15px;
 }
 
 .form-group-m {
   flex: 1;
-  margin-right: 10px;
+  display: flex;
+  flex-direction: column;
 }
 
-.form-group-m:last-child {
-  margin-right: 0;
-}
-
-label {
-  display: block;
-  margin-bottom: 5px;
+.form-group-m label {
+  font-size: 14px;
   font-weight: bold;
+  margin-bottom: 5px;
 }
 
-input[type="text"],
-input[type="number"],
-input[type="date"],
-select {
-  /* width: 100%; */
-  padding: 10px;
-  border: 1px solid #ccc;
+.input-feild-Man, .goal-form-m select {
+  padding: 8px;
+  font-size: 14px;
   border-radius: 4px;
-  box-sizing: border-box;
-  transition: border 0.3s;
+  border: 1px solid #ddd;
 }
 
-input[type="text"]:focus,
-input[type="number"]:focus,
-input[type="date"]:focus,
-select:focus {
-  border: 1px solid #007bff;
+.input-feild-Man:focus, .goal-form-m select:focus {
+  border-color: #007bff;
   outline: none;
 }
 
-/* Button Group */
 .button-group-m {
   text-align: center;
 }
@@ -71,104 +60,89 @@ select:focus {
 .goal-submit-btn-m {
   background: #D5661A;
   color: #fff;
-  border: none;
-  border-radius: 4px;
   padding: 10px 15px;
+  border: none;
+  border-radius: 5px;
   cursor: pointer;
-  font-size: 16px;
-  transition: background-color 0.3s;
+  width: 150px; /* Set a fixed width for the button */
+  margin: 10px auto; /* Center the button horizontally */
+  display: block; /* Make the button a block element to center */
+  text-align: center; /* Center the text inside the button */
+  transition: background-color 0.3s; /* Smooth transition for background color */
 }
 
-/* Goals Table */
+
+
+/* Error Message */
+.error-message {
+  color: #d9534f;
+  font-size: 13px;
+  margin-top: 5px;
+}
+
+/* Table Section */
 .goals-table-section-m {
-  margin-top: 20px;
+  margin-top: 30px;
+}
+
+.goals-table-section-m .form-title {
+  margin-bottom: 20px;
+  text-align: center;
 }
 
 .goals-table-m {
   width: 100%;
   border-collapse: collapse;
-  margin-top: 10px;
-  background-color: #fff;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  background-color: #ffffff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
 }
 
-.goals-table-m th,
-.goals-table-m td {
-  padding: 12px;
+.goals-table-m th, .goals-table-m td {
+  padding: 10px 15px;
   border: 1px solid #ddd;
-  text-align: left;
+  text-align: center;
+  font-size: 14px;
 }
 
 .goals-table-m th {
-  background-color: red;
+  background-color: #007bff;
+  color: #fff;
+  font-weight: 600;
 }
 
+.goals-table-m tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+/* Action Buttons */
 .actions-cell-m {
   display: flex;
+  justify-content: center;
   gap: 10px;
 }
 
-.edit-btn-m,
-.delete-btn-m {
-  background: none;
+.edit-btn-m, .delete-btn-m {
+  padding: 8px;
+  font-size: 16px;
+  color: #fff;
   border: none;
+  border-radius: 4px;
   cursor: pointer;
-  color: black;
+  transition: background-color 0.3s;
 }
 
-.error-message {
-  color: red;
-  font-size: 14px;
-  margin-top: 10px;
+.edit-btn-m {
+  background-color: #28a745;
 }
 
-/* Mobile Responsiveness */
-@media (max-width: 768px) {
-  .form-row-m {
-    flex-direction: column;
-  }
-
-  .form-group-m {
-    margin-right: 0;
-    margin-bottom: 15px;
-  }
-
-  .goal-submit-btn-m {
-    width: 100%;
-  }
-
-  .goals-table-m th,
-  .goals-table-m td {
-    font-size: 14px;
-  }
-
-  .actions-cell-m {
-    flex-direction: column;
-    gap: 5px;
-  }
+.edit-btn-m:hover {
+  background-color: #218838;
 }
 
-@media (max-width: 480px) {
-  .form-title {
-    font-size: 20px;
-  }
+.delete-btn-m {
+  background-color: #dc3545;
+}
 
-  .goal-form-m {
-    padding: 15px;
-  }
-
-  .goal-submit-btn-m {
-    font-size: 14px;
-  }
-
-  .goals-table-m th,
-  .goals-table-m td {
-    font-size: 12px;
-    padding: 10px;
-  }
-
-  .goal-management {
-    margin: 10px;
-    padding: 10px;
-  }
+.delete-btn-m:hover {
+  background-color: #c82333;
 }

@@ -15,7 +15,7 @@ const token = localStorage.getItem('accessToken')
   useEffect(() => {
     const fetchPrograms = async () => {
       try {
-        const response = await fetch('http://127.0.0.1:8000/api/performance/training/', {
+        const response = await fetch('http://127.0.0.1:8000/api/training/', {
           method: 'GET',
           headers: {
             'Authorization': `Bearer ${token}`, // Include the token in the request headers
@@ -83,7 +83,7 @@ const token = localStorage.getItem('accessToken')
     fontWeight: 'bold',
     color: '#d90606',
     marginBottom: '20px',
-    marginTop: '90px',
+    marginTop: '30px',
     marginLeft: '20px',
   };
  

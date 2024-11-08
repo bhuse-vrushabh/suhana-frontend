@@ -3,7 +3,6 @@ import './Dashboard.css';
 import Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
 import BellCurve from 'highcharts/modules/histogram-bellcurve';
-import { Line, Bar, Pie } from 'react-chartjs-2';
 import Sidebar from './Sidebar';
 import Navbar from './Navbar';
 import attendance from './Assets/attendence.svg';
@@ -12,6 +11,7 @@ import leave from './Assets/leave.svg';
 import learning from './Assets/learning.svg';
 
 BellCurve(Highcharts);
+
 
 const sampleChartData = {
   attendance: {
@@ -111,30 +111,44 @@ const KpiCards = () => {
       <Sidebar />
       <div className="content">
         <Navbar />
+
+        
+
         <div className="kpi-cards-container">
           {/* KPI Cards */}
-          <div className="kpi-card" style={{ background: '#FFFFFF' }} onClick={() => handleCardClick('attendance')}>
+          <div
+            className={`kpi-card ${selectedCard === 'attendance' ? 'selected' : ''}`}
+            onClick={() => handleCardClick('attendance')}
+          >
             <img src={attendance} alt="" />
             <h3>Attendance Record</h3>
             <p className="kpi-value">{attendanceRate}%</p>
             <p>You've attended 92% of the sessions this month. Great job!</p>
           </div>
 
-          <div className="kpi-card" style={{ background: '#FFFFFF' }} onClick={() => handleCardClick('performance')}>
+          <div
+            className={`kpi-card ${selectedCard === 'performance' ? 'selected' : ''}`}
+            onClick={() => handleCardClick('performance')}
+          >
             <img src={performance} alt="" />
             <h3>Performance Score</h3>
             <p className="kpi-value">{performanceScore}%</p>
             <p>Your performance is rated at 85% for this quarter.</p>
           </div>
-
-          <div className="kpi-card" style={{ background: '#F6EBC9' }} onClick={() => handleCardClick('leaveBalance')}>
+          <div
+            className={`kpi-card ${selectedCard === 'leaveBalance' ? 'selected' : ''}`}
+            onClick={() => handleCardClick('leaveBalance')}
+          >
             <img src={leave} alt="" />
             <h3>Leave Balance</h3>
             <p className="kpi-value">{leaveBalance} Days</p>
             <p>You have 8 leave days remaining. Plan your time off wisely!</p>
           </div>
 
-          <div className="kpi-card" style={{ background: '#FFFFFF' }} onClick={() => handleCardClick('learning')}>
+          <div
+            className={`kpi-card ${selectedCard === 'learning' ? 'selected' : ''}`}
+            onClick={() => handleCardClick('learning')}
+          >
             <img src={learning} alt="" />
             <h3>Learning & Development</h3>
             <p className="kpi-value">{learningProgress}%</p>

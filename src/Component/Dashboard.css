@@ -4,6 +4,8 @@ General styling for the dashboard
   height: 100vh; /* Full viewport height */
   background-color: #FEFAEE; /* Soft background color */
 }
+
+
  
 /* Container for the main content area */
 .content {
@@ -11,6 +13,7 @@ General styling for the dashboard
   padding: 20px;
 margin-left: 60px;  /* Adds space around the content */
   overflow-y: auto; /* Enables scrolling when content overflows */
+  background-color: rgb(254, 250, 238);
 }
  
 /* Container for KPI cards */
@@ -38,6 +41,8 @@ margin-left: 60px;  /* Adds space around the content */
   padding-top: 20px;
   padding:30px; /* Padding at the top of the card */
   text-align: center;
+  background-color: #FFFFFF; /* Default white background */
+  transition: background-color 0.3s ease; /* Smooth background color transition */
 }
  
 /* Remove margin for the last card */
@@ -53,12 +58,16 @@ margin-left: 60px;  /* Adds space around the content */
   transition: transform 0.6s ease; /* Smooth flipping transition */
   transform-style: none; /* Preserve 3D transformation */
 }
+ /* Hover effect on KPI cards */
+  .kpi-card:hover {
+    background-color: #F6EBC9; /* Light yellow on hover */
+  }
  
-/* .kpi-card:hover .kpi-card-inner {
-  transform: rotateY(180deg); /* Flip card on hover */
- 
- 
- 
+  /* Styling for selected KPI card */
+.kpi-card.selected {
+  background-color: #F6EBC9; /* Gold color for selected card */
+  /* border: 2px solid #DAA520;  Optional: a darker border for emphasis */
+}
  
 .kpi-card-front {
    /* Light background for the front */
