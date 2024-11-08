@@ -14,6 +14,7 @@ const token = localStorage.getItem('accessToken')
   // Fetch training programs from the API when the component is mounted
   useEffect(() => {
     const fetchPrograms = async () => {
+      const token = localStorage.getItem('accessToken')
       try {
         const response = await fetch('http://127.0.0.1:8000/api/training/', {
           method: 'GET',
