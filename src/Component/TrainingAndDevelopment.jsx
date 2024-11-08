@@ -9,13 +9,14 @@ const TrainingAndDevelopment = () => {
   const [error, setError] = useState(null);
  
   // JWT token for authorization
-  const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzMwOTU3MTY0LCJpYXQiOjE3MjgzNjUxNjQsImp0aSI6Ijg3Njc4MmQxZmU2YzQwYTg4NDc3ZGE5MmY5ZGVlZDRiIiwidXNlcl9pZCI6M30.eY53_9gs6tOmeQ96e73aeeltwnXKC873O5aWYCN32bQ'; // Use your token
+const token = localStorage.getItem('accessToken')
  
   // Fetch training programs from the API when the component is mounted
   useEffect(() => {
     const fetchPrograms = async () => {
+      const token = localStorage.getItem('accessToken')
       try {
-        const response = await fetch('http://127.0.0.1:8000/api/performance/training/', {
+        const response = await fetch('http://127.0.0.1:8000/api/training/', {
           method: 'GET',
           headers: {
             'Authorization': `Bearer ${token}`, // Include the token in the request headers
