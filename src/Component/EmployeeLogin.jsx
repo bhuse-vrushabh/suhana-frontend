@@ -496,6 +496,7 @@ const EmployeeLogin = () => {
           // Save tokens and role in context
           setAuthData({ accessToken: access, refreshToken: refresh, role });
 
+          
           Swal.fire({
             title: 'Success!',
             text: `${role.charAt(0).toUpperCase() + role.slice(1)} login successful!`,
