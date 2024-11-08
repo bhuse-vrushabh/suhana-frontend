@@ -1,6 +1,5 @@
 
-<<<<<<< HEAD
-=======
+
  
 
 
@@ -464,7 +463,6 @@
 
 
 
->>>>>>> 6d274e6e0e2727abddb9e40246c9a1b0ce5b30e6
 // EmployeeLogin.js
 import React, { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";

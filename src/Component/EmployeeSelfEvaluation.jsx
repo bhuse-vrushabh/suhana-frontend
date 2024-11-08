@@ -278,13 +278,10 @@
 // export default EmployeeSelfEvaluation;
  
 
-<<<<<<< HEAD
 
 
 
 
-=======
->>>>>>> 6d274e6e0e2727abddb9e40246c9a1b0ce5b30e6
 import React, { useState } from 'react';
 import Sidebar from './Sidebar';
 import Navbar from './Navbar';
@@ -298,27 +295,16 @@ const EmployeeSelfEvaluation = () => {
     { id: 2, name: 'Login Page UI Development' },
     { id: 3, name: 'Login Button Animation' }
   ];
-<<<<<<< HEAD
  
-=======
-
->>>>>>> 6d274e6e0e2727abddb9e40246c9a1b0ce5b30e6
   const [selectedTask, setSelectedTask] = useState(''); // State for selected task
   const [taskId, setTaskId] = useState(null); // State for selected task ID
   const [taskRating, setTaskRating] = useState(0); // State for task rating
   const [selfRating, setSelfRating] = useState(0); // State for self-rating
   const [comments, setComments] = useState(''); // State for comments
-<<<<<<< HEAD
  
   const handleSubmit = (e) => {
     e.preventDefault();
  
-=======
-  
-  const handleSubmit = (e) => {
-    e.preventDefault();
-  
->>>>>>> 6d274e6e0e2727abddb9e40246c9a1b0ce5b30e6
     // Check if a task has been selected
     if (!selectedTask) {
       Swal.fire({
@@ -329,11 +315,7 @@ const EmployeeSelfEvaluation = () => {
       });
       return; // Prevent form submission
     }
-<<<<<<< HEAD
  
-=======
-
->>>>>>> 6d274e6e0e2727abddb9e40246c9a1b0ce5b30e6
     // If validation passes, show success message
     Swal.fire({
       title: 'Submitted Successfully!',
@@ -342,18 +324,13 @@ const EmployeeSelfEvaluation = () => {
       timer: 1500,
       showConfirmButton: false,
     });
-<<<<<<< HEAD
  
-=======
-
->>>>>>> 6d274e6e0e2727abddb9e40246c9a1b0ce5b30e6
     // Reset the form fields
     setSelectedTask('');
     setTaskId(null);
     setTaskRating(0);
     setSelfRating(0);
     setComments('');
-<<<<<<< HEAD
   };
  
   const handleTaskChange = (e) => {
@@ -371,31 +348,11 @@ const EmployeeSelfEvaluation = () => {
     setSelfRating(value);
   };
  
-=======
-  };
-
-  const handleTaskChange = (e) => {
-    const selectedOption = taskOptions.find(task => task.name === e.target.value);
-    setSelectedTask(selectedOption.name);
-    setTaskId(selectedOption.id);
-    setTaskRating(0); // Reset rating when task changes
-  };
-
-  const handleTaskRatingChange = (value) => {
-    setTaskRating(value);
-  };
-
-  const handleSelfRatingChange = (value) => {
-    setSelfRating(value);
-  };
-
->>>>>>> 6d274e6e0e2727abddb9e40246c9a1b0ce5b30e6
   return (
     <div>
       <Navbar />
       <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh', backgroundColor: '#FEFAEE' }}>
         <Sidebar />
-<<<<<<< HEAD
  
         <div style={{ flex: '1', padding: '20px', backgroundColor: '#FEFAEE', borderRadius: '8px' }}>
           <h1 style={{ textAlign: 'center', fontSize: '2rem', fontWeight: 'bold', color: '#d90606', marginBottom: '20px', marginTop: '90px' }}>Employee Self Evaluation</h1>
@@ -403,15 +360,6 @@ const EmployeeSelfEvaluation = () => {
           <form onSubmit={handleSubmit}>
             <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between', marginBottom: '20px' }}>
  
-=======
-
-        <div style={{ flex: '1', padding: '20px', backgroundColor: '#FEFAEE', borderRadius: '8px' }}>
-          <h1 style={{ textAlign: 'center', fontSize: '2rem', fontWeight: 'bold', color: '#d90606', marginBottom: '20px', marginTop: '90px' }}>Employee Self Evaluation</h1>
-
-          <form onSubmit={handleSubmit}>
-            <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between', marginBottom: '20px' }}>
-
->>>>>>> 6d274e6e0e2727abddb9e40246c9a1b0ce5b30e6
               {/* Task Selection Dropdown */}
               <div style={{ flex: '1 1 300px', background: '#F7EDCF', padding: '15px', borderRadius: '8px', margin: '10px', boxShadow: '0 1px 3px rgba(0, 0, 0, 0.1)', marginLeft: '100px' }}>
                 <h2 style={{ fontSize: '1.5rem', fontWeight: 'bold', color: '#d90606', marginBottom: '10px' }}>Select a Task</h2>
@@ -422,11 +370,7 @@ const EmployeeSelfEvaluation = () => {
                   ))}
                 </select>
               </div>
-<<<<<<< HEAD
  
-=======
-
->>>>>>> 6d274e6e0e2727abddb9e40246c9a1b0ce5b30e6
               {/* Self Rating Section */}
               <div style={{ flex: '1 1 300px', background: '#F7EDCF', padding: '15px', borderRadius: '8px', margin: '10px', boxShadow: '0 1px 3px rgba(0, 0, 0, 0.1)' }}>
                 <h2 style={{ fontSize: '1.5rem', fontWeight: 'bold', color: '#d90606', marginBottom: '10px' }}>Self Rating</h2>
@@ -448,11 +392,7 @@ const EmployeeSelfEvaluation = () => {
                   ))}
                 </div>
               </div>
-<<<<<<< HEAD
  
-=======
-
->>>>>>> 6d274e6e0e2727abddb9e40246c9a1b0ce5b30e6
               {/* Comments Section */}
               <div style={{ flex: '1 1 300px', background: '#F7EDCF', padding: '15px', borderRadius: '8px', margin: '10px', boxShadow: '0 1px 3px rgba(0, 0, 0, 0.1)' }}>
                 <h2 style={{ fontSize: '1.5rem', fontWeight: 'bold', color: '#d90606', marginBottom: '10px' }}>Add Your Comment </h2>
@@ -464,11 +404,7 @@ const EmployeeSelfEvaluation = () => {
                   placeholder="Add your comment here in 50 words..."
                 />
               </div>
-<<<<<<< HEAD
  
-=======
-
->>>>>>> 6d274e6e0e2727abddb9e40246c9a1b0ce5b30e6
             </div>
 
             {/* Submit Button */}
@@ -485,8 +421,5 @@ const EmployeeSelfEvaluation = () => {
 };
 
 export default EmployeeSelfEvaluation;
-<<<<<<< HEAD
  
  
-=======
->>>>>>> 6d274e6e0e2727abddb9e40246c9a1b0ce5b30e6
