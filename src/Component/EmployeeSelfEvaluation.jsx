@@ -283,73 +283,72 @@
 
 
 
-import React, { useState } from 'react';
-import Sidebar from './Sidebar';
-import Navbar from './Navbar';
-import Swal from 'sweetalert2';
-import './EmployeeSelfEvaluation.css';
+// import React, { useState } from 'react';
+// import Sidebar from './Sidebar';
+// import Navbar from './Navbar';
+// import Swal from 'sweetalert2';
+// import './EmployeeSelfEvaluation.css';
  
-const EmployeeSelfEvaluation = () => {
-  // Define tasks with IDs
-  const taskOptions = [
-    { id: 1, name: 'Create login page' },
-    { id: 2, name: 'Login Page UI Development' },
-    { id: 3, name: 'Login Button Animation' }
-  ];
+//  export default  function  EmployeeSelfEvaluation  ()  {
+//   // Define tasks with IDs
+//   const taskOptions = [
+//     { id: 1, name: 'Create login page' },
+//     { id: 2, name: 'Login Page UI Development' },
+//     { id: 3, name: 'Login Button Animation' }
+//   ];
  
-  const [selectedTask, setSelectedTask] = useState(''); // State for selected task
-  const [taskId, setTaskId] = useState(null); // State for selected task ID
-  const [taskRating, setTaskRating] = useState(0); // State for task rating
-  const [selfRating, setSelfRating] = useState(0); // State for self-rating
-  const [comments, setComments] = useState(''); // State for comments
+//   const [selectedTask, setSelectedTask] = useState(''); // State for selected task
+//   const [taskId, setTaskId] = useState(null); // State for selected task ID
+//   const [taskRating, setTaskRating] = useState(0); // State for task rating
+//   const [selfRating, setSelfRating] = useState(0); // State for self-rating
+//   const [comments, setComments] = useState(''); // State for comments
  
-  const handleSubmit = (e) => {
-    e.preventDefault();
+//   const handleSubmit = (e) => {
+//     e.preventDefault();
  
-    // Check if a task has been selected
-    if (!selectedTask) {
-      Swal.fire({
-        title: 'Error',
-        text: 'Please select a task before submitting.',
-        icon: 'error',
-        confirmButtonText: 'Ok',
-      });
-      return; // Prevent form submission
-    }
+//     // Check if a task has been selected
+//     if (!selectedTask) {
+//       Swal.fire({
+//         title: 'Error',
+//         text: 'Please select a task before submitting.',
+//         icon: 'error',
+//         confirmButtonText: 'Ok',
+//       });
+//       return; // Prevent form submission
+//     }
  
-    // If validation passes, show success message
-    Swal.fire({
-      title: 'Submitted Successfully!',
-      text: 'Your self-evaluation has been submitted.',
-      icon: 'success',
-      timer: 1500,
-      showConfirmButton: false,
-    });
+//     // If validation passes, show success message
+//     Swal.fire({
+//       title: 'Submitted Successfully!',
+//       text: 'Your self-evaluation has been submitted.',
+//       icon: 'success',
+//       timer: 1500,
+//       showConfirmButton: false,
+//     });
  
-    // Reset the form fields
-    setSelectedTask('');
-    setTaskId(null);
-    setTaskRating(0);
-    setSelfRating(0);
-    setComments('');
-  };
+//     // Reset the form fields
+//     setSelectedTask('');
+//     setTaskId(null);
+//     setTaskRating(0);
+//     setSelfRating(0);
+//     setComments('');
+//   };
  
-  const handleTaskChange = (e) => {
-    const selectedOption = taskOptions.find(task => task.name === e.target.value);
-    setSelectedTask(selectedOption.name);
-    setTaskId(selectedOption.id);
-    setTaskRating(0); // Reset rating when task changes
-  };
+//   const handleTaskChange = (e) => {
+//     const selectedOption = taskOptions.find(task => task.name === e.target.value);
+//     setSelectedTask(selectedOption.name);
+//     setTaskId(selectedOption.id);
+//     setTaskRating(0); // Reset rating when task changes
+//   };
  
-  const handleTaskRatingChange = (value) => {
-    setTaskRating(value);
-  };
+//   const handleTaskRatingChange = (value) => {
+//     setTaskRating(value);
+//   };
  
-  const handleSelfRatingChange = (value) => {
-    setSelfRating(value);
-  };
+//   const handleSelfRatingChange = (value) => {
+//     setSelfRating(value);
+//   };
  
-=======
  
 // const EmployeeSelfEvaluation = () => {
 //   const [goals, setGoals] = useState([
@@ -698,12 +697,7 @@ const EmployeeSelfEvaluation = () => {
         <Sidebar />
 
  
-        <div style={{ flex: '1', padding: '20px', backgroundColor: '#FEFAEE', borderRadius: '8px' }}>
-          <h1 style={{ textAlign: 'center', fontSize: '2rem', fontWeight: 'bold', color: '#d90606', marginBottom: '20px', marginTop: '90px' }}>Employee Self Evaluation</h1>
- 
-          <form onSubmit={handleSubmit}>
-            <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between', marginBottom: '20px' }}>
-
+       
 
         <div style={{ flex: '1', padding: '20px', backgroundColor: '#FEFAEE', borderRadius: '8px' }}>
           <h1 style={{ textAlign: 'center', fontSize: '2rem', fontWeight: 'bold', color: '#d90606', marginBottom: '20px', marginTop: '90px' }}>Employee Self Evaluation</h1>
@@ -770,4 +764,4 @@ const EmployeeSelfEvaluation = () => {
   );
 };
 
-
+export default EmployeeSelfEvaluation;
