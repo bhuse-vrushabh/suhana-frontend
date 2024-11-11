@@ -27,7 +27,7 @@ const EmployeeSelfEvaluation = () => {
   useEffect(() => {
     // GET request to fetch evaluation data
     console.log("this is the data passed through context",authData.data)
-    
+   
     const fetchEvaluationData = async () => {
       try {
         const response = await axios.get('http://localhost:8000/api/evaluation/', {
@@ -38,17 +38,17 @@ const EmployeeSelfEvaluation = () => {
         });
         setEvaluationData(response.data);
         console.log("Access token:", authData.accessToken);
-
+ 
       } catch (error) {
         console.error('Error fetching evaluation data:', error);
       }
     };
-
+ 
     fetchEvaluationData();
   }, []);
-
-
-
+ 
+ 
+ 
   const handleSubmit = async (e) => {
     e.preventDefault();
  
@@ -187,5 +187,6 @@ const EmployeeSelfEvaluation = () => {
 };
  
 export default EmployeeSelfEvaluation;
+ 
  
  

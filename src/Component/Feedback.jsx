@@ -1,7 +1,7 @@
 
 
  import React, { useState, useEffect } from 'react';
-import axios from 'axios'; // Import Axios
+import axios from 'axios'; 
 import './Feedback.css';
 import swal from 'sweetalert2';
 import Sidebar from "./Sidebar";
@@ -45,12 +45,16 @@ const Feedback = () => {
     };
 
     try {
-//const response = await axios.post('http://127.0.0.1:8000/api/feedback/', payload);
-      //Authorization: `Bearer ${accessToken}`, // Include access token in headers
-  
-      //setResponseMessage(response.data);
-      setSubmitted(true);
-  
+      const response = await axios.post(' http://127.0.0.1:8000/api/employeetomanager_feedback/', {
+        feedback_type: feedbackType,
+        feedback_text:feedbackContent,
+        overallRating:overallRating
+      }, {
+          headers: {
+              'Authorization': `Bearer ${accessToken}`, // Include the token in the request headers
+              'Content-Type': 'application/json',
+            },
+      });
       // Show success SweetAlert message
       swal.fire({
         icon: 'success',
@@ -58,10 +62,11 @@ const Feedback = () => {
         text: 'Your feedback has been successfully submitted!',
         timer: 1500,
       });
+      console.log(response.data);
       
       // Reset the form fields after submission
-      setSelectedEmployee('');
-      setSelectedManager('');
+      // setSelectedEmployee('');
+      // setSelectedManager('');
       setFeedbackContent('');
       setOverallRating('');
     } catch (error) {
@@ -75,7 +80,7 @@ const Feedback = () => {
   };
   const handleStarClick = (rating) => {
     setOverallRating(rating);
-    const ratingDescriptions = ['Poor', 'Fair', 'Good', 'Very Good', 'Excellent'];
+   
   };
 
   
@@ -99,7 +104,7 @@ const Feedback = () => {
                 className="select"
               >
            
-                <option value="employee">Employee Feedback</option>
+                <option value="employee">Self Feedback</option>
                 <option value="manager">Manager Feedback</option>
               </select>
             </div>
@@ -108,19 +113,13 @@ const Feedback = () => {
             {feedbackType === 'employee' && (
               <>
                 <div className="form-group">
-                  <label htmlFor="employeeSelect">Select Employee:</label>
-                  <select
+                  <label htmlFor="employeeSelect">Employee:</label>
+                  <input
                     id="employeeSelect"
                     value={selectedEmployee}
-                    onChange={(e) => setSelectedEmployee(e.target.value)}
-                    required
-                    className="select"
-                  >
-                    <option value="" disabled>Select an employee</option>
-                    <option value="Vikas Patil">Vikas Patil</option>
-                    <option value="Adnan Hafir">Adnan Hafir</option>
-                    <option value="Ajay Bhishnoi">Ajay Bhishnoi</option>
-                  </select>
+                    readOnly
+                    className="input"
+                  />
                 </div>
 
                 <div className="form-group">
@@ -205,3 +204,5 @@ const Feedback = () => {
 };
 
 export default Feedback;
+
+

@@ -192,16 +192,6 @@ const token = localStorage.getItem('accessToken')
               ))}
             </tbody>
           </table>
- 
-         
-               
-             
-             
-             
-             
-             
- 
-         
         </div>
       </div>
     </div>
@@ -209,3 +199,9 @@ const token = localStorage.getItem('accessToken')
 };
  
 export default TrainingAndDevelopment;
+
+
+
+
+
+
