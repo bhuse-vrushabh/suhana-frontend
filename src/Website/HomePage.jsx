@@ -1,23 +1,68 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import './HomePage.css';
 import Sidebar from "./Sidebar_A";
 import { FaUsers, FaUserCheck, FaUserTimes } from 'react-icons/fa';
 import total_employee from './homelog/totalemp.svg'
 import active_employee from './homelog/activeemp.svg'
 import noleave_employee from './homelog/onleave.svg'
+import { AuthContext } from "../Component/AuthContext";
+
 
 const HomePage = () => {
+
+  const { authData } = useContext(AuthContext);
+    console.log("this is the data passed through context",authData)
+
   const [darkMode, setDarkMode] = useState(false);
+  const [homeData, setHomeData] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
 
   const toggleDarkMode = () => {
     setDarkMode(!darkMode);
   };
 
+
+  useEffect(() => {
+    const fetchHomeData = async () => {
+      try {
+        const response = await fetch("http://127.0.0.1:8000/api/emp_stats/2024-11-06/", {
+          method: "GET",
+          headers: {
+          'Authorization': `Bearer ${authData.accessToken}`, // Include the token in the request headers  
+            "Content-Type": "application/json",
+          },
+        });
+        console.log("ths is the responce data", response    )
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+
+        const data = await response.json();
+        console.log("This is the response data:", data)
+        setHomeData(data);
+      } catch (error) {
+        setError(error.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchHomeData();
+  }, []);
+
+
+
+
+
+
   // Card data with distinct colors
   const cardData = [
     {
       title: "Total Employees",
-      value: "150",
+      value: homeData ? `${homeData.Total_emp}` : "Loading...",
+
       icon: <img src={total_employee} alt="" />,
       color: "#edd36b", // yellow
       backColor: "#f5c505", //Darker yellow
@@ -25,7 +70,9 @@ const HomePage = () => {
     },
     {
       title: "Active Employees",
-      value: "140",
+      value: homeData ? `${homeData.total_present_employees}` : "Loading...",
+
+
       icon: <img src={active_employee} alt="" />,
       color: "#1ba877", // Green
       backColor: "#218838", // Darker Green
@@ -33,7 +80,7 @@ const HomePage = () => {
     },
     {
       title: "On Leave",
-      value: "10",
+      value: homeData ? `${homeData.Emp_on_leave}` : "Loading...",
       icon: <img src={noleave_employee} alt="" />,
       color: "#f05665", // Red
       backColor: "#c82333", // Darker Red
