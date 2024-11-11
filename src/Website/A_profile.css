@@ -10,6 +10,7 @@
     align-items: center;
     justify-content: center;
     min-height: 100vh;
+    margin-top: 100px;
 }
 
 /* Profile container */
@@ -69,6 +70,22 @@
 .A_profile_intp:focus {
     border-color: #007bff;
     outline: none;
+}
+
+.A_profile_edit{
+    display: flex;
+    /* align-items: center; */
+    justify-content: center;
+   
+}
+
+.A_profile_edit_btnn{
+    margin-top: 10px 5px;
+    padding: 12px 15px;
+    border-radius: 20px;
+    background-color: #F3741E;
+    border: none;
+    color: white;
 }
 
 /* Responsive styles */
