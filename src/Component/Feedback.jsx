@@ -1,7 +1,8 @@
 
 
- import React, { useState, useEffect } from 'react';
-import axios from 'axios'; 
+
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import './Feedback.css';
 import swal from 'sweetalert2';
 import Sidebar from "./Sidebar";
@@ -15,62 +16,65 @@ const Feedback = () => {
   const [anonymous, setAnonymous] = useState(false);
   const [overallRating, setOverallRating] = useState('0');
   const [submitted, setSubmitted] = useState(false);
-  const [responseMessage, setResponseMessage] = useState(''); // New state for response message
+  const [responseMessage, setResponseMessage] = useState('');
+  const [managers, setManagers] = useState([]);
 
   const accessToken = localStorage.getItem('accessToken');
+
+  // Fetch managers list when component mounts
+  useEffect(() => {
+    const fetchManagers = async () => {
+      try {
+        const response = await axios.get('http://127.0.0.1:8000/api/list_managers/', {
+          headers: {
+            'Authorization': `Bearer ${accessToken}`,
+          },
+        });
+        setManagers(response.data.managers);
+      } catch (error) {
+        console.error("Error fetching managers:", error);
+        swal.fire({
+          icon: 'error',
+          title: 'Failed to Load Managers',
+          text: 'There was an error loading the managers list. Please try again later.',
+        });
+      }
+    };
+    fetchManagers();
+  }, [accessToken]);
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
-    // Ensure all required fields are filled
-    if (!feedbackContent  || !overallRating) {
+    if (!feedbackContent || !overallRating) {
       swal.fire({
-        icon:'error',
-        title:'Incomplete Submission',
-        text:' ',
+        icon: 'error',
+        title: 'Incomplete Submission',
+        text: 'Please complete all required fields.',
       });
       return;
     }
-
-    // Prepare payload
     const payload = {
-      to_user: feedbackType === 'employee' ? selectedEmployee : selectedManager,
+      feedback_type: feedbackType === 'employee' ? 'Self Feedback' : 'Manager Feedback',
       feedback_text: feedbackContent,
-      feedback_type: feedbackType === 'employee' ? 'Direct Report' : 'Manager Feedback',
-      anonymous: anonymous,
-      rating: parseInt(overallRating), // Convert rating to an integer
-      title: "Feedback Submission", // Add a suitable title
-      department: "Your Department", // Replace with the actual department
-      feedback_status: "Acknowledged",
-      response: "", // This can be set to an appropriate value or left blank
+      rating: parseInt(overallRating),
+      ...(feedbackType === 'manager' && { to_user_id: selectedManager }),
     };
-
     try {
-      const response = await axios.post(' http://127.0.0.1:8000/api/employeetomanager_feedback/', {
-        feedback_type: feedbackType,
-        feedback_text:feedbackContent,
-        overallRating:overallRating
-      }, {
-          headers: {
-              'Authorization': `Bearer ${accessToken}`, // Include the token in the request headers
-              'Content-Type': 'application/json',
-            },
+      const response = await axios.post('http://127.0.0.1:8000/api/employeetomanager_feedback/', payload, {
+        headers: {
+          'Authorization': `Bearer ${accessToken}`,
+          'Content-Type': 'application/json',
+        },
       });
-      // Show success SweetAlert message
       swal.fire({
         icon: 'success',
         title: 'Feedback Submitted',
         text: 'Your feedback has been successfully submitted!',
         timer: 1500,
       });
-      console.log(response.data);
-      
-      // Reset the form fields after submission
-      // setSelectedEmployee('');
-      // setSelectedManager('');
       setFeedbackContent('');
       setOverallRating('');
     } catch (error) {
-      console.error("There was an error submitting your feedback:", error);
+      console.error("Error submitting feedback:", error);
       swal.fire({
         icon: 'error',
         title: 'Submission Failed',
@@ -80,10 +84,7 @@ const Feedback = () => {
   };
   const handleStarClick = (rating) => {
     setOverallRating(rating);
-   
   };
-
-  
   return (
     <div className='feedback-page'>
       <Navbar />
@@ -92,8 +93,6 @@ const Feedback = () => {
         <div className="review-feedback-page">
           <h1 className="feedback-title">Feedback Form</h1>
           <form onSubmit={handleSubmit} className="feedback-form">
-
-            {/* Feedback Type Selection */}
             <div className="form-group">
               <label htmlFor="feedbackTypeSelect">Select Feedback Type:</label>
               <select
@@ -103,40 +102,24 @@ const Feedback = () => {
                 required
                 className="select"
               >
-           
                 <option value="employee">Self Feedback</option>
                 <option value="manager">Manager Feedback</option>
               </select>
             </div>
 
-            {/* Employee Feedback Section */}
             {feedbackType === 'employee' && (
-              <>
-                <div className="form-group">
-                  <label htmlFor="employeeSelect">Employee:</label>
-                  <input
-                    id="employeeSelect"
-                    value={selectedEmployee}
-                    readOnly
-                    className="input"
-                  />
-                </div>
-
-                <div className="form-group">
-                  <label htmlFor="feedbackContent">Feedback:</label>
-                  <textarea
-                    id="feedbackContent"
-                    value={feedbackContent}
-                    onChange={(e) => setFeedbackContent(e.target.value)}
-                    placeholder="Provide your feedback..."
-                    required
-                    className="textarea"
-                  />
-                </div>
-              </>
+              <div className="form-group">
+                <label htmlFor="feedbackContent">Feedback:</label>
+                <textarea
+                  id="feedbackContent"
+                  value={feedbackContent}
+                  onChange={(e) => setFeedbackContent(e.target.value)}
+                  placeholder="Provide your feedback..."
+                  required
+                  className="textarea"
+                />
+              </div>
             )}
-
-            {/* Manager Feedback Section */}
             {feedbackType === 'manager' && (
               <>
                 <div className="form-group">
@@ -149,12 +132,13 @@ const Feedback = () => {
                     className="select"
                   >
                     <option value="" disabled>Select a manager</option>
-                    <option value="Sanjay Patil">Sanjay Patil</option>
-                    <option value="Meera Sinha">Meera Sinha</option>
-                    <option value="Ishan Mahir">Ishan Mahir</option>
+                    {managers.map((manager) => (
+                      <option key={manager.user_id} value={manager.user_id}>
+                        {manager.full_name}
+                      </option>
+                    ))}
                   </select>
                 </div>
-
                 <div className="form-group">
                   <label htmlFor="feedbackContent">Feedback:</label>
                   <textarea
@@ -168,8 +152,6 @@ const Feedback = () => {
                 </div>
               </>
             )}
-
-            {/* overall Rating Section */}
             <div className="form-group">
               <label>Overall Rating:</label>
               <div className="star-rating">
@@ -184,13 +166,10 @@ const Feedback = () => {
                 ))}
               </div>
             </div>
-
-            {/* Submit Button */}
             <div className='button-container'>
               <button type="submit" className="submit-button">Submit</button>
             </div>
           </form>
-
           {submitted && responseMessage && (
             <div className="response-message">
               <h2>Response:</h2>
@@ -202,7 +181,4 @@ const Feedback = () => {
     </div>
   );
 };
-
 export default Feedback;
-
-
