@@ -137,9 +137,7 @@ const handleStarClickForPerformance = (type, ratingValue, index) => {
       <div style={{ display: 'flex', minHeight: '100vh', backgroundColor: '#FEFAEE', padding: '20px' }}>
         <Sidebar />
         <div style={{ flex: 1, padding: '20px', backgroundColor: 'rgb(247, 237, 207);', borderRadius: '8px', marginLeft: '80px' }}>
-          <h1 style={{ textAlign: 'center', fontSize: '28px', fontWeight: 'bold', color: '#ff0000', marginTop: '60px' }}>
-            Employee Profile
-          </h1>
+
           {/* persnoal details */}
           {/* Edit Button Icon
           <div style={{ textAlign: 'right', marginBottom: '20px' }}>
@@ -257,3 +255,6 @@ const handleStarClickForPerformance = (type, ratingValue, index) => {
 
 
 export default EmployeeProfile;
+
+
+

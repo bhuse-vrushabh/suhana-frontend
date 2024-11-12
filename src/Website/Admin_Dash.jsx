@@ -180,7 +180,7 @@ const Admin_Dash = () => {
   useEffect(() => {
     const fetchAttendanceData = async () => {
       try {
-        const response = await fetch("http://127.0.0.1:8000/api/emp_stats/2024-11-06/", {
+        const response = await fetch("http://127.0.0.1:8000/api/annual_attendance_rate/2024/", {
           method: "GET",
           headers: {
           'Authorization': `Bearer ${authData.accessToken}`, // Include the token in the request headers  
@@ -212,7 +212,7 @@ const Admin_Dash = () => {
   const kpiData = [
     {
       label: "Attendance Overview",
-      value: attendanceData ? `${attendanceData.total_present_employees}` : "Loading...",
+      value: attendanceData ? `${attendanceData.annual_attendance_rate}%` : "Loading..."  ,
       icon: <img src={att} alt="" />,
       chart: "attendance",
       cardback:
