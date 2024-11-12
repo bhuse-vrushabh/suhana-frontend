@@ -91,6 +91,27 @@
   z-index: 1000; /* Ensure dropdown is above other content */
 }
 
+
+/* Logout button styling */
+.logout-btn {
+  text-decoration: none;
+  color: black; /* White text color */
+ 
+  
+  font-size: 14px; /* Font size */
+  cursor: pointer; /* Pointer cursor on hover */
+  
+ 
+  text-align: left; /* Center-align text */
+  
+}
+
+/* Hover effect for logout button */
+.logout-btn:hover {
+  background-color: none; /* Darker red on hover */
+}
+
+
 /* Media queries for responsive design */
 @media (max-width: 768px) {
   .navbar {
