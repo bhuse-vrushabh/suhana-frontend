@@ -58,7 +58,7 @@ function Registraion() {
         Swal.fire({
             icon: 'success',
             title: 'Success',
-            text: 'Admin profile created/updated successfully!',
+            text: ' profile created successfully!',
             timer: 1500,
             showConfirmButton: false
         });
