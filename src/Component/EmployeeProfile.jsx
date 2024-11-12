@@ -255,3 +255,6 @@ const handleStarClickForPerformance = (type, ratingValue, index) => {
 
 
 export default EmployeeProfile;
+
+
+

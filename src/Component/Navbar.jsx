@@ -1,15 +1,17 @@
 import React, { useState } from 'react';
 import './Navbar.css'; // Ensure this path is correct
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useNavigate, Link } from 'react-router-dom';
 import { faBell, faUser } from '@fortawesome/free-solid-svg-icons';
 
 import suhana from './Suhana1.png';
 import navbell from './Assets/navbell.svg'
-import { Link } from 'react-router-dom';
+//import { Link } from 'react-router-dom';
 
 function Nav() {
   const [isNotificationOpen, setIsNotificationOpen] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const navigate = useNavigate();
 
   // Toggle notification panel
   const toggleNotification = () => {
@@ -19,6 +21,14 @@ function Nav() {
   // Toggle user dropdown
   const toggleDropdown = () => {
     setIsDropdownOpen(!isDropdownOpen);
+  };
+
+  // Logout function
+  const handleLogout = () => {
+    // Clear any stored authentication tokens, session data, etc.
+    localStorage.removeItem('token'); // example for token
+    // Redirect to login page
+    navigate('/EmployeeLogin');
   };
 
   return (
@@ -54,14 +64,18 @@ function Nav() {
           </button>
           {isDropdownOpen && (
             <div className="dropdown-menu">
+              <ul>
             <li>
                     <Link to ="/PersonalDetailsForm">
-       My Account
+                    My Account
                     </Link>
                   </li>
-              <ul>
-                <li><a href="#/logout">Logout</a></li>
-              </ul>
+                  <li>
+                  <Link to="/EmployeeLogin" onClick={handleLogout} className="logout-btn">
+                    Logout
+                  </Link>
+                </li>
+                </ul>
             </div>
           )}
         </div>

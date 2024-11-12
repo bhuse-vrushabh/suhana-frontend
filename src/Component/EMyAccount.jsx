@@ -5,44 +5,42 @@ import Swal from 'sweetalert2';
 import "../Component/EMyAccount.css";
 
 const InputField = ({ label, name, value, onChange, disabled = false, containerClass }) => {
-  const handleContentChange = (e) => {
-    onChange({ target: { name, value: e.currentTarget.textContent } });
-  };
-
   return (
     <div className={containerClass}>
       <label>
         <strong>{label}:</strong>
       </label>
-      <div
-        contentEditable={!disabled}
-        onInput={handleContentChange}
-        suppressContentEditableWarning={true}
-        className="editable-div"
-      >
-        {value}
-      </div>
+      <input
+        type="text"
+        name={name}
+        value={value}
+        onChange={onChange}
+        disabled={disabled}
+        className="editable-input"
+      />
     </div>
   );
 };
 
 const PersonalDetailsForm = () => {
   const [employeeData, setEmployeeData] = useState({
-    name: 'Pradip',
-    middlename: 'Vilas',
-    surname: 'Sawant',
-    contact: '7658359088',
-    email: 'pradipsawant123@gmail.com',
-    gender: 'Male',
-    department: 'Finance',
-    position: 'Accountant',
+    name: '',
+    middlename: '',
+    surname: '',
+    contact: '',
+    email: '',
+    gender: '',
+    department: '',
+    position: '',
   });
 
-  const [isEditing, setIsEditing] = useState(false);
+  const [isEditing, setIsEditing] = useState(true);
+  const [error, setError] = useState('');
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setEmployeeData({ ...employeeData, [name]: value });
+    setError('');
   };
 
   const handleToggleEdit = () => {
@@ -50,6 +48,12 @@ const PersonalDetailsForm = () => {
   };
 
   const handleSaveChanges = () => {
+    const isFormComplete = Object.values(employeeData).every(field => field.trim() !== '');
+    if (!isFormComplete) {
+      setError('Please fill in all fields before saving.');
+      return;
+    }
+
     Swal.fire({
       title: 'Success!',
       text: 'Personal details saved successfully!',
@@ -57,6 +61,7 @@ const PersonalDetailsForm = () => {
       timer: 1500,
       showConfirmButton: false,
     });
+    localStorage.setItem("employeeData", JSON.stringify(employeeData));
     setIsEditing(false);
   };
   
@@ -145,6 +150,7 @@ const PersonalDetailsForm = () => {
         >
           {isEditing ? 'Save Changes' : 'Edit Personal Details'}
         </button>
+        {error && <p className="error-message">{error}</p>}
       </div>
     </div>
   );
