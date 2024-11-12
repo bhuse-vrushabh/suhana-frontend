@@ -27,7 +27,7 @@ const HomePage = () => {
   useEffect(() => {
     const fetchHomeData = async () => {
       try {
-        const response = await fetch("http://127.0.0.1:8000/api/emp_stats/2024-11-06/", {
+        const response = await fetch("http://127.0.0.1:8000/api/emp_stats/2024-11-06/", {   // date not be hardcoded
           method: "GET",
           headers: {
           'Authorization': `Bearer ${authData.accessToken}`, // Include the token in the request headers  
