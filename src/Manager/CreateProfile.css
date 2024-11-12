@@ -37,6 +37,7 @@
 .form-group-Manager input[type="email"],
 .form-group-Manager input[type="tel"],
 .form-group-Manager input[type="date"],
+.form-group-Manager input[type="url"],
 .form-group-Manager select {
   padding: 10px;
   font-size: 14px;
@@ -51,6 +52,7 @@
 .form-group-Manager input[type="email"]:focus,
 .form-group-Manager input[type="tel"]:focus,
 .form-group-Manager input[type="date"]:focus,
+.form-group-Manager input[type="url"]:focus
 .form-group-Manager select:focus {
   border-color: #3085d6;
 }

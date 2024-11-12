@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './GoalManagement.css';
 import './Sidebarr.css';
 import Sidebarr from './Sidebarr';
@@ -11,46 +11,58 @@ import Nav_M from './Nav_M';
 
 const GoalManagement = () => {
   const [formData, setFormData] = useState({
-    employee: '', // Store the employee ID
-    description: '', // Task description
-    weightage: '', // Weightage of the task
+    employee_id: '', // Holds the selected employee ID
+    description: '',
+    weightage: '',
     startDate: '',
     endDate: '',
-    status: 'Pending' // Default status
+    status: '',
   });
 
+  const [employees, setEmployees] = useState([]);
   const [goals, setGoals] = useState([]);
   const [isEditing, setIsEditing] = useState(false);
   const [editIndex, setEditIndex] = useState(null);
   const [error, setError] = useState('');
 
-  // List of employees, but you will only be using their IDs
-  const employees = [
-    { id: 1, name: "Raj" },
-    { id: 2, name: "Varad" },
-    { id: 3, name: "Rohit" },
-    { id: 4, name: "Shubham" }
-  ];
+  useEffect(() => {
+    const fetchEmployees = async () => {
+      try {
+        const response = await axios.get('http://127.0.0.1:8000/api/employees/', {
+          headers: {
+            Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzMzOTE1MzcwLCJpYXQiOjE3MzEzMjMzNzAsImp0aSI6IjQzNjMzZGE5ZGFkNzQ5ZGViM2RlOGYzNDE5NGY3MjU4IiwidXNlcl9pZCI6MjF9.vK2Jb4DtWFiiPgxvZ217rPsOvyLTaEIPQp0aPOULc00`, // Replace with your actual token
+          },
+        });
+
+        if (response.status === 200) {
+          setEmployees(response.data); // Assuming the response is an array of employees
+        }
+      } catch (error) {
+        console.error('Error fetching employees:', error);
+      }
+    };
+
+    fetchEmployees();
+  }, []); // Empty dependency array to run only once on component mount
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData({
       ...formData,
-      [name]: name === "employee" ? Number(value) : value, // Convert employee ID to a number
+      [name]: value,
     });
   };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     const today = new Date();
     today.setHours(0, 0, 0, 0); // Set to start of today to compare dates accurately
-  
+
     // Validate weightage
     if (isNaN(formData.weightage) || formData.weightage <= 0 || formData.weightage > 10) {
       setError("Weightage must be a number between 1 and 10.");
       return;
     }
-  
+
     // Validate start date to be today or later
     if (formData.startDate) {
       const start = new Date(formData.startDate);
@@ -59,7 +71,7 @@ const GoalManagement = () => {
         return;
       }
     }
-  
+
     // Validate that end date is after start date
     if (formData.startDate && formData.endDate) {
       const start = new Date(formData.startDate);
@@ -69,19 +81,20 @@ const GoalManagement = () => {
         return;
       }
     }
-  
+
     setError(""); // Clear errors if all validations pass
-  
+
 
     const formattedData = {
-      employee: formData.employee,
+      employee_id: parseInt(formData.employee_id, 10), // Convert to integer
       description: formData.description,
       weightage: Number(formData.weightage),
-      start_date: formData.startDate, // Use snake_case to match API requirements
+      start_date: formData.startDate,
       end_date: formData.endDate,
       status: formData.status,
     };
-  
+
+
     // Format the dates correctly
     if (formattedData.start_date) {
       formattedData.start_date = new Date(formattedData.start_date).toISOString().split('T')[0]; // Format as YYYY-MM-DD
@@ -89,20 +102,20 @@ const GoalManagement = () => {
     if (formattedData.end_date) {
       formattedData.end_date = new Date(formattedData.end_date).toISOString().split('T')[0]; // Format as YYYY-MM-DD
     }
-  
+
     console.log('Submitting Goal Data:', formattedData); // Log the data being sent
-  
+
     try {
-      const response = await axios.post('http://127.0.0.1:8000/api/performance/goals/', formattedData, {
+      const response = await axios.post('http://127.0.0.1:8000/api/setgoals/', formattedData, {
         headers: {
-          Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzMyMjUyNjI1LCJpYXQiOjE3Mjk2NjA2MjUsImp0aSI6IjVhODdhNGFmNmU4YjQ2ODJhNzI5NDc0YjliZTYwYmZiIiwidXNlcl9pZCI6M30.rzZp4IhtsJCLpKaUUSPuQtsITxCBmDuiPweBjgAfefk`, // Replace with your actual token
+          Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzMzOTE1MzcwLCJpYXQiOjE3MzEzMjMzNzAsImp0aSI6IjQzNjMzZGE5ZGFkNzQ5ZGViM2RlOGYzNDE5NGY3MjU4IiwidXNlcl9pZCI6MjF9.vK2Jb4DtWFiiPgxvZ217rPsOvyLTaEIPQp0aPOULc00`, // Replace with your actual token
         },
       });
-  
+
       if (response.status === 201 || response.status === 200) {
         const responseData = response.data;
         console.log('Response data:', responseData);
-  
+
         if (isEditing) {
           const updatedGoals = [...goals];
           updatedGoals[editIndex] = responseData;
@@ -111,25 +124,31 @@ const GoalManagement = () => {
           setEditIndex(null);
           Swal.fire('Success', 'Task updated successfully!', 'success');
         } else {
-          setGoals([...goals, responseData]);
+          setGoals((prevGoals) => [...prevGoals, responseData]);
           Swal.fire('Success', 'Task added successfully!', 'success');
         }
-  
+
         // Reset the form
-        setFormData({ employee: '', description: '', weightage: '', startDate: '', endDate: '', status: 'Pending' });
+        setFormData({ employee_id:'', description: '', weightage: '', startDate: '', endDate: '', status: 'Pending' });
       }
     } catch (error) {
       if (error.response) {
         console.error("Error data:", error.response.data);
         const errorDetails = error.response.data;
-        const errorMessage = Object.values(errorDetails).flat().join(', ');
-        Swal.fire('Error', errorMessage || 'There was an issue saving the task. Please try again.', 'error');
+
+        // Specific handling for "Employee not found" error
+        if (errorDetails.employee_id) {
+          Swal.fire('Error', `Employee ID error: ${errorDetails.employee_id}`, 'error');
+        } else {
+          const errorMessage = Object.values(errorDetails).flat().join(', ');
+          Swal.fire('Error', errorMessage || 'There was an issue saving the task. Please try again.', 'error');
+        }
       } else {
         console.error("Error message:", error.message);
         Swal.fire('Error', 'An unexpected error occurred.', 'error');
       }
     }
-  };
+  }
 
   const handleEdit = (index) => {
     setIsEditing(true);
@@ -139,7 +158,7 @@ const GoalManagement = () => {
 
   const handleDelete = (index) => {
     const goalId = goals[index].id; // Get the ID of the goal to delete
-  
+
     Swal.fire({
       title: 'Are you sure?',
       text: "Do you want to delete this task?",
@@ -156,11 +175,11 @@ const GoalManagement = () => {
               Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzMyMjUyNjI1LCJpYXQiOjE3Mjk2NjA2MjUsImp0aSI6IjVhODdhNGFmNmU4YjQ2ODJhNzI5NDc0YjliZTYwYmZiIiwidXNlcl9pZCI6M30.rzZp4IhtsJCLpKaUUSPuQtsITxCBmDuiPweBjgAfefk`, // Replace with your actual token
             },
           });
-  
+
           // Remove the deleted goal from the state
           const updatedGoals = goals.filter((_, i) => i !== index);
           setGoals(updatedGoals);
-  
+
           Swal.fire('Deleted!', 'Task has been deleted.', 'success');
         } catch (error) {
           console.error("Error deleting the task:", error.response ? error.response.data : error.message);
@@ -169,32 +188,37 @@ const GoalManagement = () => {
       }
     });
   };
-  
+
   return (
     <div>
       <div className="main-wrapper">
         <Sidebarr />
         <div className="main-wrapper_n">
-          <Nav_M/>
+          <Nav_M />
           <div>
             <h2 className="form-title">{isEditing ? 'Edit Employee Task' : 'Employee Task'}</h2>
             <form className="goal-form-m" onSubmit={handleSubmit}>
               <div className="form-row-m">
                 <div className="form-group-m">
-                  <label>Employee ID:</label>
+                  <label htmlFor="employee">Employee:</label>
                   <select
-                    name="employee"
-                    value={formData.employee}
+                    name="employee_id"
+                    value={formData.employee_id}
                     onChange={handleInputChange}
                     required
                   >
-                    <option value="">Select an employee ID</option>
+                    <option value="">Select an employee</option>
                     {employees.map((employee) => (
-                      <option key={employee.id} value={employee.id}>
-                        {employee.id}
+                      <option key={employee.employee_id} value={employee.employee_id}>
+                        {employee.full_name} (ID: {employee.employee_id})
                       </option>
                     ))}
                   </select>
+
+
+
+
+
                 </div>
 
                 <div className="form-group-m">
@@ -204,7 +228,7 @@ const GoalManagement = () => {
                     name="description"
                     value={formData.description}
                     onChange={handleInputChange}
-                     className="input-feild-Man"
+                    className="input-feild-Man"
                     required
                   />
                 </div>
@@ -216,7 +240,7 @@ const GoalManagement = () => {
                     name="weightage"
                     value={formData.weightage}
                     onChange={handleInputChange}
-                     className="input-feild-Man"
+                    className="input-feild-Man"
                     required
                   />
                 </div>
@@ -230,7 +254,7 @@ const GoalManagement = () => {
                     name="startDate"
                     value={formData.startDate}
                     onChange={handleInputChange}
-                     className="input-feild-Man"
+                    className="input-feild-Man"
                     required
                   />
                 </div>
@@ -242,7 +266,7 @@ const GoalManagement = () => {
                     name="endDate"
                     value={formData.endDate}
                     onChange={handleInputChange}
-                     className="input-feild-Man"
+                    className="input-feild-Man"
                     required
                   />
                   {error && <div className="error-message">{error}</div>}
@@ -254,11 +278,11 @@ const GoalManagement = () => {
                     name="status"
                     value={formData.status}
                     onChange={handleInputChange}
-                     className="input-feild-Man"
+                    className="input-feild-Man"
                     required
                   >
                     <option value="Pending">Pending</option>
-                    
+
                     <option value="Completed">Completed</option>
                   </select>
                 </div>
@@ -278,7 +302,7 @@ const GoalManagement = () => {
               <table className="goals-table-m">
                 <thead>
                   <tr>
-                    <th>Employee ID</th>
+                  <th>Employee ID - Name</th>
                     <th>Description</th>
                     <th>Weightage</th>
                     <th>Start Date</th>
@@ -290,7 +314,7 @@ const GoalManagement = () => {
                 <tbody>
                   {goals.map((goal, index) => (
                     <tr key={index}>
-                      <td>{goal.employee}</td>
+                       <td>{employees.find(emp => emp.employee_id === goal.employee_id)?.full_name}</td>
                       <td>{goal.description}</td>
                       <td>{goal.weightage}</td>
                       <td>{goal.start_date}</td>
