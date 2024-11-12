@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect ,useContext} from 'react';
 import Sidebarr from './Sidebarr';
 
 import "./Sidebarr";
@@ -8,20 +8,20 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Swal from 'sweetalert2';
 import axios from 'axios';
 import Nav_M from './Nav_M';
+import { AuthContext } from "../Component/AuthContext";
 
 function TrainingDevelopmentPage() {
+    const { authData } = useContext(AuthContext);
+    console.log("this is the data passed through context",authData)
     const [programs] = useState([
         { id: 1, name: 'Leadership Training', duration: '5 days', description: 'Developing leadership skills', trainer: 'Niranjan Navale', startDate: '2024-10-15', endDate: '2024-10-19' },
         { id: 2, name: 'Team Management', duration: '3 days', description: 'Effective team management strategies', trainer: 'Rohan Joshi', startDate: '2024-11-01', endDate: '2024-11-03' },
     ]);
 
-    const [employees] = useState([
-        { id: 1, name: 'Rohit Bhagat' },
-        { id: 2, name: 'Vaibhav Gawali' },
-        { id: 3, name: 'Kunal Shinde' },
-        { id: 4, name: 'Abhi Phaphale' },
-    ]);
 
+
+
+    const [employees, setEmployees] = useState([]);
     const [assignments, setAssignments] = useState([]);
     const [formData, setFormData] = useState({
         selectedEmployee: '',
@@ -29,11 +29,32 @@ function TrainingDevelopmentPage() {
         selectedStartDate: '',
         selectedEndDate: '',
         description: '',
-        status: 'Assigned', // Default status
+        status: '', // Default status
         editingIndex: null,
     });
     const [dateError, setDateError] = useState('');
 
+    // Fetch employee data from the API
+   
+  useEffect(() => {
+    const fetchEmployees = async () => {
+      try {
+        const response = await axios.get('http://127.0.0.1:8000/api/employees/', {
+          headers: {
+            Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzMzOTE1MzcwLCJpYXQiOjE3MzEzMjMzNzAsImp0aSI6IjQzNjMzZGE5ZGFkNzQ5ZGViM2RlOGYzNDE5NGY3MjU4IiwidXNlcl9pZCI6MjF9.vK2Jb4DtWFiiPgxvZ217rPsOvyLTaEIPQp0aPOULc00`, // Replace with your actual token
+          },
+        });
+
+        if (response.status === 200) {
+          setEmployees(response.data); // Assuming the response is an array of employees
+        }
+      } catch (error) {
+        console.error('Error fetching employees:', error);
+      }
+    };
+
+    fetchEmployees();
+  }, []);
     const handleInputChange = (e) => {
         const { name, value } = e.target;
         setFormData({
@@ -48,37 +69,38 @@ function TrainingDevelopmentPage() {
     const handleAssignProgram = async (e) => {
         e.preventDefault();
         const { selectedEmployee, selectedProgram, selectedStartDate, selectedEndDate, description, status, editingIndex } = formData;
-    
+
         const today = new Date();
         const startDate = new Date(selectedStartDate);
         const endDate = new Date(selectedEndDate);
-    
+
         today.setHours(0, 0, 0, 0);
         startDate.setHours(0, 0, 0, 0);
         endDate.setHours(0, 0, 0, 0);
-    
+
         if (startDate < today) {
             setDateError("Start Date must be today or later.");
             return;
         }
-    
+
         if (endDate < today) {
             setDateError("End Date must be today or later.");
             return;
         }
-    
+
         if (startDate > endDate) {
             setDateError("End Date must be after Start Date.");
             return;
         }
-    
+
         if (selectedEmployee && selectedProgram && selectedStartDate && selectedEndDate && description) {
             const program = programs.find(prog => prog.id === parseInt(selectedProgram));
-            const employee = employees.find(emp => emp.id === parseInt(selectedEmployee));
-    
+            
+
+
             const assignmentPayload = {
                 name: program.name,
-                employee: employee.name, // Store employee name directly
+                
                 description,
                 start_date: selectedStartDate,
                 end_date: selectedEndDate,
@@ -89,18 +111,18 @@ function TrainingDevelopmentPage() {
                 if (editingIndex !== null) {
                     // Update existing assignment with PUT request
                     const assignmentId = assignments[editingIndex].id; // Assuming `id` is stored in `assignments`
-                    response = await axios.put(`http://127.0.0.1:8000/api/performance/training/2/`, assignmentPayload, {
+                    response = await axios.put(`http://127.0.0.1:8000/api/training/2/`, assignmentPayload, {
                         headers: {
                             'Content-Type': 'application/json',
-                            'Authorization': `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzMyMjUyNjI1LCJpYXQiOjE3Mjk2NjA2MjUsImp0aSI6IjVhODdhNGFmNmU4YjQ2ODJhNzI5NDc0YjliZTYwYmZiIiwidXNlcl9pZCI6M30.rzZp4IhtsJCLpKaUUSPuQtsITxCBmDuiPweBjgAfefk`,
+                            'Authorization': `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzMzOTE1MzcwLCJpYXQiOjE3MzEzMjMzNzAsImp0aSI6IjQzNjMzZGE5ZGFkNzQ5ZGViM2RlOGYzNDE5NGY3MjU4IiwidXNlcl9pZCI6MjF9.vK2Jb4DtWFiiPgxvZ217rPsOvyLTaEIPQp0aPOULc00`,
                         }
                     });
                 } else {
                     // Create new assignment with POST request
-                    response = await axios.post('http://127.0.0.1:8000/api/performance/training/', assignmentPayload, {
+                    response = await axios.post('http://127.0.0.1:8000/api/training/', assignmentPayload, {
                         headers: {
                             'Content-Type': 'application/json',
-                            'Authorization': `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzMyMjUyNjI1LCJpYXQiOjE3Mjk2NjA2MjUsImp0aSI6IjVhODdhNGFmNmU4YjQ2ODJhNzI5NDc0YjliZTYwYmZiIiwidXNlcl9pZCI6M30.rzZp4IhtsJCLpKaUUSPuQtsITxCBmDuiPweBjgAfefk`,
+                            'Authorization': `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzMzOTE1MzcwLCJpYXQiOjE3MzEzMjMzNzAsImp0aSI6IjQzNjMzZGE5ZGFkNzQ5ZGViM2RlOGYzNDE5NGY3MjU4IiwidXNlcl9pZCI6MjF9.vK2Jb4DtWFiiPgxvZ217rPsOvyLTaEIPQp0aPOULc00`,
                         }
                     });
                 }
@@ -157,7 +179,7 @@ function TrainingDevelopmentPage() {
         }).then(async (result) => {
             if (result.isConfirmed) {
                 try {
-                    const response = await axios.delete(`http://127.0.0.1:8000/api/performance/training/5/`, {
+                    const response = await axios.delete(`http://127.0.0.1:8000/api/training/5/`, {
                         headers: {
                             'Content-Type': 'application/json',
                             'Authorization': `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzMyMjUyNjI1LCJpYXQiOjE3Mjk2NjA2MjUsImp0aSI6IjVhODdhNGFmNmU4YjQ2ODJhNzI5NDc0YjliZTYwYmZiIiwidXNlcl9pZCI6M30.rzZp4IhtsJCLpKaUUSPuQtsITxCBmDuiPweBjgAfefk`,
@@ -221,12 +243,11 @@ function TrainingDevelopmentPage() {
             <div className="main-wrapper">
                 <Sidebarr />
                 <div className="main-wrapper_n">
-                    <Nav_M/>
+                    <Nav_M />
                     <div>
                         <section id="assign">
                             <h2>Training to Employees</h2>
                             <form className="goal-form-M" onSubmit={handleAssignProgram}>
-
                                 <div className="form-group-M-inline">
                                     {/* Employee Name and Program Name */}
                                     <div className="form-group-M">
@@ -234,7 +255,9 @@ function TrainingDevelopmentPage() {
                                         <select name="selectedEmployee" value={formData.selectedEmployee} onChange={handleInputChange} required>
                                             <option value="">--Select Employee--</option>
                                             {employees.map(employee => (
-                                                <option key={employee.id} value={employee.id}>{employee.name}</option>
+                                                <option key={employee.id} value={employee.id}>
+                                                    {employee.id} - {employee.full_name}
+                                                </option>
                                             ))}
                                         </select>
                                     </div>
@@ -248,7 +271,6 @@ function TrainingDevelopmentPage() {
                                         </select>
                                     </div>
                                 </div>
-
                                 <div className="form-group-M-inline">
                                     {/* Start Date, End Date, Description, and Status */}
                                     <div className="form-group-M">
@@ -273,7 +295,7 @@ function TrainingDevelopmentPage() {
                                     <div className="form-group-M">
                                         <label>Status:</label>
                                         <select name="status" value={formData.status} onChange={handleInputChange}>
-                                            <option value="Assigned">Assigned</option>
+                                            
                                             <option value="In Progress">In Progress</option>
                                             <option value="Completed">Completed</option>
                                         </select>
@@ -291,13 +313,13 @@ function TrainingDevelopmentPage() {
 
                         </section>
 
-                        <section id="assigned-training">
 
+                        <section id="assigned-training">
                             {assignments.length > 0 ? (
                                 <table className="assigned-programs-table-M">
                                     <thead>
                                         <tr>
-                                            <th>Employee Name</th>
+                                            <th>Employee ID - Name</th>
                                             <th>Program Name</th>
                                             <th>Start Date</th>
                                             <th>End Date</th>
@@ -309,7 +331,9 @@ function TrainingDevelopmentPage() {
                                     <tbody>
                                         {assignments.map((assignment, index) => (
                                             <tr key={index}>
-                                                <td>{employees.find(emp => emp.id === parseInt(assignment.selectedEmployee))?.name}</td>
+                                                <td>
+                                                    {employees.find(emp => emp.id === parseInt(assignment.selectedEmployee))?.id} - {employees.find(emp => emp.id === assignment.selectedEmployee)?.full_name}
+                                                </td>
                                                 <td>{assignment.name}</td>
                                                 <td>{assignment.start_date}</td>
                                                 <td>{assignment.end_date}</td>
