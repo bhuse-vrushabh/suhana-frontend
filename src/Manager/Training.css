@@ -32,7 +32,8 @@
   margin-bottom: 15px;
 }
 
-label {
+.form-group-M label {
+  font-size: 14px;
   font-weight: bold;
   margin-bottom: 5px;
   color: #555;

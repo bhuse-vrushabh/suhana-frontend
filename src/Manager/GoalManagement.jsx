@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect,useContext } from 'react';
 import './GoalManagement.css';
 import './Sidebarr.css';
 import Sidebarr from './Sidebarr';
@@ -8,8 +8,9 @@ import { faEdit, faTrash } from '@fortawesome/free-solid-svg-icons';
 import Swal from 'sweetalert2'; // Import SweetAlert2
 import axios from 'axios';
 import Nav_M from './Nav_M';
-
+import { AuthContext } from '../Component/AuthContext';
 const GoalManagement = () => {
+  const { authData } = useContext(AuthContext);
   const [formData, setFormData] = useState({
     employee_id: '', // Holds the selected employee ID
     description: '',
@@ -30,7 +31,8 @@ const GoalManagement = () => {
       try {
         const response = await axios.get('http://127.0.0.1:8000/api/employees/', {
           headers: {
-            Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzMzOTE1MzcwLCJpYXQiOjE3MzEzMjMzNzAsImp0aSI6IjQzNjMzZGE5ZGFkNzQ5ZGViM2RlOGYzNDE5NGY3MjU4IiwidXNlcl9pZCI6MjF9.vK2Jb4DtWFiiPgxvZ217rPsOvyLTaEIPQp0aPOULc00`, // Replace with your actual token
+            Authorization: `Bearer ${authData.accessToken}`, // Use token from context
+            "Content-Type": "application/json",
           },
         });
 
@@ -108,7 +110,8 @@ const GoalManagement = () => {
     try {
       const response = await axios.post('http://127.0.0.1:8000/api/setgoals/', formattedData, {
         headers: {
-          Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzMzOTE1MzcwLCJpYXQiOjE3MzEzMjMzNzAsImp0aSI6IjQzNjMzZGE5ZGFkNzQ5ZGViM2RlOGYzNDE5NGY3MjU4IiwidXNlcl9pZCI6MjF9.vK2Jb4DtWFiiPgxvZ217rPsOvyLTaEIPQp0aPOULc00`, // Replace with your actual token
+          Authorization: `Bearer ${authData.accessToken}`, // Use token from context
+          "Content-Type": "application/json",
         },
       });
 
@@ -172,7 +175,8 @@ const GoalManagement = () => {
         try {
           await axios.delete(`http://127.0.0.1:8000/api/performance/goals/23/`, {
             headers: {
-              Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzMyMjUyNjI1LCJpYXQiOjE3Mjk2NjA2MjUsImp0aSI6IjVhODdhNGFmNmU4YjQ2ODJhNzI5NDc0YjliZTYwYmZiIiwidXNlcl9pZCI6M30.rzZp4IhtsJCLpKaUUSPuQtsITxCBmDuiPweBjgAfefk`, // Replace with your actual token
+              Authorization: `Bearer ${authData.accessToken}`, // Use token from context
+              "Content-Type": "application/json",
             },
           });
 
@@ -200,7 +204,7 @@ const GoalManagement = () => {
             <form className="goal-form-m" onSubmit={handleSubmit}>
               <div className="form-row-m">
                 <div className="form-group-m">
-                  <label htmlFor="employee">Employee:</label>
+                  <label htmlFor="employee">Employee Name:</label>
                   <select
                     name="employee_id"
                     value={formData.employee_id}
@@ -315,6 +319,7 @@ const GoalManagement = () => {
                   {goals.map((goal, index) => (
                     <tr key={index}>
                        <td>{employees.find(emp => emp.employee_id === goal.employee_id)?.full_name}</td>
+                       
                       <td>{goal.description}</td>
                       <td>{goal.weightage}</td>
                       <td>{goal.start_date}</td>

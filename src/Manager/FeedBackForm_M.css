@@ -76,5 +76,25 @@
     transition: background-color 0.3s; /* Smooth transition for background color */
   }
   
-
+  .Mger-star-rating {
+    display: flex;
+    gap: 5px; /* Spacing between stars */
+    align-items: center;
+    cursor: pointer;
+  }
+  
+  /* Unfilled star styling */
+  .Mger-star {
+    font-size: 3.0rem;
+    color: lightgray;
+    transition: color 0.3s;
+  }
+  
+  /* Filled star styling */
+  .Mger-star-filled {
+    font-size:3.0rem;
+    color: gold;
+    transition: color 0.3s;
+  }
+  
   
