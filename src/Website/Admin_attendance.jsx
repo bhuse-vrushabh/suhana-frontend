@@ -79,14 +79,14 @@ const Admin_attendance = () => {
                                                         <span>{feedback.rating}</span>
                                                     </div>
                                                 </div>
-                                                <div className="table-row">
+                                                {/* <div className="table-row">
                                                     <div className="table-header">Department</div>
                                                     <div className="table-data">{feedback.department}</div>
                                                 </div>
                                                 <div className="table-row">
                                                     <div className="table-header">Status</div>
                                                     <div className="table-data">{feedback.feedback_status}</div>
-                                                </div>
+                                                </div> */}
                                                 {feedback.response && (
                                                     <div className="table-row">
                                                         <div className="table-header">Response</div>

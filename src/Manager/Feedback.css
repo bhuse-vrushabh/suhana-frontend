@@ -98,10 +98,10 @@
  
 /* Responsive adjustments */
 @media (max-width: 768px) {
-  .admin-wrapper {
+  /* .admin-wrapper {
       flex-direction: column;
   }
- 
+  */
   .feedback-card {
       flex: 0 0 100%; /* Make cards full width on smaller screens */
   }
