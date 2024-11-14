@@ -41,7 +41,8 @@ function TrainingDevelopmentPage() {
       try {
         const response = await axios.get('http://127.0.0.1:8000/api/employees/', {
           headers: {
-            Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzMzOTE1MzcwLCJpYXQiOjE3MzEzMjMzNzAsImp0aSI6IjQzNjMzZGE5ZGFkNzQ5ZGViM2RlOGYzNDE5NGY3MjU4IiwidXNlcl9pZCI6MjF9.vK2Jb4DtWFiiPgxvZ217rPsOvyLTaEIPQp0aPOULc00`, // Replace with your actual token
+            Authorization: `Bearer ${authData.accessToken}`, // Use token from context
+            "Content-Type": "application/json",
           },
         });
 
@@ -113,16 +114,16 @@ function TrainingDevelopmentPage() {
                     const assignmentId = assignments[editingIndex].id; // Assuming `id` is stored in `assignments`
                     response = await axios.put(`http://127.0.0.1:8000/api/training/2/`, assignmentPayload, {
                         headers: {
-                            'Content-Type': 'application/json',
-                            'Authorization': `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzMzOTE1MzcwLCJpYXQiOjE3MzEzMjMzNzAsImp0aSI6IjQzNjMzZGE5ZGFkNzQ5ZGViM2RlOGYzNDE5NGY3MjU4IiwidXNlcl9pZCI6MjF9.vK2Jb4DtWFiiPgxvZ217rPsOvyLTaEIPQp0aPOULc00`,
+                            Authorization: `Bearer ${authData.accessToken}`, // Use token from context
+                            "Content-Type": "application/json",
                         }
                     });
                 } else {
                     // Create new assignment with POST request
                     response = await axios.post('http://127.0.0.1:8000/api/training/', assignmentPayload, {
                         headers: {
-                            'Content-Type': 'application/json',
-                            'Authorization': `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzMzOTE1MzcwLCJpYXQiOjE3MzEzMjMzNzAsImp0aSI6IjQzNjMzZGE5ZGFkNzQ5ZGViM2RlOGYzNDE5NGY3MjU4IiwidXNlcl9pZCI6MjF9.vK2Jb4DtWFiiPgxvZ217rPsOvyLTaEIPQp0aPOULc00`,
+                            Authorization: `Bearer ${authData.accessToken}`, // Use token from context
+                            "Content-Type": "application/json",
                         }
                     });
                 }
@@ -181,8 +182,8 @@ function TrainingDevelopmentPage() {
                 try {
                     const response = await axios.delete(`http://127.0.0.1:8000/api/training/5/`, {
                         headers: {
-                            'Content-Type': 'application/json',
-                            'Authorization': `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzMyMjUyNjI1LCJpYXQiOjE3Mjk2NjA2MjUsImp0aSI6IjVhODdhNGFmNmU4YjQ2ODJhNzI5NDc0YjliZTYwYmZiIiwidXNlcl9pZCI6M30.rzZp4IhtsJCLpKaUUSPuQtsITxCBmDuiPweBjgAfefk`,
+                            Authorization: `Bearer ${authData.accessToken}`, // Use token from context
+                            "Content-Type": "application/json",
                         }
                     });
 
@@ -253,10 +254,10 @@ function TrainingDevelopmentPage() {
                                     <div className="form-group-M">
                                         <label>Employee Name:</label>
                                         <select name="selectedEmployee" value={formData.selectedEmployee} onChange={handleInputChange} required>
-                                            <option value="">--Select Employee--</option>
+                                            <option value="">Select Employee</option>
                                             {employees.map(employee => (
                                                 <option key={employee.id} value={employee.id}>
-                                                    {employee.id} - {employee.full_name}
+                                                     {employee.full_name} (ID: {employee.employee_id})
                                                 </option>
                                             ))}
                                         </select>
@@ -264,22 +265,11 @@ function TrainingDevelopmentPage() {
                                     <div className="form-group-M">
                                         <label>Program Name:</label>
                                         <select name="selectedProgram" value={formData.selectedProgram} onChange={handleInputChange} required>
-                                            <option value="">--Select Program--</option>
+                                            <option value="">Select Program</option>
                                             {programs.map(program => (
                                                 <option key={program.id} value={program.id}>{program.name}</option>
                                             ))}
                                         </select>
-                                    </div>
-                                </div>
-                                <div className="form-group-M-inline">
-                                    {/* Start Date, End Date, Description, and Status */}
-                                    <div className="form-group-M">
-                                        <label>Start Date:</label>
-                                        <input type="date" name="selectedStartDate" value={formData.selectedStartDate} onChange={handleInputChange} required />
-                                    </div>
-                                    <div className="form-group-M">
-                                        <label>End Date:</label>
-                                        <input type="date" name="selectedEndDate" value={formData.selectedEndDate} onChange={handleInputChange} required />
                                     </div>
                                     <div className="form-group-M">
                                         <label>Description:</label>
@@ -292,12 +282,25 @@ function TrainingDevelopmentPage() {
                                         />
                                     </div>
 
+                                </div>
+                                <div className="form-group-M-inline">
+                                    {/* Start Date, End Date, Description, and Status */}
+                                    <div className="form-group-M">
+                                        <label>Start Date:</label>
+                                        <input type="date" name="selectedStartDate" value={formData.selectedStartDate} onChange={handleInputChange} required />
+                                    </div>
+                                    <div className="form-group-M">
+                                        <label>End Date:</label>
+                                        <input type="date" name="selectedEndDate" value={formData.selectedEndDate} onChange={handleInputChange} required />
+                                    </div>
+                                  
                                     <div className="form-group-M">
                                         <label>Status:</label>
                                         <select name="status" value={formData.status} onChange={handleInputChange}>
                                             
-                                            <option value="In Progress">In Progress</option>
+                                            
                                             <option value="Completed">Completed</option>
+                                            <option value="In Progress">In Progess</option>
                                         </select>
                                     </div>
                                 </div>
@@ -319,7 +322,7 @@ function TrainingDevelopmentPage() {
                                 <table className="assigned-programs-table-M">
                                     <thead>
                                         <tr>
-                                            <th>Employee ID - Name</th>
+                                            <th>Employee ID  Name</th>
                                             <th>Program Name</th>
                                             <th>Start Date</th>
                                             <th>End Date</th>
