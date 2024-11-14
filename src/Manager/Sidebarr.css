@@ -27,11 +27,11 @@ h1 {
 } */
 
 /* Wrapper layout for sidebar and main content */
-.wrapper {
+/* .wrapper {
     display: flex;
     flex-direction: row;
     min-height: 100vh;
-}
+} */
 
 /* Main content styles */
 .main {
@@ -119,9 +119,9 @@ h1 {
   }
   
 @media (max-width: 768px) {
-    .wrapper {
+    /* .wrapper {
         flex-direction: column;
-    }
+    } */
 
     #sidebar_M {
         width: 80px;

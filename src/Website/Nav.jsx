@@ -214,7 +214,7 @@ function Nav({ user }) {
 
   return (
     <nav className="A_navbar">
-      <div className="nav-icons">
+      <div className="nav-icons_A">
         <div className='nav_logo'>
           <img src={myImage} alt="Suhana logo" />
         </div>

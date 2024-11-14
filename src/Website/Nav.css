@@ -53,7 +53,7 @@ button:hover {
 }
  
 /* Container for icons (bell and user) */
-.nav-icons {
+.nav-icons_A {
   display: flex;
   align-items: center;
  
@@ -219,11 +219,12 @@ button:hover {
   }
    
   /* Container for icons (bell and user) */
-  .nav-icons {
+  .nav-icons_A {
     display: flex;
     align-items: center;
     gap: 15px;
-  
+    display: flex;
+        justify-content: space-between;
     
   }
    
