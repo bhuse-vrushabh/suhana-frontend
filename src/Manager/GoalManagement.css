@@ -110,9 +110,9 @@
   font-weight: 600;
 }
 
-.goals-table-m tr:nth-child(even) {
+/* .goals-table-m tr:nth-child(even) {
   background-color: #f2f2f2;
-}
+} */
 
 /* Action Buttons */
 .actions-cell-m {

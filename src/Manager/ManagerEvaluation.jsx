@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import axios from "axios"; // Import axios
 import "./ManagerEvaluation.css";
 import "./Sidebarr.css";
@@ -9,228 +9,167 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEdit, faTrash } from "@fortawesome/free-solid-svg-icons";
 import Swal from 'sweetalert2';
 import Nav_M from "./Nav_M";
-
+import { AuthContext } from "../Component/AuthContext";
 
 const ManagerEvaluation = () => {
+  const { authData } = useContext(AuthContext);
   const [employees, setEmployees] = useState([]);
+  const [showTable, setShowTable] = useState(false);
   const [newEmployee, setNewEmployee] = useState({
-    employee_id: "",
-    employee_name: "",
-    task_id: "",
-    self_rating_id: "",
-    manager_rating: 0,
-    manager_feedback: "",
-    final_rating: 0,
-    status: " ",
+    id: null,
+    employee: "",
     goal: "",
+    goalDescription: "",
+    self_rating: "",
+    manager_rating: "",
+    manager_feedback: "",
+    final_rating: "",
+
+    manager_id: "",
   });
   const [editMode, setEditMode] = useState(false);
-  const [editIndex, setEditIndex] = useState(null);
-  const [ratingError, setRatingError] = useState("");
-  const [showTable, setShowTable] = useState(false);
-  const [tasks, setTasks] = useState([]);
-  const [feedbackError, setFeedbackError] = useState(""); 
-  const [selectedId, setSelectedId] = useState('');
-  
 
-  // Fetch employee evaluations on component mount
+  // Fetch employees data from API on component load
+  // Fetch employees data with ID and name from API on component load
   useEffect(() => {
     const fetchEmployees = async () => {
       try {
-        const response = await axios.get('http://127.0.0.1:8000/api/evaluation/', {
-          headers: {
-            Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzMzNjM3MDMzLCJpYXQiOjE3MzEwNDUwMzMsImp0aSI6IjA3NzVjMTNhYjVkMzQ3ZjliZTA4NTQxYWIzZTI1YjlhIiwidXNlcl9pZCI6MjB9.BmW1THMSbg6KcBK86Ov9y5u1OKAsRBNmz7DKCH1lJ58`,
-          },
+        const response = await axios.get('http://127.0.0.1:8000/api/employees/', {
+          headers: { Authorization: `Bearer ${authData.accessToken}` },
         });
-        if (response.status === 200) {
-          setEmployees(response.data);
-        }
+        console.log("Fetched Employees:", response.data); // Debug log
+        setEmployees(response.data); // Ensure response data includes { id, name } for each employee
       } catch (error) {
-        console.error('Error fetching employees:', error);
+        console.error("Error fetching employees:", error);
       }
     };
-
     fetchEmployees();
-  }, []);
+  }, [authData]);
 
-  const calculateFinalRating = (managerRating, selfRating) => {
-    return (managerRating + selfRating) / 2;
-  };
 
-  // Handle input changes, and fetch task and self-rating on employee selection
-  const handleInputChange = async (e) => {
-    const { name, value } = e.target;
-    setNewEmployee({ ...newEmployee, [name]: value });
 
-      // Validate feedback input
-  const validateFeedback = (feedback) => {
-    if (!feedback || feedback.trim().length < 5) {
-      setFeedbackError("Feedback should be at least 5 characters long.");
-    } else {
-      setFeedbackError(""); // Clear the error if valid
-    }
-  };
 
-    // Fetch employee details based on selected employee_id
-    if (name === "employee_id" && value) {
-      try {
-        const response = await axios.get(`http://127.0.0.1:8000/api/evaluation/`, {
-          headers: {
-            Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzMzNjM3MDMzLCJpYXQiOjE3MzEwNDUwMzMsImp0aSI6IjA3NzVjMTNhYjVkMzQ3ZjliZTA4NTQxYWIzZTI1YjlhIiwidXNlcl9pZCI6MjB9.BmW1THMSbg6KcBK86Ov9y5u1OKAsRBNmz7DKCH1lJ58`,
-          },
-        });
-        if (response.status === 200) {
-          const selectedEmployee = response.data;
-          setNewEmployee((prev) => ({
-            ...prev,
-            employee_name: selectedEmployee.name,  // Assuming employee has name field
-            task_id: selectedEmployee.task_id,
-            self_rating_id: selectedEmployee.self_rating_id,
-            goal: selectedEmployee.goal,
-            manager_rating: selectedEmployee.manager_rating,
-            manager_feedback: selectedEmployee.manager_feedback,
-            status: selectedEmployee.status,
-          }));
-
-          // Fetch task details based on task_id if needed
-          const taskResponse = await axios.get(`http://127.0.0.1:8000/api/evaluation/`, {
-            headers: {
-              Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzMzNjM3MDMzLCJpYXQiOjE3MzEwNDUwMzMsImp0aSI6IjA3NzVjMTNhYjVkMzQ3ZjliZTA4NTQxYWIzZTI1YjlhIiwidXNlcl9pZCI6MjB9.BmW1THMSbg6KcBK86Ov9y5u1OKAsRBNmz7DKCH1lJ58`,
-            },
-          });
-          if (taskResponse.status === 200) {
-            setTasks(taskResponse.data); // Task data
-          }
-        }
-      } catch (error) {
-        console.error("Error fetching task and self-rating:", error);
-      }
-    }
-  };
-
-  // Add or update employee evaluation
-  const addOrUpdateEmployee = async (e) => {
-    e.preventDefault();
-
-    // Validation for manager_rating
-    if (!/^[1-5]$/.test(newEmployee.manager_rating)) {
-      setRatingError("Manager Rating must be a number between 1 and 5.");
-      return;
-    } else setRatingError("");
-
-    const employeeData = {
-      manager_rating: newEmployee.manager_rating,
-      manager_feedback: newEmployee.manager_feedback,
-      status: newEmployee.status,
-    };
+  const handleEmployeeChange = async (e) => {
+    const selectedEmployeeId = e.target.value;
+    setNewEmployee((prev) => ({ ...prev, employee: selectedEmployeeId }));
 
     try {
-      let response;
-      if (editMode) {
-        response = await axios.patch(`http://127.0.0.1:8000/api/evaluation/2/`, employeeData, {
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzMzNjM3MDMzLCJpYXQiOjE3MzEwNDUwMzMsImp0aSI6IjA3NzVjMTNhYjVkMzQ3ZjliZTA4NTQxYWIzZTI1YjlhIiwidXNlcl9pZCI6MjB9.BmW1THMSbg6KcBK86Ov9y5u1OKAsRBNmz7DKCH1lJ58`,
-          },
+      // Fetch goal data for selected employee
+      const goalResponse = await axios.get(`http://127.0.0.1:8000/api/goals/`, {
+        headers: { Authorization: `Bearer ${authData.accessToken}` },
+      });
+
+      const goalData = goalResponse.data.find(goal => goal.employee === parseInt(selectedEmployeeId));
+
+      if (goalData) {
+        setNewEmployee((prev) => ({
+          ...prev,
+          goal: goalData.description,  // Set the goal description
+        }));
+
+        // Fetch self-rating data for the selected employee
+        const selfRatingResponse = await axios.get(`http://127.0.0.1:8000/api/evaluation/`, {
+          headers: { Authorization: `Bearer ${authData.accessToken}` },
         });
-      } 
-      
 
-      const updatedEmployees = editMode
-        ? employees.map((emp) => (emp.id === newEmployee.employee_id ? response.data : emp))
-        : [...employees, response.data];
+        const selfRatingData = selfRatingResponse.data.find(rating => rating.employee === parseInt(selectedEmployeeId));
 
-      setEmployees(updatedEmployees);
-      setShowTable(true);
-
-      Swal.fire({
-        icon: 'success',
-        title: `Evaluation ${editMode ? 'updated' : 'added'} successfully!`,
-        timer: 3000,
-        showConfirmButton: false,
-      });
-      resetForm();
+        if (selfRatingData) {
+          console.log("Self-rating found:", selfRatingData.self_rating); // Confirm correct field
+          setNewEmployee((prev) => ({
+            ...prev,
+            self_rating: selfRatingData.self_rating,  // Use self_rating field
+          }));
+        } else {
+          console.log("Self-rating not found for employee ID:", selectedEmployeeId);
+          setNewEmployee((prev) => ({ ...prev, self_rating: "" }));
+        }
+      } else {
+        console.log("Goal not found for employee ID:", selectedEmployeeId);
+      }
     } catch (error) {
-      console.error("Error adding or updating evaluation:", error);
-      Swal.fire({
-        icon: 'error',
-        title: 'Error',
-        text: `Failed to ${editMode ? 'update' : 'add'} evaluation. Please try again.`,
-      });
+      console.error("Error fetching goal or self-rating data:", error);
+      Swal.fire("Error", "Failed to fetch goal or self-rating data. Please try again.", "error");
     }
   };
 
-  // Reset form state
+
+  // Handle input change
+  // Handle input change
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setNewEmployee((prev) => {
+      const updatedEmployee = { ...prev, [name]: value };
+
+      // Calculate the average for final_rating if both ratings are available
+      if (updatedEmployee.self_rating && updatedEmployee.manager_rating) {
+        updatedEmployee.final_rating = (
+          (parseFloat(updatedEmployee.self_rating) + parseFloat(updatedEmployee.manager_rating)) / 2
+        ).toFixed(2);
+      }
+
+      return updatedEmployee;
+    });
+  };
+  const handleManagerRatingClick = (value) => {
+    console.log("Star clicked:", value);  // Add a log to check if the function is triggered
+    setNewEmployee((prev) => ({
+      ...prev,
+      manager_rating: value, // Set the manager rating to the clicked value
+    }));
+  };
+
+
+
+
+
+
+
+
+  // Add or update employee evaluation
+  const updateEmployeeEvaluation = async (e) => {
+    e.preventDefault();
+    try {
+      const employeeData = {
+        manager_rating: newEmployee.manager_rating,
+        manager_feedback: newEmployee.manager_feedback,
+        final_rating: newEmployee.final_rating,  // Include final_rating in the payload
+        status: newEmployee.status,
+      };
+
+      await axios.patch(`http://127.0.0.1:8000/api/evaluation/2/`, employeeData, {
+        headers: { Authorization: `Bearer ${authData.accessToken}` },
+      });
+
+      Swal.fire("Updated!", "Evaluation has been updated successfully!", "success");
+      resetForm();
+    } catch (error) {
+      console.error("Error saving evaluation:", error);
+      Swal.fire("Error", "Failed to save evaluation. Please try again.", "error");
+    }
+  };
+
+  // Reset form
   const resetForm = () => {
     setNewEmployee({
-      employee_id: "",
-      employee_name: "",
-      task_id: "",
-      self_rating_id: "",
-      manager_rating: 0,
+      id: null,
+      employee: "",
+      goal: "",
+      goalDescription: "",
+      self_rating: "",
+      manager_rating: "",
       manager_feedback: "",
       final_rating: "",
-      status: " ",
-      goal: "",
+
+      manager_id: "",
     });
-    setEditIndex(null);
     setEditMode(false);
-    setRatingError("");
   };
-  const handleEdit = (index) => {
-    const employee = employees[index];
-    setNewEmployee({
-      ...employee,
-      final_rating: calculateFinalRating(employee.self_rating, employee.manager_rating),
-    });
-    setEditMode(true);
-    setEditIndex(index);
-  };
- 
- 
-  const handleDelete = async (index) => {
-    const evaluationId = employees[index].id;
- 
-    Swal.fire({
-      title: 'Are you sure?',
-      text: "You won't be able to revert this!",
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonText: 'Yes, delete it!',
-      cancelButtonText: 'Cancel'
-    }).then(async (result) => {
-      if (result.isConfirmed) {
-        try {
-          // Send DELETE request
-          await axios.delete(`http://127.0.0.1:8000/api/performance/evaluations/2/`, {
-            headers: {
-              'Authorization': `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzMyMjUyNjI1LCJpYXQiOjE3Mjk2NjA2MjUsImp0aSI6IjVhODdhNGFmNmU4YjQ2ODJhNzI5NDc0YjliZTYwYmZiIiwidXNlcl9pZCI6M30.rzZp4IhtsJCLpKaUUSPuQtsITxCBmDuiPweBjgAfefk`, // Add token to Authorization header
-            },
-          });
- 
-          const updatedEmployees = employees.filter((_, i) => i !== index);
-          setEmployees(updatedEmployees);
-          if (updatedEmployees.length === 0) {
-            setShowTable(false);
-          }
- 
-          Swal.fire({
-            icon: 'success',
-            title: 'Deleted!',
-            text: 'Evaluation has been deleted.',
-            timer: 3000,
-            showConfirmButton: false
-          });
-        } catch (error) {
-          Swal.fire({
-            icon: 'error',
-            title: 'Error',
-            text: 'Failed to delete evaluation. Please try again.',
-          });
-        }
-      }
-    });
-  };
+
+
+
+
+
   return (
     <div className="main-wrapper">
       <Sidebarr />
@@ -242,65 +181,47 @@ const ManagerEvaluation = () => {
             <h2>{editMode ? "Edit Evaluation" : "Add Evaluation"}</h2>
           </div>
           <div className="card-M">
-            <form onSubmit={addOrUpdateEmployee}>
+            <form onSubmit={updateEmployeeEvaluation}>
               <div className="form-row_m three-column">
+
                 <div className="form-group_m">
-                  <label>Employee:</label>
-                  <select
-                    name="employee_id"
-                    value={newEmployee.employee_id}
-                    onChange={handleInputChange}
-                    className="input-field_m"
-                  >
+                  <label>Employee Name:</label>
+                  <select name="employee" value={newEmployee.employee} onChange={handleEmployeeChange} required className="input-field_m">
                     <option value="">Select Employee</option>
-                    {employees.map((employee) => (
-                      <option key={employee.id} value={employee.id}>
-                        ID: {employee.id} 
+                    {employees.map((emp) => (
+                      <option key={emp.employee_id} value={emp.employee_id}>
+                        {emp.employee_id} - {emp.full_name} {/* Display employee ID with full name */}
                       </option>
                     ))}
                   </select>
+
                 </div>
                 <div className="form-group_m">
-                  <label>Employee Name:</label>
+
+                  <label>Goal Description:</label>
                   <input
                     type="text"
-                    name="employee_name"
-                    value={newEmployee.employee_name}
+                    name="goal"
+                    value={newEmployee.goal}
                     readOnly
                     className="input-field_m"
+                    required
                   />
-                </div>
-                <div className="form-group_m">
-                  <label>Task:</label>
-                  <select
-                    name="task_id"
-                    value={newEmployee.task_id}
-                    onChange={handleInputChange}
-                    className="input-field_m"
-                  >
-                    <option value="">Select Task</option>
-                    {tasks && tasks.length > 0 ? (  // Check if tasks is defined and has length
-                      tasks.map((goal) => (
-                        <option key={goal.id} value={goal.id}>
-                          {goal.description} {/* Assuming each task has a description */}
-                        </option>
-                      ))
-                    ) : (
-                      <option value="">No tasks available</option>
-                    )}
-                  </select>
 
                 </div>
 
                 <div className="form-group_m">
                   <label>Self Rating:</label>
                   <input
-                    type="number"
+                    type="text"
                     name="self_rating"
-                    value={newEmployee.self_rating_id ? `Self Rating ID: ${newEmployee.self_rating_id}` : ""}
+                    value={newEmployee.self_rating}
                     readOnly
                     className="input-field_m"
+                    required
                   />
+
+
                 </div>
               </div>
 
@@ -308,17 +229,19 @@ const ManagerEvaluation = () => {
               <div className="form-row_m three-column">
                 <div className="form-group_m">
                   <label>Manager Rating:</label>
-                  <input
-                    type="number"
-                    name="manager_rating"
-                    value={newEmployee.manager_rating}
-                    onChange={handleInputChange}
-                    min="1"
-                    max="5"
-                    className="input-field_m"
-                    required
-                  />
-                  {ratingError && <div className="error-message">{ratingError}</div>}
+
+                  <div className="m_star-rating">
+                    {[1, 2, 3, 4, 5].map((star) => (
+                      <span
+                        key={star}
+                        onClick={() => handleManagerRatingClick(star)}
+                        className={star <= newEmployee.manager_rating ? "m_star filled" : "m_star"}
+                      >
+                        ★
+                      </span>
+                    ))}
+                  </div>
+
                 </div>
 
                 <div className="form-group_m">
@@ -330,7 +253,7 @@ const ManagerEvaluation = () => {
                     onChange={handleInputChange}
                     className="input-field_m"
                   />
-                  {feedbackError && <div className="error-message">{feedbackError}</div>}
+
                 </div>
 
                 <div className="form-group_m">
@@ -342,10 +265,11 @@ const ManagerEvaluation = () => {
                     readOnly
                     className="input-field_m"
                   />
+
                 </div>
               </div>
 
-              <div className="form-group_m">
+              {/* <div className="form-group_m">
                 <label>Status:</label>
                 <select
                   name="status"
@@ -356,13 +280,12 @@ const ManagerEvaluation = () => {
                   <option value="pending">Pending</option>
                   <option value="Completed">Completed</option>
                 </select>
-              </div>
+              </div> */}
 
               <div className="button-container_m">
                 <button type="submit" className="manager-submit-button_m">
-                  {editMode ? "Update Evaluation" : "Add Evaluation"}
+                  {editMode ? "Update Evaluation" : "Submit"}
                 </button>
-
               </div>
             </form>
           </div>
@@ -376,12 +299,11 @@ const ManagerEvaluation = () => {
                     <th>SL</th>
                     <th>Employee ID</th>
                     <th>Self Rating</th>
-                    <th>Task</th>
                     <th>Manager Rating</th>
                     <th>Manager Feedback</th>
                     <th>Final Rating</th>
                     <th>Status</th>
-                    <th>Goal ID</th>
+                    <th>Goal Description</th>
                     <th>Actions</th>
                   </tr>
                 </thead>
@@ -389,26 +311,21 @@ const ManagerEvaluation = () => {
                   {employees.map((employee, index) => (
                     <tr key={employee.id}>
                       <td>{index + 1}</td>
-                      <td>{employee.employee}</td> {/* Employee ID */}
+                      <td>{employee.employee}</td>
                       <td>{employee.self_rating}</td>
-                      <td>{employee.task}</td>
                       <td>{employee.manager_rating}</td>
                       <td>{employee.manager_feedback}</td>
                       <td>{employee.final_rating}</td>
                       <td>{employee.status}</td>
                       <td>{employee.goal}</td>
-                      <td className="actions-cell_m">
-                        <button className="edit-btn_m" onClick={() => handleEdit(index)}>
-                          <FontAwesomeIcon icon={faEdit} />
-                        </button>
-                        <button className="delete-btn_m" onClick={() => handleDelete(index)}>
-                          <FontAwesomeIcon icon={faTrash} />
-                        </button>
+                      <td>
+
                       </td>
                     </tr>
                   ))}
                 </tbody>
               </table>
+
             </div>
           )}
         </div>

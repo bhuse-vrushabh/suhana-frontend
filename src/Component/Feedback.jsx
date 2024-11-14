@@ -1,27 +1,19 @@
-
-
-
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './Feedback.css';
 import swal from 'sweetalert2';
 import Sidebar from "./Sidebar";
 import Navbar from "./Navbar";
-
+ 
 const Feedback = () => {
   const [feedbackType, setFeedbackType] = useState('employee');
-  const [selectedEmployee, setSelectedEmployee] = useState('');
   const [selectedManager, setSelectedManager] = useState('');
   const [feedbackContent, setFeedbackContent] = useState('');
-  const [anonymous, setAnonymous] = useState(false);
-  const [overallRating, setOverallRating] = useState('0');
-  const [submitted, setSubmitted] = useState(false);
-  const [responseMessage, setResponseMessage] = useState('');
+  const [overallRating, setOverallRating] = useState(0);
   const [managers, setManagers] = useState([]);
-
   const accessToken = localStorage.getItem('accessToken');
-
-  // Fetch managers list when component mounts
+ 
+  // Fetch managers list on component mount
   useEffect(() => {
     const fetchManagers = async () => {
       try {
@@ -42,6 +34,8 @@ const Feedback = () => {
     };
     fetchManagers();
   }, [accessToken]);
+ 
+  // Handle feedback submission
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!feedbackContent || !overallRating) {
@@ -52,14 +46,16 @@ const Feedback = () => {
       });
       return;
     }
+ 
     const payload = {
       feedback_type: feedbackType === 'employee' ? 'Self Feedback' : 'Manager Feedback',
       feedback_text: feedbackContent,
       rating: parseInt(overallRating),
       ...(feedbackType === 'manager' && { to_user_id: selectedManager }),
     };
+ 
     try {
-      const response = await axios.post('http://127.0.0.1:8000/api/employeetomanager_feedback/', payload, {
+      await axios.post('http://127.0.0.1:8000/api/employeetomanager_feedback/', payload, {
         headers: {
           'Authorization': `Bearer ${accessToken}`,
           'Content-Type': 'application/json',
@@ -71,8 +67,10 @@ const Feedback = () => {
         text: 'Your feedback has been successfully submitted!',
         timer: 1500,
       });
+      // Reset form on successful submission
       setFeedbackContent('');
-      setOverallRating('');
+      setOverallRating(0);
+      setSelectedManager('');
     } catch (error) {
       console.error("Error submitting feedback:", error);
       swal.fire({
@@ -82,9 +80,12 @@ const Feedback = () => {
       });
     }
   };
+ 
+  // Handle star rating click
   const handleStarClick = (rating) => {
     setOverallRating(rating);
   };
+ 
   return (
     <div className='feedback-page'>
       <Navbar />
@@ -93,12 +94,18 @@ const Feedback = () => {
         <div className="review-feedback-page">
           <h1 className="feedback-title">Feedback Form</h1>
           <form onSubmit={handleSubmit} className="feedback-form">
+            {/* Feedback Type Selection */}
             <div className="form-group">
               <label htmlFor="feedbackTypeSelect">Select Feedback Type:</label>
               <select
                 id="feedbackTypeSelect"
                 value={feedbackType}
-                onChange={(e) => setFeedbackType(e.target.value)}
+                onChange={(e) => {
+                  setFeedbackType(e.target.value);
+                  setFeedbackContent('');
+                  setOverallRating(0);
+                  setSelectedManager('');
+                }}
                 required
                 className="select"
               >
@@ -106,7 +113,8 @@ const Feedback = () => {
                 <option value="manager">Manager Feedback</option>
               </select>
             </div>
-
+ 
+            {/* Conditional Feedback Content for Employee Feedback */}
             {feedbackType === 'employee' && (
               <div className="form-group">
                 <label htmlFor="feedbackContent">Feedback:</label>
@@ -120,6 +128,8 @@ const Feedback = () => {
                 />
               </div>
             )}
+ 
+            {/* Conditional Manager Selection and Feedback Content for Manager Feedback */}
             {feedbackType === 'manager' && (
               <>
                 <div className="form-group">
@@ -152,6 +162,8 @@ const Feedback = () => {
                 </div>
               </>
             )}
+ 
+            {/* Star Rating Component */}
             <div className="form-group">
               <label>Overall Rating:</label>
               <div className="star-rating">
@@ -166,19 +178,20 @@ const Feedback = () => {
                 ))}
               </div>
             </div>
+ 
+            {/* Submit Button */}
             <div className='button-container'>
               <button type="submit" className="submit-button">Submit</button>
             </div>
           </form>
-          {submitted && responseMessage && (
-            <div className="response-message">
-              <h2>Response:</h2>
-              <pre>{JSON.stringify(responseMessage, null, 2)}</pre>
-            </div>
-          )}
         </div>
       </div>
     </div>
   );
 };
+ 
 export default Feedback;
+ 
+ 
+ 
+ 

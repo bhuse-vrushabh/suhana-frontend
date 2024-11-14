@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { Bar } from 'react-chartjs-2'; // Chart.js component
 import HeatMap from 'react-heatmap-grid';
 import Highcharts from 'highcharts';
@@ -7,7 +7,7 @@ import BellCurve from 'highcharts/modules/histogram-bellcurve';
 import Sidebarr from './Sidebarr';
 import { faChartLine, faUsers, faCheckCircle, faPercent } from '@fortawesome/free-solid-svg-icons'; // FontAwesome icons
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-
+import axios from 'axios';
 import './Dashboard.css';
 import './Sidebarr.css';
 
@@ -15,15 +15,42 @@ import Teamattendence from "./Teamattendence.png";
 import Performance from "./Performance.png";
 import Training from "./Training.png";
 import Nav_M from './Nav_M';
-
+import { AuthContext } from '../Component/AuthContext';
 // Initialize BellCurve module
 BellCurve(Highcharts);
 
 function Manager_Dashboard() {
+  const { authData } = useContext(AuthContext); // Use authData from context
   const [activeChart, setActiveChart] = useState('attendance');
+  const [attendance, setAttendance] = useState(0); // Update attendance state
+  useEffect(() => {
+    // Fetch annual attendance from API
+    const fetchAttendance = async () => {
+      try {
+        const response = await axios.get('http://127.0.0.1:8000/api/annual_attendance_rate/2024/', {
+          headers: {
+            'Authorization': `Bearer ${authData.accessToken}`, // Use token from context
+            'Content-Type': 'application/json',
+          },
+        });
 
+        console.log('API Response:', response.data); // Log the full response
+
+        if (response.status === 200 && response.data.annual_attendance_rate != null) {
+          setAttendance(response.data.annual_attendance_rate); // Update to match the response structure
+
+        }
+      } catch (error) {
+        console.error('Error fetching annual attendance:', error);
+      }
+    };
+
+    if (authData.accessToken) {
+      fetchAttendance(); // Call the function if the token is available
+    }
+  }, [authData.accessToken]); // Effect depends on authData.accessToken
   // KPI Data
-  const attendance = 85;
+
   const avgPerformance = 4.3;
   const trainingCompletion = 76;
 
@@ -134,10 +161,18 @@ function Manager_Dashboard() {
         <Nav_M />
 
         <div className="kpi-cards-M">
+
+
           <div className="kpi-card-M" onClick={() => handleCardClick("attendance")}>
             <img src={Teamattendence} alt="Attendance Icon" className="kpi-icon-M" />
             <div className="kpi-label-M">Total Attendance</div>
-            <div className="kpi-value-M">{attendance}%</div>
+             <div className="kpi-value-M">
+              {attendance !== null ? (
+                <p>{attendance}%</p> // Display attendance if data is available
+              ) : (
+                <p>Loading...</p> // Show loading message if data is still fetching
+              )}
+            </div>
           </div>
           <div className="kpi-card-M" onClick={() => handleCardClick("performance")}>
             <img src={Performance} alt="Performance Icon" className="kpi-icon-M" />
@@ -177,7 +212,7 @@ function Manager_Dashboard() {
             </div>
           )}
         </div>
-        
+
         {activeChart !== "attendance" && (
           <div >
             {activeChart === "performance" && (
