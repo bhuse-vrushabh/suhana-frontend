@@ -1,35 +1,30 @@
 import React, { useState, useEffect } from 'react';
 import Sidebar from './Sidebar';
 import Navbar from './Navbar';
- 
 const TrainingAndDevelopment = () => {
   const [programs, setPrograms] = useState([]);
   const [selectedProgram, setSelectedProgram] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
- 
+  const [currentPage, setCurrentPage] = useState(1); // Current page state
+  const programsPerPage = 5; // Number of programs to display per page
   // JWT token for authorization
-const token = localStorage.getItem('accessToken')
- 
+  const token = localStorage.getItem('accessToken');
   // Fetch training programs from the API when the component is mounted
   useEffect(() => {
     const fetchPrograms = async () => {
-      const token = localStorage.getItem('accessToken')
       try {
         const response = await fetch('http://127.0.0.1:8000/api/training/', {
           method: 'GET',
           headers: {
-            'Authorization': `Bearer ${token}`, // Include the token in the request headers
+            'Authorization': `Bearer ${token}`,
             'Content-Type': 'application/json',
           },
         });
- 
         if (!response.ok) {
           throw new Error(`Error: ${response.status} - ${response.statusText}`);
         }
- 
         const data = await response.json();
- 
         const formattedPrograms = data.map((program) => ({
           id: program.id,
           name: program.name,
@@ -38,7 +33,7 @@ const token = localStorage.getItem('accessToken')
           endDate: program.end_date,
           status: program.status,
         }));
- 
+
         setPrograms(formattedPrograms);
         setLoading(false);
       } catch (error) {
@@ -47,118 +42,39 @@ const token = localStorage.getItem('accessToken')
         setLoading(false);
       }
     };
- 
-    fetchPrograms(); // Fetch data on mount
-  }, [token]); // Only need to rerun if token changes
- 
+    fetchPrograms();
+  }, [token]);
   const handleProgramClick = (program) => {
     setSelectedProgram(program);
   };
- 
   const handleSubmit = (e) => {
     e.preventDefault();
     alert('Form Submitted Successfully!');
     console.log('Form Submitted:', selectedProgram);
-    // Submit data to backend API here if needed
   };
- 
-  // Styles (same as before)
-  const containerStyle = {
-    display: 'flex',
-    minHeight: '100vh',
-    backgroundColor: '#FEFAEE',
-    marginLeft: '30px',
+  // Pagination calculations
+  const indexOfLastProgram = currentPage * programsPerPage;
+  const indexOfFirstProgram = indexOfLastProgram - programsPerPage;
+  const currentPrograms = programs.slice(indexOfFirstProgram, indexOfLastProgram);
+
+  const totalPages = Math.ceil(programs.length / programsPerPage);
+
+  const handleNextPage = () => {
+    if (currentPage < totalPages) setCurrentPage((prevPage) => prevPage + 1);
   };
- 
-  const mainContentStyle = {
-    flex: '1',
-    padding: '20px',
-    backgroundColor: '#FEFAEE',
-    borderRadius: '8px',
-    margin: '60px',
+
+  const handlePreviousPage = () => {
+    if (currentPage > 1) setCurrentPage((prevPage) => prevPage - 1);
   };
- 
-  const titleStyle = {
-    textAlign: 'center',
-    fontSize: '30px',
-    fontWeight: 'bold',
-    color: '#d90606',
-    marginBottom: '20px',
-    marginTop: '30px',
-    marginLeft: '20px',
-  };
- 
-  const tableStyle = {
-    width: '100%',
-    borderCollapse: 'collapse',
-    marginBottom: '20px',
-  };
- 
-  const thStyle = {
-    borderBottom: '2px solid #ddd',
-    padding: '10px',
-    backgroundColor: '#fff',
-    textAlign: 'left',
-  };
- 
-  const tdStyle = {
-    borderBottom: '1px solid #ddd',
-    padding: '10px',
-    cursor: 'pointer',
-  };
- 
-  const formStyle = {
-    marginBottom: '20px',
-    backgroundColor: '#fff',
-    padding: '15px',
-    borderRadius: '8px',
-    boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
-  };
- 
-  const labelStyle = {
-    fontSize: '20px',
-    fontWeight: 'bold',
-    color: '#333',
-    display: 'block',
-    marginBottom: '5px',
-    textAlign: 'left',
-  };
- 
-  const inputStyle = {
-    width: '97.9%',
-    padding: '12px',
-    margin: '10px 0',
-    borderRadius: '4px',
-    border: '1px solid #ccc',
-    fontSize: '18px',
-  };
- 
-  const buttonContainerStyle = {
-    display: 'flex',
-    justifyContent: 'center',
-    marginTop: '10px',
-  };
- 
-  const buttonStyle = {
-    width: '199px',
-    padding: '12px',
-    borderRadius: '4px',
-    border: 'none',
-    color: '#fff',
-    backgroundColor: '#D5661A',
-    cursor: 'pointer',
-    fontWeight: 'bold',
-    fontSize: '18px',
-  };
- 
+
   if (loading) {
     return <div>Loading programs...</div>;
   }
- 
+
   if (error) {
     return <div>Error: {error}</div>;
   }
- 
+
   return (
     <div>
       <Navbar />
@@ -166,7 +82,7 @@ const token = localStorage.getItem('accessToken')
         <Sidebar />
         <div style={mainContentStyle}>
           <h1 style={titleStyle}>Training and Development</h1>
- 
+
           {/* Training Program Table */}
           <table style={tableStyle}>
             <thead>
@@ -180,7 +96,7 @@ const token = localStorage.getItem('accessToken')
               </tr>
             </thead>
             <tbody>
-              {programs.map((program) => (
+              {currentPrograms.map((program) => (
                 <tr key={program.id} onClick={() => handleProgramClick(program)}>
                   <td style={tdStyle}>{program.id}</td>
                   <td style={tdStyle}>{program.name}</td>
@@ -192,16 +108,92 @@ const token = localStorage.getItem('accessToken')
               ))}
             </tbody>
           </table>
+
+          {/* Pagination Controls */}
+          <div style={paginationStyle}>
+            <button
+              onClick={handlePreviousPage}
+              style={paginationButtonStyle}
+              disabled={currentPage === 1}
+            >
+              Previous
+            </button>
+            <span>Page {currentPage} of {totalPages}</span>
+            <button
+              onClick={handleNextPage}
+              style={paginationButtonStyle}
+              disabled={currentPage === totalPages}
+            >
+              Next
+            </button>
+          </div>
         </div>
       </div>
     </div>
   );
 };
- 
+
+// Styles (same as in the original code)
+const containerStyle = {
+  display: 'flex',
+  minHeight: '100vh',
+  backgroundColor: '#FEFAEE',
+  marginLeft: '30px',
+};
+
+const mainContentStyle = {
+  flex: '1',
+  padding: '20px',
+  backgroundColor: '#FEFAEE',
+  borderRadius: '8px',
+  margin: '60px',
+};
+
+const titleStyle = {
+  textAlign: 'center',
+  fontSize: '30px',
+  fontWeight: 'bold',
+  color: '#d90606',
+  marginBottom: '20px',
+  marginTop: '30px',
+  marginLeft: '20px',
+};
+
+const tableStyle = {
+  width: '100%',
+  borderCollapse: 'collapse',
+  marginBottom: '20px',
+};
+
+const thStyle = {
+  borderBottom: '2px solid #ddd',
+  padding: '10px',
+  backgroundColor: '#fff',
+  textAlign: 'left',
+};
+
+const tdStyle = {
+  borderBottom: '1px solid #ddd',
+  padding: '10px',
+  cursor: 'pointer',
+};
+
+const paginationStyle = {
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  marginTop: '20px',
+};
+
+const paginationButtonStyle = {
+  padding: '10px 20px',
+  margin: '0 10px',
+  borderRadius: '4px',
+  border: 'none',
+  backgroundColor: '#D5661A',
+  color: '#fff',
+  cursor: 'pointer',
+  fontWeight: 'bold',
+};
+
 export default TrainingAndDevelopment;
-
-
-
-
-
-
