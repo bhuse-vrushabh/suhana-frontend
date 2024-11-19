@@ -3,6 +3,8 @@ import './Admin_attendance.css';
 import Sidebar from "./Sidebar_A";
 import Nav from "./Nav";
 
+//**************************************In this file i have write the feedback which is given to of simply cheklist file code ***********************/
+
 const Admin_attendance = () => {
     const [feedbackData, setFeedbackData] = useState([]);
     const [loading, setLoading] = useState(true);
