@@ -6,11 +6,10 @@ const TrainingAndDevelopment = () => {
   const [selectedProgram, setSelectedProgram] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [currentPage, setCurrentPage] = useState(1); // Current page state
-  const programsPerPage = 5; // Number of programs to display per page
-  // JWT token for authorization
+  const [currentPage, setCurrentPage] = useState(1); 
+  const programsPerPage = 5; 
+  
   const token = localStorage.getItem('accessToken');
-  // Fetch training programs from the API when the component is mounted
   useEffect(() => {
     const fetchPrograms = async () => {
       try {
@@ -111,28 +110,28 @@ const TrainingAndDevelopment = () => {
 
           {/* Pagination Controls */}
           <div style={paginationStyle}>
-            <button
-              onClick={handlePreviousPage}
-              style={paginationButtonStyle}
-              disabled={currentPage === 1}
-            >
-              Previous
-            </button>
-            <span>Page {currentPage} of {totalPages}</span>
-            <button
-              onClick={handleNextPage}
-              style={paginationButtonStyle}
-              disabled={currentPage === totalPages}
-            >
-              Next
-            </button>
-          </div>
+  <button
+    onClick={handlePreviousPage}
+    style={paginationButtonStyle}
+    disabled={currentPage === 1}
+  >
+    Previous
+  </button>
+  <span style={{ fontSize: '14px' }}>Page {currentPage} of {totalPages}</span>
+  <button
+    onClick={handleNextPage}
+    style={paginationButtonStyle}
+    disabled={currentPage === totalPages}
+  >
+    Next
+  </button>
+</div>
+
         </div>
       </div>
     </div>
   );
 };
-
 // Styles (same as in the original code)
 const containerStyle = {
   display: 'flex',
@@ -179,21 +178,30 @@ const tdStyle = {
 };
 
 const paginationStyle = {
-  display: 'flex',
-  justifyContent: 'center',
-  alignItems: 'center',
-  marginTop: '20px',
+  position: 'absolute', // Position the pagination absolutely within the parent container
+  bottom: '20px',       // Distance from the bottom of the page
+  right: '20px',        // Distance from the right of the page
+  display: 'flex',      // Align buttons and text in a row
+  gap: '10px',          // Space between buttons and text
+  alignItems: 'center', // Align text and buttons vertically in the center
 };
 
 const paginationButtonStyle = {
   padding: '10px 20px',
-  margin: '0 10px',
   borderRadius: '4px',
   border: 'none',
   backgroundColor: '#D5661A',
   color: '#fff',
   cursor: 'pointer',
   fontWeight: 'bold',
+  fontSize: '14px', // Set a consistent font size
 };
-
 export default TrainingAndDevelopment;
+
+
+
+
+
+
+
+
