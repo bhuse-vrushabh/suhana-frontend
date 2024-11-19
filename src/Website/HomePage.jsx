@@ -135,14 +135,14 @@ const HomePage = () => {
               </div>
             </section>
 
-            <section className="recent-activity">
+            {/* <section className="recent-activity">
               <h2>Recent Activity</h2>
               <ul>
                 <li>Rahul Verma marked as present on 2024-10-09</li>
                 <li>Priya Sharma requested leave on 2024-10-10</li>
                 <li>Rohan Mehta joined the company on 2024-10-11</li>
               </ul>
-            </section>
+            </section> */}
           </main>
         </div>
       </div>

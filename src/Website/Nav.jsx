@@ -208,7 +208,7 @@ function Nav({ user }) {
     navigate('/EmployeeLogin');
   };
   const handlemyaccount = () => {
-    localStorage.removeItem('token'); // Clear token on logout
+    // localStorage.removeItem('token'); // Clear token on logout
     navigate('/A_profile');
   };
 

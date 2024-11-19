@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState, useContext } from "react";
 import './Dashboard.css';
 import Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
@@ -9,22 +9,11 @@ import attendance from './Assets/attendence.svg';
 import performance from './Assets/performance.svg';
 import leave from './Assets/leave.svg';
 import learning from './Assets/learning.svg';
+import { AuthContext } from "../Component/AuthContext";
 
 BellCurve(Highcharts);
 
-
 const sampleChartData = {
-  attendance: {
-    labels: ['Week 1', 'Week 2', 'Week 3', 'Week 4'],
-    datasets: [
-      {
-        label: 'Attendance (%)',
-        data: [88, 92, 94, 96],
-        borderColor: 'rgba(75, 192, 192, 1)',
-        fill: false,
-      },
-    ],
-  },
   leaveUsage: {
     labels: ['Sick Leave', 'Vacation', 'Personal'],
     datasets: [
@@ -95,9 +84,51 @@ const bellCurveOptions = (data, isPerformance = false) => ({
 });
 
 const KpiCards = () => {
+  const { authData, clearTokens } = useContext(AuthContext);
   const [selectedCard, setSelectedCard] = useState(null);
+  const [attendanceData, setAttendanceData] = useState(null);
+  const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(true);
 
-  const attendanceRate = 92;
+  // Fetch attendance data using the token from localStorage
+  const fetchAttendanceData = async () => {
+    const token = localStorage.getItem('accessToken');
+    if (!token) {
+      console.error("No token found. Redirecting to login.");
+      clearTokens();
+      return;
+    }
+    
+    try {
+      const response = await fetch('http://127.0.0.1:8000/api/annual_attendance_rate/2024/', {
+        method: "GET",
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+      });
+      if (!response.ok) {
+        if (response.status === 401) {
+          console.log("Token expired. Redirecting to login...");
+          clearTokens();
+        }
+        throw new Error("Network response was not ok");
+      }
+      const data = await response.json();
+      console.log("This is the response data:", data);
+      setAttendanceData(data);
+    } catch (error) {
+      console.error("Error fetching attendance data:", error);
+      setError(error.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchAttendanceData();
+  }, [authData.accessToken]);
+
   const leaveBalance = 8;
   const performanceScore = 85;
   const learningProgress = 75;
@@ -111,9 +142,6 @@ const KpiCards = () => {
       <Sidebar />
       <div className="content">
         <Navbar />
-
-        
-
         <div className="kpi-cards-container">
           {/* KPI Cards */}
           <div
@@ -122,8 +150,10 @@ const KpiCards = () => {
           >
             <img src={attendance} alt="" />
             <h3>Attendance Record</h3>
-            <p className="kpi-value">{attendanceRate}%</p>
-            <p>You've attended 92% of the sessions this month. Great job!</p>
+            <p className="kpi-value">
+              {attendanceData ? `${attendanceData.annual_attendance_rate}%` : 'Loading...'}
+            </p>
+            <p>You've attended 70% of the sessions this month. Great job!</p>
           </div>
 
           <div
@@ -135,6 +165,7 @@ const KpiCards = () => {
             <p className="kpi-value">{performanceScore}%</p>
             <p>Your performance is rated at 85% for this quarter.</p>
           </div>
+
           <div
             className={`kpi-card ${selectedCard === 'leaveBalance' ? 'selected' : ''}`}
             onClick={() => handleCardClick('leaveBalance')}
@@ -173,16 +204,12 @@ const KpiCards = () => {
           {selectedCard === 'performance' && (
             <div className="chart">
               <h3>Performance Overview </h3>
-              {/* <HighchartsReact highcharts={Highcharts} options={bellCurveOptions([80, 85], true)} /> */}
               <HighchartsReact highcharts={Highcharts} options={bellCurveOptions([30, 50, 20])} />
-
             </div>
           )}
-           {selectedCard === 'learning' && (
+          {selectedCard === 'learning' && (
             <div className="chart">
               <h3>Learning Progress: 75%</h3>
-              
-
             </div>
           )}
         </div>

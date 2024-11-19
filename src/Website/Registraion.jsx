@@ -55,13 +55,13 @@ function Registraion() {
             dateOfJoining: ""
         });
 
-        Swal.fire({
-            icon: 'success',
-            title: 'Success',
-            text: ' profile created successfully!',
-            timer: 1500,
-            showConfirmButton: false
-        });
+        // Swal.fire({
+        //     icon: 'success',
+        //     title: 'Success',
+        //     text: ' profile created successfully!',
+        //     timer: 1500,
+        //     showConfirmButton: false
+        // });
     };
 
     const handleEdit = (index) => {
@@ -136,7 +136,7 @@ function Registraion() {
                 <Sidebar />
                 <div className="registration_by">
                     <div className="employee-card">
-                        <h2>Create Admin Profile</h2>
+                        <h2>Create Employee Profile</h2>
                         <form onSubmit={handleSubmit} className="employee-form">
                             <div className="form-row">
                                 <label>
