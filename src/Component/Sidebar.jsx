@@ -2,11 +2,11 @@ import React, { useState } from "react";
 import {FontAwesomeIcon  } from "@fortawesome/react-fontawesome";
 import {
   faX,
-  faHome,
-  faClipboardList,
+  faTasks,
+  faBook,
   faComments,
-  faSignOutAlt,
   faCog,
+  faCheckCircle,
   faDashboard,
 } from "@fortawesome/free-solid-svg-icons";
 import { createBrowserHistory } from "history";
@@ -82,29 +82,31 @@ const Sidebar = () => {
           </div>
         </li>
 
+        <li className="sidebar-item" onClick={() => navigate("/TrainingAndDevelopment")}>
+          <div>
+            <a href="#" className="sidebar-link">
+              <FontAwesomeIcon icon={faBook} className="icon-black" />
+              <span className="icon-text">Training</span>
+            </a>
+            <p>Training</p>
+          </div>
+        </li>
+
         <li className="sidebar-item" onClick={() => navigate("/EmployeeSelfEvaluation")}>
           <div>
             <a href="#" className="sidebar-link">
-              <FontAwesomeIcon icon={faHome} className="icon-black" />
+              <FontAwesomeIcon icon={faCheckCircle} className="icon-black" />
               <span className="icon-text">Evaluation</span>
             </a>
             <p>Evaluation</p>
           </div>
         </li>
 
-        <li className="sidebar-item" onClick={() => navigate("/TrainingAndDevelopment")}>
-          <div>
-            <a href="#" className="sidebar-link">
-              <FontAwesomeIcon icon={faClipboardList} className="icon-black" />
-              <span className="icon-text">Training</span>
-            </a>
-            <p>Training</p>
-          </div>
-        </li>
+        
         <li className="sidebar-item" onClick={() => navigate("/ReportsAnalytics")}>
           <div>
             <a href="#" className="sidebar-link">
-              <FontAwesomeIcon icon={faClipboardList} className="icon-black" />
+              <FontAwesomeIcon icon={faTasks} className="icon-black" />
               <span className="icon-text">Analytics</span>
             </a>
             <p>Analytics</p>
@@ -124,7 +126,7 @@ const Sidebar = () => {
         <li className="sidebar-item" onClick={() => navigate("/EmployeeProfile")}>
           <div>
             <a href="#" className="sidebar-link">
-              <FontAwesomeIcon icon={faX} className="icon-black login-logo" />
+              <FontAwesomeIcon icon={faCog} className="icon-black login-logo" />
               <span className="icon-text">Rating History</span>
             </a>
             <p>Rating History</p>

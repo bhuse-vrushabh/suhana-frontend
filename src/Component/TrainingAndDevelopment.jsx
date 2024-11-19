@@ -150,7 +150,7 @@ const mainContentStyle = {
 
 const titleStyle = {
   textAlign: 'center',
-  fontSize: '30px',
+  fontSize: '2rem',
   fontWeight: 'bold',
   color: '#d90606',
   marginBottom: '20px',
