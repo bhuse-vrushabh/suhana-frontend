@@ -84,12 +84,9 @@ const EmployeeProfile = () => {
     const { name, value, type, checked } = e.target;
     setFeedbackData({ ...feedbackData, [name]: type === 'checkbox' ? checked : value });
   };
-
-   // Define handleStarClick to set the rating
    const handleStarClick = (ratingValue) => {
     setFeedbackData({ ...feedbackData, rating: ratingValue });
   };
-
   // Define handleStarClickForPerformance for both Employee and Manager Ratings
 const handleStarClickForPerformance = (type, ratingValue, index) => {
   // Make a copy of the performanceHistory state to avoid direct mutation
@@ -99,10 +96,8 @@ const handleStarClickForPerformance = (type, ratingValue, index) => {
   } else if (type === 'Manager') {
     updatedPerformanceHistory[index].ManagerRating = ratingValue;
   }
-
   setPerformanceHistory(updatedPerformanceHistory); // Set the updated performance history
 };
-
   const handleSubmitFeedback = (e) => {
     e.preventDefault();
     if (!feedbackData.feedback_text || !feedbackData.title || !feedbackData.department || feedbackData.rating === 0 ) {
@@ -130,7 +125,6 @@ const handleStarClickForPerformance = (type, ratingValue, index) => {
     });
   });
 };
-
   return (
     <div>
       <Navbar />
@@ -211,8 +205,7 @@ const handleStarClickForPerformance = (type, ratingValue, index) => {
             ))}
           </div>
         </td>
-      </tr>
-                  
+      </tr>     
               ))}
             </tbody>
           </table>
@@ -252,8 +245,6 @@ const handleStarClickForPerformance = (type, ratingValue, index) => {
     </div> 
   );
 };
-
-
 export default EmployeeProfile;
 
 
