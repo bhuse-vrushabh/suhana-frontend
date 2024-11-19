@@ -6,7 +6,7 @@
   padding: 20px;
   background-color: #FEFAEE;
 }
-
+ 
 .personal-details-main {
   width: 100%;
   max-width: 800px;
@@ -17,7 +17,7 @@
   margin-left: 80px;
   margin-top: 20px;
 }
-
+ 
 .personal-details-heading {
   font-size: 24px;
   font-weight: bold;
@@ -25,7 +25,7 @@
   text-align: center;
   margin: 50px 0 20px;
 }
-
+ 
 /* Row Styling */
 .personal-details-row {
   display: flex;
@@ -33,23 +33,23 @@
   gap: 15px;
   margin-bottom: 15px;
 }
-
+ 
 /* Input Field Containers */
-.first-name-container, .middle-name-container, .last-name-container,
-.contact-number-container, .email-container, .gender-container,
-.department-container, .position-container {
+/* .first-name-container, .middle-name-container, .last-name-container, */
+.full-name-container,.employee-id-container,
+.contact-number-container,  .gender-container, .emergency-contact-container, .dob-container, .joining-date-container{
   display: flex;
   flex-direction: column;
   width: 30%;
 }
-
+ 
 label {
   margin-bottom: 5px;
   font-size: 14px;
   font-weight: bold;
   color: #333;
 }
-
+ 
 .editable-input {
  
   padding: 8px 10px;
@@ -58,17 +58,17 @@ label {
   border-radius: 4px;
   color: #333;
 }
-
+ 
 .editable-input:focus {
   outline: none;
   border-color: #D5661A;
 }
-
+ 
 .editable-input:disabled {
   background-color: #f0f0f0;
   color: #888;
 }
-
+ 
 /* Button Styling */
 .edit-save-button {
   width: 100%;
@@ -84,22 +84,22 @@ label {
   cursor: pointer;
   transition: background-color 0.3s ease;
 }
-
+ 
 .edit-save-button:hover {
   background-color: #b44e1a;
 }
-
+ 
 .edit-save-button:focus {
   outline: none;
 }
-
+ 
 .error-message {
   color: #ff0000;
   font-size: 14px;
   text-align: center;
   margin-top: 10px;
 }
-
+ 
 /* Editable Div Styling */
 .editable-div {
   padding: 8px;
@@ -108,31 +108,34 @@ label {
   min-height: 40px;
   width: 100%;
 }
-
+ 
 .editable-div[contenteditable="true"]:focus {
   outline: 2px solid #D5661A;
 }
-
+ 
 .editable-div[contenteditable="false"] {
   background-color: #f5f5f5;
   color: #999;
 }
-
+ 
 /* Responsive Adjustments */
 @media (max-width: 768px) {
   .personal-details-main {
     margin-left: 0;
     padding: 15px;
   }
-
+ 
   .edit-save-button {
     width: 100%;
     padding: 12px;
   }
-
-  .first-name-container, .middle-name-container, .last-name-container,
-  .contact-number-container, .email-container, .gender-container,
-  .department-container, .position-container {
+ 
+  /* .first-name-container, .middle-name-container, .last-name-container, */
+  .full-name-container,.employee-id-container,
+  .contact-number-container,  .gender-container,
+ .emergency-contact-container, .dob-container, .joining-date-container{
     width: 100%;
   }
 }
+ 
+ 
