@@ -124,6 +124,41 @@
   color: #555;
   transition: color 0.3s;
 }
+/* Pagination container */
+.pagination-controls-M {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+/* Pagination buttons */
+.pagination-button-M {
+  background-color: #fe0606;
+  color: #333;
+  border: 1px solid #ccc;
+  padding: 8px 16px;
+  font-size: 14px;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: background-color 0.3s, border-color 0.3s;
+}
+
+/* Active page button */
+
+
+/* Previous and Next button */
+.previous-next-button {
+  font-weight: bold;
+  background-color: #e70f2b;
+  color: white;
+  
+  padding: 8px 16px;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
 
 
 

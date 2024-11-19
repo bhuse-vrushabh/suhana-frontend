@@ -69,6 +69,7 @@ h1 {
     flex-direction: column;
     align-items: center;
     justify-content: flex-start;
+   
 }
   
   /* Sidebar item - icon in box */
@@ -124,7 +125,7 @@ h1 {
     } */
 
     #sidebar_M {
-        width: 80px;
+        width: 90px;
         margin-left: -3%;
         margin-top: -23px;
     }

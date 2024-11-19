@@ -88,7 +88,7 @@ function FeedBackForm_M() {
         <div className="main-wrapper_n">
           <Nav_M />
           <div className="manager-rating-container-Mger">
-            <h3>Manager Feedback</h3>
+            <h3> Feedback</h3>
             <form className="manager-rating-form-Mger" onSubmit={handleSubmit}>
 
               <div className="form-group-Mger">
@@ -133,7 +133,7 @@ function FeedBackForm_M() {
             </div> */}
 
               <div className="form-group-Mger">
-                <label htmlFor="rating">Rating:</label>
+                <label htmlFor="rating">Overall Rating:</label>
                 <div className="Mger-star-rating">
                   {[1, 2, 3, 4, 5].map((star) => (
                     <span

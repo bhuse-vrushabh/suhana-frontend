@@ -1,4 +1,4 @@
-import React, { useState, useEffect ,useContext} from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import Sidebarr from './Sidebarr';
 
 import "./Sidebarr";
@@ -12,10 +12,18 @@ import { AuthContext } from "../Component/AuthContext";
 
 function TrainingDevelopmentPage() {
     const { authData } = useContext(AuthContext);
-    console.log("this is the data passed through context",authData)
+    console.log("this is the data passed through context", authData)
     const [programs] = useState([
         { id: 1, name: 'Leadership Training', duration: '5 days', description: 'Developing leadership skills', trainer: 'Niranjan Navale', startDate: '2024-10-15', endDate: '2024-10-19' },
         { id: 2, name: 'Team Management', duration: '3 days', description: 'Effective team management strategies', trainer: 'Rohan Joshi', startDate: '2024-11-01', endDate: '2024-11-03' },
+        { id: 3, name: 'Communication Skills Workshop', duration: '2 days', description: 'Improving communication techniques', trainer: 'Priya Mehta', startDate: '2024-11-10', endDate: '2024-11-12' },
+        { id: 4, name: 'Time Management', duration: '1 day', description: 'Maximizing productivity and efficiency', trainer: 'Amit Kumar', startDate: '2024-11-20', endDate: '2024-11-20' },
+        { id: 5, name: 'Conflict Resolution Strategies', duration: '3 days', description: 'Techniques to resolve workplace conflicts', trainer: 'Sanjay Sharma', startDate: '2024-11-25', endDate: '2024-11-27' },
+        { id: 6, name: 'Project Management Essentials', duration: '4 days', description: 'Fundamentals of project management', trainer: 'Simran Kaur', startDate: '2024-12-01', endDate: '2024-12-04' },
+        { id: 7, name: 'Agile Methodologies Training', duration: '2 days', description: 'Mastering Agile techniques', trainer: 'Arjun Patel', startDate: '2024-12-05', endDate: '2024-12-06' },
+        { id: 8, name: 'Customer Service Excellence', duration: '1 day', description: 'Improving customer interactions', trainer: 'Meera Singh', startDate: '2024-12-10', endDate: '2024-12-10' },
+        { id: 9, name: 'Digital Marketing Bootcamp', duration: '6 days', description: 'Digital marketing strategies and tools', trainer: 'Ravi Gupta', startDate: '2024-12-12', endDate: '2024-12-17' },
+        { id: 10, name: 'Financial Literacy for Employees', duration: '3 days', description: 'Understanding personal and business finance', trainer: 'Ayesha Khan', startDate: '2024-12-18', endDate: '2024-12-20' },
     ]);
 
 
@@ -29,33 +37,50 @@ function TrainingDevelopmentPage() {
         selectedStartDate: '',
         selectedEndDate: '',
         description: '',
-        status: '', // Default status
+        status: '',
         editingIndex: null,
     });
     const [dateError, setDateError] = useState('');
-
+    const [currentPage, setCurrentPage] = useState(1);
+    const entriesPerPage = 10; // Show 10 entries per page
     // Fetch employee data from the API
-   
-  useEffect(() => {
-    const fetchEmployees = async () => {
-      try {
-        const response = await axios.get('http://127.0.0.1:8000/api/employees/', {
-          headers: {
-            Authorization: `Bearer ${authData.accessToken}`, // Use token from context
-            "Content-Type": "application/json",
-          },
-        });
 
-        if (response.status === 200) {
-          setEmployees(response.data); // Assuming the response is an array of employees
-        }
-      } catch (error) {
-        console.error('Error fetching employees:', error);
-      }
-    };
+    useEffect(() => {
+        const fetchEmployees = async () => {
+            try {
+                const response = await axios.get('http://127.0.0.1:8000/api/employees/', {
+                    headers: {
+                        Authorization: `Bearer ${authData.accessToken}`, // Use token from context
+                        "Content-Type": "application/json",
+                    },
+                });
 
-    fetchEmployees();
-  }, []);
+                if (response.status === 200) {
+                    setEmployees(response.data); // Assuming the response is an array of employees
+                }
+            } catch (error) {
+                console.error('Error fetching employees:', error);
+            }
+        };
+        const fetchAssignments = async () => {
+            try {
+                const response = await axios.get('http://127.0.0.1:8000/api/training/', {
+                    headers: {
+                        Authorization: `Bearer ${authData.accessToken}`,
+                        "Content-Type": "application/json",
+                    },
+                });
+                if (response.status === 200) {
+                    setAssignments(response.data);
+                }
+            } catch (error) {
+                console.error('Error fetching training assignments:', error);
+            }
+        };
+
+        fetchEmployees();
+        fetchAssignments();
+    }, [authData]);
     const handleInputChange = (e) => {
         const { name, value } = e.target;
         setFormData({
@@ -96,17 +121,17 @@ function TrainingDevelopmentPage() {
 
         if (selectedEmployee && selectedProgram && selectedStartDate && selectedEndDate && description) {
             const program = programs.find(prog => prog.id === parseInt(selectedProgram));
-            
 
 
             const assignmentPayload = {
+                selectedEmployee, // This should be the employee `id`
                 name: program.name,
-                
                 description,
                 start_date: selectedStartDate,
                 end_date: selectedEndDate,
                 status,
             };
+
             try {
                 let response;
                 if (editingIndex !== null) {
@@ -125,6 +150,8 @@ function TrainingDevelopmentPage() {
                             Authorization: `Bearer ${authData.accessToken}`, // Use token from context
                             "Content-Type": "application/json",
                         }
+
+
                     });
                 }
 
@@ -144,6 +171,7 @@ function TrainingDevelopmentPage() {
                         updatedAssignments.push(response.data); // Add new assignment
                     }
                     setAssignments(updatedAssignments);
+
                     resetForm();
                 }
 
@@ -212,7 +240,7 @@ function TrainingDevelopmentPage() {
             selectedStartDate: '',
             selectedEndDate: '',
             description: '',
-            status: 'Assigned',
+            status: '',
             editingIndex: null,
         });
         setDateError('');
@@ -239,6 +267,19 @@ function TrainingDevelopmentPage() {
             });
         }
     };
+
+    const totalPages = Math.ceil(assignments.length / entriesPerPage);
+
+    const indexOfLastEntry = currentPage * entriesPerPage;
+    const indexOfFirstEntry = indexOfLastEntry - entriesPerPage;
+    const currentAssignments = assignments.slice(indexOfFirstEntry, indexOfLastEntry);
+
+  
+    // Handle page change
+    const handlePageChange = (pageNumber) => {
+      setCurrentPage(pageNumber);
+    };
+
     return (
         <div>
             <div className="main-wrapper">
@@ -247,7 +288,7 @@ function TrainingDevelopmentPage() {
                     <Nav_M />
                     <div>
                         <section id="assign">
-                            <h2>Training to Employees</h2>
+                            <h2>Training</h2>
                             <form className="goal-form-M" onSubmit={handleAssignProgram}>
                                 <div className="form-group-M-inline">
                                     {/* Employee Name and Program Name */}
@@ -257,7 +298,7 @@ function TrainingDevelopmentPage() {
                                             <option value="">Select Employee</option>
                                             {employees.map(employee => (
                                                 <option key={employee.id} value={employee.id}>
-                                                     {employee.full_name} (ID: {employee.employee_id})
+                                                    {employee.full_name} (ID: {employee.employee_id})
                                                 </option>
                                             ))}
                                         </select>
@@ -293,14 +334,13 @@ function TrainingDevelopmentPage() {
                                         <label>End Date:</label>
                                         <input type="date" name="selectedEndDate" value={formData.selectedEndDate} onChange={handleInputChange} required />
                                     </div>
-                                  
+
                                     <div className="form-group-M">
                                         <label>Status:</label>
                                         <select name="status" value={formData.status} onChange={handleInputChange}>
-                                            
-                                            
                                             <option value="Completed">Completed</option>
                                             <option value="In Progress">In Progess</option>
+
                                         </select>
                                     </div>
                                 </div>
@@ -322,42 +362,76 @@ function TrainingDevelopmentPage() {
                                 <table className="assigned-programs-table-M">
                                     <thead>
                                         <tr>
-                                            <th>Employee ID  Name</th>
-                                            <th>Program Name</th>
-                                            <th>Start Date</th>
-                                            <th>End Date</th>
-                                            <th>Description</th>
-                                            <th>Status</th>
-                                            <th>Actions</th>
+                                        <th>ID</th>
+                    <th>Program Name</th>
+                    <th>Description</th>
+                    <th>Start Date</th>
+                    <th>End Date</th>
+                    <th>Status</th>
+                    <th>Actions</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {assignments.map((assignment, index) => (
-                                            <tr key={index}>
-                                                <td>
-                                                    {employees.find(emp => emp.id === parseInt(assignment.selectedEmployee))?.id} - {employees.find(emp => emp.id === assignment.selectedEmployee)?.full_name}
-                                                </td>
-                                                <td>{assignment.name}</td>
-                                                <td>{assignment.start_date}</td>
-                                                <td>{assignment.end_date}</td>
-                                                <td>{assignment.description}</td>
-                                                <td>{assignment.status}</td>
-                                                <td className="action-buttons-M">
-                                                    <button onClick={() => handleEditAssignment(index)} className="edit-button-M">
-                                                        <FontAwesomeIcon icon={faEdit} />
-                                                    </button>
-                                                    <button onClick={() => handleDeleteAssignment(index)} className="delete-button-M">
-                                                        <FontAwesomeIcon icon={faTrash} />
-                                                    </button>
-                                                </td>
-                                            </tr>
-                                        ))}
-                                    </tbody>
+                                  
+      
+        {currentAssignments.map((assignment, index) => {
+            const employee = employees.find(
+                emp => emp.id === parseInt(assignment.selectedEmployee, 10)
+            );
+        return (
+            <tr key={index}>
+                <td>{assignment.id}</td> {/* ID */}
+                            <td>{assignment.name}</td> {/* Name */}
+                            <td>{assignment.description}</td> {/* Description */}
+                            <td>{assignment.start_date}</td> {/* Start Date */}
+                            <td>{assignment.end_date}</td> {/* End Date */}
+                            <td>{assignment.status}</td> {/* Status */}
+                <td className="action-buttons-M">
+                    <button onClick={() => handleEditAssignment(index)} className="edit-button-M">
+                        <FontAwesomeIcon icon={faEdit} />
+                    </button>
+                    <button onClick={() => handleDeleteAssignment(index)} className="delete-button-M">
+                        <FontAwesomeIcon icon={faTrash} />
+                    </button>
+                </td>
+            </tr>
+        );
+    })}
+</tbody>
+
                                 </table>
                             ) : (
                                 <p>No programs assigned yet.</p>
                             )}
                         </section>
+                        <div className="pagination-controls-M">
+    <button
+        className="pagination-button-M prev-next-button"
+        onClick={() => handlePageChange(currentPage - 1)}
+        disabled={currentPage === 1}
+    >
+        Previous
+    </button>
+
+    {Array.from({ length: totalPages }, (_, index) => (
+        <button
+            key={index}
+            className={`pagination-button-M ${currentPage === index + 1 ? 'active' : ''}`}
+            onClick={() => handlePageChange(index + 1)}
+        >
+            {index + 1}
+        </button>
+    ))}
+
+    <button
+        className="pagination-button-M prev-next-button"
+        onClick={() => handlePageChange(currentPage + 1)}
+        disabled={currentPage === totalPages}
+    >
+        Next
+    </button>
+</div>
+
                     </div>
                 </div>
             </div>

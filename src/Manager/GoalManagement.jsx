@@ -1,4 +1,4 @@
-import React, { useState, useEffect,useContext } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import './GoalManagement.css';
 import './Sidebarr.css';
 import Sidebarr from './Sidebarr';
@@ -25,6 +25,9 @@ const GoalManagement = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [editIndex, setEditIndex] = useState(null);
   const [error, setError] = useState('');
+  const [currentPage, setCurrentPage] = useState(1); // State to track the current page
+
+  const itemsPerPage = 10; // Number of items per page
 
   useEffect(() => {
     const fetchEmployees = async () => {
@@ -36,6 +39,8 @@ const GoalManagement = () => {
           },
         });
 
+        // console.log("this is employee " ,employees);
+
         if (response.status === 200) {
           setEmployees(response.data); // Assuming the response is an array of employees
         }
@@ -44,9 +49,27 @@ const GoalManagement = () => {
       }
     };
 
-    fetchEmployees();
-  }, []); // Empty dependency array to run only once on component mount
+    const fetchGoals = async () => {
+      try {
+        const response = await axios.get('http://127.0.0.1:8000/api/goals/', {
+          headers: {
+            Authorization: `Bearer ${authData.accessToken}`,
+            'Content-Type': 'application/json',
+          },
+        });
 
+          
+        if (response.status === 200) {
+          setGoals(response.data);
+        }
+      } catch (error) {
+        console.error('Error fetching goals:', error);
+      }
+    };
+
+    fetchEmployees();
+    fetchGoals();
+  }, []);
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData({
@@ -54,18 +77,25 @@ const GoalManagement = () => {
       [name]: value,
     });
   };
+  const handleEdit = (index) => {
+    setIsEditing(true);
+    setEditIndex(index);
+    setFormData({
+      employee_id: goals[index].employee_id,
+      description: goals[index].description,
+      weightage: goals[index].weightage,
+      startDate: goals[index].start_date,
+      endDate: goals[index].end_date,
+      status: goals[index].status,
+    });
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     const today = new Date();
-    today.setHours(0, 0, 0, 0); // Set to start of today to compare dates accurately
+    today.setHours(0, 0, 0, 0);
 
     // Validate weightage
-    if (isNaN(formData.weightage) || formData.weightage <= 0 || formData.weightage > 10) {
-      setError("Weightage must be a number between 1 and 10.");
-      return;
-    }
-
-    // Validate start date to be today or later
     if (formData.startDate) {
       const start = new Date(formData.startDate);
       if (start < today) {
@@ -74,7 +104,6 @@ const GoalManagement = () => {
       }
     }
 
-    // Validate that end date is after start date
     if (formData.startDate && formData.endDate) {
       const start = new Date(formData.startDate);
       const end = new Date(formData.endDate);
@@ -84,11 +113,10 @@ const GoalManagement = () => {
       }
     }
 
-    setError(""); // Clear errors if all validations pass
-
+    setError("");
 
     const formattedData = {
-      employee_id: parseInt(formData.employee_id, 10), // Convert to integer
+      employee_id: parseInt(formData.employee_id, 10),
       description: formData.description,
       weightage: Number(formData.weightage),
       start_date: formData.startDate,
@@ -96,68 +124,84 @@ const GoalManagement = () => {
       status: formData.status,
     };
 
-
-    // Format the dates correctly
     if (formattedData.start_date) {
-      formattedData.start_date = new Date(formattedData.start_date).toISOString().split('T')[0]; // Format as YYYY-MM-DD
+      formattedData.start_date = new Date(formattedData.start_date).toISOString().split("T")[0];
     }
     if (formattedData.end_date) {
-      formattedData.end_date = new Date(formattedData.end_date).toISOString().split('T')[0]; // Format as YYYY-MM-DD
+      formattedData.end_date = new Date(formattedData.end_date).toISOString().split("T")[0];
     }
 
-    console.log('Submitting Goal Data:', formattedData); // Log the data being sent
-
     try {
-      const response = await axios.post('http://127.0.0.1:8000/api/setgoals/', formattedData, {
-        headers: {
-          Authorization: `Bearer ${authData.accessToken}`, // Use token from context
-          "Content-Type": "application/json",
-        },
-      });
+      if (isEditing) {
+        // Make a PATCH request to update the goal
+        const response = await axios.patch(
+          `http://127.0.0.1:8000/api/performance-goals/5/51/update/`,
+          formattedData,
+          {
+            headers: {
+              Authorization: `Bearer ${authData.accessToken}`,
+              "Content-Type": "application/json",
+            },
+          }
+        );
 
-      if (response.status === 201 || response.status === 200) {
-        const responseData = response.data;
-        console.log('Response data:', responseData);
-
-        if (isEditing) {
-          const updatedGoals = [...goals];
-          updatedGoals[editIndex] = responseData;
+        if (response.status === 200 || response.status === 201) {
+          // Update the existing goal in the array
+          const updatedGoals = goals.map((goal, index) =>
+            index === editIndex ? response.data : goal
+          );
           setGoals(updatedGoals);
           setIsEditing(false);
           setEditIndex(null);
-          Swal.fire('Success', 'Task updated successfully!', 'success');
-        } else {
-          setGoals((prevGoals) => [...prevGoals, responseData]);
-          Swal.fire('Success', 'Task added successfully!', 'success');
+          Swal.fire("Success", "Task updated successfully!", "success");
         }
+      } else {
+        // Add a new goal
+        const response = await axios.post(
+          "http://127.0.0.1:8000/api/setgoals/",
+          formattedData,
+          {
+            headers: {
+              Authorization: `Bearer ${authData.accessToken}`,
+              "Content-Type": "application/json",
+            },
+          }
+        );
 
-        // Reset the form
-        setFormData({ employee_id:'', description: '', weightage: '', startDate: '', endDate: '', status: 'Pending' });
+        if (response.status === 201 || response.status === 200) {
+          setGoals((prevGoals) => [...prevGoals, response.data]);
+          Swal.fire("Success", "Task added successfully!", "success");
+        }
       }
+
+      // Reset the form
+      setFormData({
+        employee_id: "",
+        description: "",
+        weightage: "",
+        startDate: "",
+        endDate: "",
+        status: "",
+      });
     } catch (error) {
       if (error.response) {
         console.error("Error data:", error.response.data);
         const errorDetails = error.response.data;
 
-        // Specific handling for "Employee not found" error
         if (errorDetails.employee_id) {
-          Swal.fire('Error', `Employee ID error: ${errorDetails.employee_id}`, 'error');
+          Swal.fire("Error", `Employee ID error: ${errorDetails.employee_id}`, "error");
         } else {
-          const errorMessage = Object.values(errorDetails).flat().join(', ');
-          Swal.fire('Error', errorMessage || 'There was an issue saving the task. Please try again.', 'error');
+          const errorMessage = Object.values(errorDetails).flat().join(", ");
+          Swal.fire("Error", errorMessage || "There was an issue saving the task. Please try again.", "error");
         }
       } else {
         console.error("Error message:", error.message);
-        Swal.fire('Error', 'An unexpected error occurred.', 'error');
+        Swal.fire("Error", "An unexpected error occurred.", "error");
       }
     }
-  }
-
-  const handleEdit = (index) => {
-    setIsEditing(true);
-    setEditIndex(index);
-    setFormData(goals[index]);
   };
+
+
 
   const handleDelete = (index) => {
     const goalId = goals[index].id; // Get the ID of the goal to delete
@@ -173,7 +217,7 @@ const GoalManagement = () => {
     }).then(async (result) => {
       if (result.isConfirmed) {
         try {
-          await axios.delete(`http://127.0.0.1:8000/api/performance/goals/23/`, {
+          await axios.delete(`http://127.0.0.1:8000/api/goals/2/`, {
             headers: {
               Authorization: `Bearer ${authData.accessToken}`, // Use token from context
               "Content-Type": "application/json",
@@ -192,7 +236,15 @@ const GoalManagement = () => {
       }
     });
   };
+  const totalPages = Math.ceil(goals.length / itemsPerPage);
+  const paginatedGoals = goals.slice(
+    (currentPage - 1) * itemsPerPage,
+    currentPage * itemsPerPage
+  );
 
+  const handlePageChange = (pageNumber) => {
+    setCurrentPage(pageNumber);
+  };
   return (
     <div>
       <div className="main-wrapper">
@@ -200,7 +252,7 @@ const GoalManagement = () => {
         <div className="main-wrapper_n">
           <Nav_M />
           <div>
-            <h2 className="form-title">{isEditing ? 'Edit Employee Task' : 'Employee Task'}</h2>
+            <h2 className="form-title">{isEditing ? 'Edit Employee Task' : ' Task'}</h2>
             <form className="goal-form-m" onSubmit={handleSubmit}>
               <div className="form-row-m">
                 <div className="form-group-m">
@@ -226,7 +278,7 @@ const GoalManagement = () => {
                 </div>
 
                 <div className="form-group-m">
-                  <label>Description:</label>
+                  <label>Task</label>
                   <input
                     type="text"
                     name="description"
@@ -243,10 +295,22 @@ const GoalManagement = () => {
                     type="number"
                     name="weightage"
                     value={formData.weightage}
-                    onChange={handleInputChange}
+                    onChange={(e) => {
+                      const value = e.target.value;
+                      // Check if value is within 1-10
+                      if (value < 1 || value > 10) {
+                        setError("Weightage must be between 1 and 10.");
+                      } else {
+                        setError(""); // Clear the error if within the range
+                      }
+                      handleInputChange(e); // Continue to update the formData
+                    }}
+                    min="1"
+                    max="10"
                     className="input-feild-Man"
                     required
                   />
+                  {error && <div className="error-message">{error}</div>}
                 </div>
               </div>
 
@@ -285,6 +349,7 @@ const GoalManagement = () => {
                     className="input-feild-Man"
                     required
                   >
+                    <option value="Status">Status</option>
                     <option value="Pending">Pending</option>
 
                     <option value="Completed">Completed</option>
@@ -306,40 +371,79 @@ const GoalManagement = () => {
               <table className="goals-table-m">
                 <thead>
                   <tr>
-                  <th>Employee ID - Name</th>
+
+                    <th>ID</th> {/* Display employee's ID */}
                     <th>Description</th>
                     <th>Weightage</th>
                     <th>Start Date</th>
                     <th>End Date</th>
                     <th>Status</th>
-                    <th>Actions</th>
+                    <th>Employee ID</th>
+                    <th>Action</th> {/* Display employee's ID */}
                   </tr>
                 </thead>
                 <tbody>
-                  {goals.map((goal, index) => (
-                    <tr key={index}>
-                       <td>{employees.find(emp => emp.employee_id === goal.employee_id)?.full_name}</td>
-                       
-                      <td>{goal.description}</td>
-                      <td>{goal.weightage}</td>
-                      <td>{goal.start_date}</td>
-                      <td>{goal.end_date}</td>
-                      <td>{goal.status}</td>
-                      <td className="actions-cell-m">
-                        <button className="edit-btn-m" onClick={() => handleEdit(index)}>
-                          <FontAwesomeIcon icon={faEdit} />
-                        </button>
-                        <button className="delete-btn-m" onClick={() => handleDelete(index)}>
-                          <FontAwesomeIcon icon={faTrash} />
-                        </button>
-                      </td>
-                    </tr>
-                  ))}
+                  {paginatedGoals.map((goal, index) => {
+                    // If employee_id is a number in one and string in the other, use == for comparison
+                    const employee = employees.find((emp) => String(emp.employee_id) === String(goal.employee_id));
+
+                    return (
+                      <tr key={goal.id}>
+
+                        <td>{goal.id}</td>
+                        <td>{goal.description}</td>
+                        <td>{goal.weightage}</td>
+                        <td>{goal.start_date}</td>
+                        <td>{goal.end_date}</td>
+                        <td>{goal.status}</td>
+                        <td>{employee && employee.employee_id ? employee.employee_id : ''}</td>
+
+
+                        <td>
+                          <button onClick={() => handleEdit(index)} className="edit-btn">
+                            <FontAwesomeIcon icon={faEdit} />
+                          </button>
+                          <button onClick={() => handleDelete(index)} className="delete-btn">
+                            <FontAwesomeIcon icon={faTrash} />
+                          </button>
+                        </td>
+                      </tr>
+                    );
+                  })}
                 </tbody>
               </table>
+
             ) : (
               <p>No Task set yet.</p>
             )}
+           <div className="pagination-m">
+  <button
+    onClick={() => handlePageChange(currentPage - 1)}
+    disabled={currentPage === 1} // Disable Previous if already on the first page
+    className="pagination-btn-m prev-next-btn"
+  >
+    Previous
+  </button>
+
+  {Array.from({ length: totalPages }, (_, index) => (
+    <button
+      key={index}
+      onClick={() => handlePageChange(index + 1)}
+      className={`pagination-btn-m ${currentPage === index + 1 ? 'active' : ''}`}
+    >
+      {index + 1}
+    </button>
+  ))}
+
+  <button
+    onClick={() => handlePageChange(currentPage + 1)}
+    disabled={currentPage === totalPages} // Disable Next if on the last page
+    className="pagination-btn-m prev-next-btn"
+  >
+    Next
+  </button>
+</div>
+
           </div>
         </div>
       </div>

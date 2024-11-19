@@ -146,3 +146,27 @@
 .delete-btn-m:hover {
   background-color: #c82333;
 }
+/* Pagination container */
+.pagination-m {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+/* Pagination buttons (for page numbers) */
+.pagination-btn-m {
+  background-color: #3209e8;
+  color:#ccc;
+  border: 1px solid #ccc;
+  padding: 8px 16px;
+  font-size: 14px;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: background-color 0.3s, border-color 0.3s;
+}
+
+
+
+

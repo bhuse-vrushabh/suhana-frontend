@@ -137,7 +137,7 @@ const ManagerEvaluation = () => {
         status: newEmployee.status,
       };
 
-      await axios.patch(`http://127.0.0.1:8000/api/evaluation/2/`, employeeData, {
+      await axios.patch(`http://127.0.0.1:8000/api/evaluation/1/`, employeeData, {
         headers: { Authorization: `Bearer ${authData.accessToken}` },
       });
 
@@ -178,7 +178,7 @@ const ManagerEvaluation = () => {
 
         <div>
           <div className="card-header">
-            <h2>{editMode ? "Edit Evaluation" : "Add Evaluation"}</h2>
+            <h2>{editMode ? "Edit Evaluation" : " Evaluation"}</h2>
           </div>
           <div className="card-M">
             <form onSubmit={updateEmployeeEvaluation}>

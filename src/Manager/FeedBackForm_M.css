@@ -97,4 +97,60 @@
     transition: color 0.3s;
   }
   
-  
+  /* Mobile Responsiveness */
+@media (max-width: 768px) {
+  .manager-rating-container-Mger {
+      padding: 15px; /* Reduce padding */
+      max-width: 100%; /* Full width */
+  }
+
+  .form-group-Mger input,
+  .form-group-Mger select,
+  .form-group-Mger textarea {
+      font-size: 14px; /* Smaller font size */
+      padding: 8px; /* Reduce padding */
+  }
+
+  .form-group-Mger textarea {
+      min-height: 80px; /* Adjust height for smaller screens */
+  }
+
+  .submit-button-Mger {
+      width: 120px; /* Reduce button width */
+      padding: 8px 10px; /* Adjust padding */
+  }
+
+  .Mger-star {
+      font-size: 2.5rem; /* Reduce star size */
+  }
+
+  .Mger-star-filled {
+      font-size: 2.5rem; /* Reduce filled star size */
+  }
+}
+
+@media (max-width: 480px) {
+  .manager-rating-container-Mger {
+      padding: 10px; /* Further reduce padding */
+  }
+
+  .form-group-Mger input,
+  .form-group-Mger select,
+  .form-group-Mger textarea {
+      font-size: 12px; /* Smaller font size */
+      padding: 6px; /* Reduce padding */
+  }
+
+  .submit-button-Mger {
+      width: 100px; /* Further reduce button width */
+      padding: 6px 8px; /* Adjust padding */
+  }
+
+  .Mger-star {
+      font-size: 2rem; /* Further reduce star size */
+  }
+
+  .Mger-star-filled {
+      font-size: 2rem; /* Further reduce filled star size */
+  }
+}

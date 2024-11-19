@@ -70,46 +70,45 @@ function Manager_Dashboard() {
     return '#f44336'; // red
   };
 
-  // Bell Curve Highchart Options for Performance
-  const performanceBellCurveOptions = {
-    title: {
-      text: 'Performance Bell Curve'
-    },
-    xAxis: [{
-      title: { text: 'Performance Score' },
-      alignTicks: false
-    }, {
-      title: { text: 'Bell Curve' },
-      alignTicks: false,
-      opposite: true
-    }],
-    yAxis: [{
-      title: { text: 'Frequency' }
-    }],
-    series: [{
-      name: 'Performance Score',
-      type: 'histogram',
-      xAxis: 0,
-      yAxis: 0,
-      baseSeries: 's1',
-      zIndex: -1
-    }, {
+// Bell Curve Highchart Options for Performance
+const performanceBellCurveOptions = {
+  title: {
+    text: 'Performance Bell Curve'
+  },
+  xAxis: [{
+    title: { text: 'Performance Score' },
+    alignTicks: false
+  }, {
+    title: { text: 'Bell Curve' },
+    alignTicks: false,
+    opposite: true
+  }],
+  yAxis: [{
+    title: { text: 'Frequency' }
+  }],
+  series: [
+    {
       name: 'Bell Curve',
       type: 'bellcurve',
       xAxis: 1,
       yAxis: 0,
       baseSeries: 's1',
-      zIndex: -2
-    }, {
-      name: 'Data',
+      zIndex: -2,
+      color: '#7cb5ec', // Customize the color
+    },
+    {
+      name: 'Data', // Still required to calculate the bell curve
       type: 'scatter',
       data: [4.5, 3.8, 4.2, 3.9, 4.1, 4.0], // Sample performance scores
       id: 's1',
       marker: {
-        radius: 2
-      }
-    }]
-  };
+        enabled: false // Disable markers to hide the data visually
+      },
+      visible: false // Ensure this series is hidden
+    }
+  ]
+};
+
 
   // Bell Curve Highchart Options for Training
   const trainingBellCurveOptions = {
@@ -127,30 +126,29 @@ function Manager_Dashboard() {
     yAxis: [{
       title: { text: 'Frequency' }
     }],
-    series: [{
-      name: 'Courses Completed',
-      type: 'histogram',
-      xAxis: 0,
-      yAxis: 0,
-      baseSeries: 's2',
-      zIndex: -1
-    }, {
-      name: 'Bell Curve',
-      type: 'bellcurve',
-      xAxis: 1,
-      yAxis: 0,
-      baseSeries: 's2',
-      zIndex: -2
-    }, {
-      name: 'Data',
-      type: 'scatter',
-      data: [8, 5, 7, 6, 7.5, 6.5], // Sample training completion scores
-      id: 's2',
-      marker: {
-        radius: 2
+    series: [
+      {
+        name: 'Bell Curve',
+        type: 'bellcurve',
+        xAxis: 1,
+        yAxis: 0,
+        baseSeries: 's2',
+        zIndex: -2,
+        color: '#90ed7d', // Customize the color
+      },
+      {
+        name: 'Data',
+        type: 'scatter',
+        data: [8, 5, 7, 6, 7.5, 6.5], // Sample training completion scores
+        id: 's2',
+        marker: {
+          enabled: false // Disable markers to hide the data visually
+        },
+        visible: false // Ensure this series is hidden
       }
-    }]
+    ]
   };
+  
 
   const handleCardClick = (chart) => setActiveChart(chart);
 
@@ -168,9 +166,9 @@ function Manager_Dashboard() {
             <div className="kpi-label-M">Total Attendance</div>
              <div className="kpi-value-M">
               {attendance !== null ? (
-                <p>{attendance}%</p> // Display attendance if data is available
+                <p>{attendance}%</p> 
               ) : (
-                <p>Loading...</p> // Show loading message if data is still fetching
+                <p>Loading...</p> 
               )}
             </div>
           </div>
@@ -217,14 +215,14 @@ function Manager_Dashboard() {
           <div >
             {activeChart === "performance" && (
               <div className="bar-chart-container-M">
-                <h4>Performance Bell Curve</h4>
+               
                 <HighchartsReact highcharts={Highcharts} options={performanceBellCurveOptions} />
               </div>
             )}
 
             {activeChart === "training" && (
               <div className="bar-chart-container-M">
-                <h4>Training Bell Curve</h4>
+                
                 <HighchartsReact highcharts={Highcharts} options={trainingBellCurveOptions} />
               </div>
             )}
