@@ -9,7 +9,7 @@ import { AuthContext } from './AuthContext';
 const EmployeeLogin = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [errorMessage, setErrorMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState({ email: "", password: "" });  // Track error messages for email and password
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
@@ -19,7 +19,25 @@ const EmployeeLogin = () => {
   const handleLoginClick = (e) => {
     e.preventDefault();
     setLoading(true);
-    setErrorMessage("");
+
+    // Check if email or password is empty
+    let emailError = "";
+    let passwordError = "";
+
+    if (!email) {
+      emailError = "Email address is required.";
+    }
+
+    if (!password) {
+      passwordError = "Password is required.";
+    }
+
+    // If there are any error messages, set them and stop further execution
+    if (emailError || passwordError) {
+      setLoading(false);
+      setErrorMessage({ email: emailError, password: passwordError });
+      return;
+    }
 
     const postData = { email, password };
 
@@ -32,7 +50,6 @@ const EmployeeLogin = () => {
           // Save tokens and role in context
           setAuthData({ accessToken: access, refreshToken: refresh, role });
 
-          
           Swal.fire({
             title: 'Success!',
             text: `${role.charAt(0).toUpperCase() + role.slice(1)} login successful!`,
@@ -53,7 +70,7 @@ const EmployeeLogin = () => {
                 navigate("/Dashboard");
                 break;
               default:
-                setErrorMessage("Unknown role. Please contact support.");
+                setErrorMessage({ email: "", password: "Unknown role. Please contact support." });
             }
           }, 1500);
         } else {
@@ -65,7 +82,7 @@ const EmployeeLogin = () => {
         if (error.response && error.response.status === 401) {
           handleInvalidCredentials();
         } else {
-          setErrorMessage("Login Failed. Please try again.");
+          setErrorMessage({ email: "", password: "Login Failed. Please try again." });
           Swal.fire({
             title: 'Error!',
             text: 'Login Failed. Please try again later.',
@@ -78,7 +95,7 @@ const EmployeeLogin = () => {
   };
 
   const handleInvalidCredentials = () => {
-    setErrorMessage("Invalid email or password. Please try again.");
+    setErrorMessage({ email: "", password: "Invalid email or password. Please try again." });
     Swal.fire({
       title: 'Error!',
       text: 'Login failed. Please check your credentials.',
@@ -87,6 +104,7 @@ const EmployeeLogin = () => {
       showConfirmButton: false
     });
   };
+
   const handleForgotPassword = () => {
     Swal.fire({
       title: 'Forgot Password',
@@ -101,18 +119,9 @@ const EmployeeLogin = () => {
           return false;
         } else {
           return axios.post(`http://127.0.0.1:8000/api/forgot_password/`, { email: inputEmail })
-            // .then(() => {
-            //   Swal.fire({
-            //     title: 'Success!',
-            //     text: `Reset password link sent to ${inputEmail}. Please check your inbox.`,
-            //     icon: 'success',
-            //     timer: 2000,
-            //     showConfirmButton: false
-            //   })
-              .then(() => {
-                handleOtpAndPasswordReset(inputEmail);
-              })
-           
+            .then(() => {
+              handleOtpAndPasswordReset(inputEmail);
+            })
             .catch(() => {
               Swal.fire({
                 title: 'Error!',
@@ -126,7 +135,7 @@ const EmployeeLogin = () => {
       }
     });
   };
- 
+
   const handleOtpAndPasswordReset = (inputEmail) => {
     Swal.fire({
       title: 'Enter OTP',
@@ -140,7 +149,6 @@ const EmployeeLogin = () => {
           Swal.showValidationMessage('Please enter a valid 6-digit OTP');
           return false;
         } else {
-       
           Swal.fire({
             title: 'Reset Password',
             html:
@@ -150,20 +158,17 @@ const EmployeeLogin = () => {
             preConfirm: () => {
               const newPassword = Swal.getPopup().querySelector('#newPassword').value;
               const confirmPassword = Swal.getPopup().querySelector('#confirmPassword').value;
- 
+
               if (!newPassword || !confirmPassword) {
                 Swal.showValidationMessage('Please enter both password fields');
               } else if (newPassword !== confirmPassword) {
                 Swal.showValidationMessage('Passwords do not match');
               } else {
                 return axios.post(`http://127.0.0.1:8000/api/reset_password/`, {
-                 
-                    email:email,
-                    new_password:newPassword,
-                    otp:otp
-               
+                  email: email,
+                  new_password: newPassword,
+                  otp: otp
                 })
-               
                 .then(() => {
                   Swal.fire({
                     title: 'Success!',
@@ -173,23 +178,35 @@ const EmployeeLogin = () => {
                     showConfirmButton: false
                   });
                 })
-                  .catch(() => {
-                    Swal.fire({
-                      title: 'Error!',
-                      text: 'Failed to reset password. Please try again later.',
-                      icon: 'error',
-                      timer: 2000,
-                      showConfirmButton: false
-                    });
+                .catch(() => {
+                  Swal.fire({
+                    title: 'Error!',
+                    text: 'Failed to reset password. Please try again later.',
+                    icon: 'error',
+                    timer: 2000,
+                    showConfirmButton: false
                   });
+                });
               }
             }
           });
         }
       }
     });
-   
   };
+
+  // Clear error messages when the user starts typing
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    if (name === "email") setEmail(value);
+    if (name === "password") setPassword(value);
+
+    setErrorMessage(prevState => ({
+      ...prevState,
+      [name]: ""  // Clear the error for the specific field
+    }));
+  };
+
   return (
     <div>
       <div className="container-fluid">
@@ -208,9 +225,12 @@ const EmployeeLogin = () => {
                   className="form-control"
                   placeholder="Enter Username"
                   value={email}
-                  onChange={(e) => setEmail(e.target.value)}
+                  onChange={handleInputChange}
+                  name="email"
                   required
                 />
+                {/* Show error message if email is empty */}
+                {errorMessage.email && <p className="text-danger">{errorMessage.email}</p>}
               </div>
 
               <div className="mb-3 password-input">
@@ -220,12 +240,13 @@ const EmployeeLogin = () => {
                   className="form-control"
                   placeholder="Enter password"
                   value={password}
-                  onChange={(e) => setPassword(e.target.value)}
+                  onChange={handleInputChange}
+                  name="password"
                   required
                 />
+                {/* Show error message if password is empty */}
+                {errorMessage.password && <p className="text-danger">{errorMessage.password}</p>}
               </div>
-
-              {errorMessage && <p className="text-danger">{errorMessage}</p>}
 
               <div className="mb-3" id="loginbtncenter">
                 <button
@@ -250,11 +271,5 @@ const EmployeeLogin = () => {
 };
 
 export default EmployeeLogin;
- 
- 
-
-
-
-
 
 
