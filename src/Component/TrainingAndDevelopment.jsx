@@ -1,7 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect,useContext } from 'react';
 import Sidebar from './Sidebar';
 import Navbar from './Navbar';
+import { AuthContext } from "../Component/AuthContext";
+
 const TrainingAndDevelopment = () => {
+  
+  const { authData, clearTokens } = useContext(AuthContext);
+  console.log(authData);
   const [programs, setPrograms] = useState([]);
   const [selectedProgram, setSelectedProgram] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -16,8 +21,8 @@ const TrainingAndDevelopment = () => {
         const response = await fetch('http://127.0.0.1:8000/api/training/', {
           method: 'GET',
           headers: {
-            'Authorization': `Bearer ${token}`,
-            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${authData.accessToken}`,
+            "Content-Type": "application/json",
           },
         });
         if (!response.ok) {
