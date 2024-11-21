@@ -223,7 +223,7 @@ const EmployeeLogin = () => {
                 <input
                   type="email"
                   className="form-control"
-                  placeholder="Enter Username"
+                  placeholder="Enter Email"
                   value={email}
                   onChange={handleInputChange}
                   name="email"

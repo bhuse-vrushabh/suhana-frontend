@@ -17,9 +17,10 @@ const EmployeeSelfEvaluation = () => {
   const [comments, setComments] = useState(''); // State for comments
   const [fetchEvaluationData, setfetchEvaluationData] = useState(null);
   const { authData, clearTokens } = useContext(AuthContext);
+  console.log(authData);
 
   useEffect(() => {
-    // GET request to fetch evaluation data
+
     if (!authData?.accessToken) {
       console.warn("No access token available, skipping API call.");
       return;
@@ -34,8 +35,8 @@ const EmployeeSelfEvaluation = () => {
           },
           params: { description: " " }
         });
-        console.log("Fetched task options:", response.data); // Log the response data
-        setTaskOptions(response.data); // Assuming response data is in the form [{id: ..., name: ...}]
+        console.log("Fetched task options:", response.data); 
+        setTaskOptions(response.data); 
       } catch (error) {
         console.error('Error fetching goals data:', error);
       }
