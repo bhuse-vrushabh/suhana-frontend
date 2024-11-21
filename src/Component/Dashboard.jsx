@@ -1,4 +1,4 @@
- 
+
 import React, { useEffect, useState, useContext } from "react";
 import './Dashboard.css';
 import Highcharts from 'highcharts';

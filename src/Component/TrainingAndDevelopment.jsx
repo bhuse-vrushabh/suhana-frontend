@@ -1,20 +1,19 @@
-import React, { useState, useEffect,useContext } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import Sidebar from './Sidebar';
 import Navbar from './Navbar';
 import { AuthContext } from "../Component/AuthContext";
 
 const TrainingAndDevelopment = () => {
-  
-  const { authData, clearTokens } = useContext(AuthContext);
+  const { authData } = useContext(AuthContext);
   console.log(authData);
   const [programs, setPrograms] = useState([]);
   const [selectedProgram, setSelectedProgram] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [currentPage, setCurrentPage] = useState(1); 
-  const programsPerPage = 5; 
-  
-  const token = localStorage.getItem('accessToken');
+  const [currentPage, setCurrentPage] = useState(1);
+  const [searchQuery, setSearchQuery] = useState(""); // State for search input
+  const programsPerPage = 5;
+
   useEffect(() => {
     const fetchPrograms = async () => {
       try {
@@ -22,7 +21,7 @@ const TrainingAndDevelopment = () => {
           method: 'GET',
           headers: {
             'Authorization': `Bearer ${authData.accessToken}`,
-            "Content-Type": "application/json",
+            'Content-Type': 'application/json',
           },
         });
         if (!response.ok) {
@@ -47,21 +46,33 @@ const TrainingAndDevelopment = () => {
       }
     };
     fetchPrograms();
-  }, [token]);
+  }, [authData.accessToken]);
+
   const handleProgramClick = (program) => {
     setSelectedProgram(program);
   };
+
+  const handleSearchChange = (e) => {
+    setSearchQuery(e.target.value);
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     alert('Form Submitted Successfully!');
     console.log('Form Submitted:', selectedProgram);
   };
-  // Pagination calculations
+
+  const filteredPrograms = programs.filter(
+    (program) =>
+      program.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      program.startDate.includes(searchQuery)
+  );
+
   const indexOfLastProgram = currentPage * programsPerPage;
   const indexOfFirstProgram = indexOfLastProgram - programsPerPage;
-  const currentPrograms = programs.slice(indexOfFirstProgram, indexOfLastProgram);
+  const currentPrograms = filteredPrograms.slice(indexOfFirstProgram, indexOfLastProgram);
 
-  const totalPages = Math.ceil(programs.length / programsPerPage);
+  const totalPages = Math.ceil(filteredPrograms.length / programsPerPage);
 
   const handleNextPage = () => {
     if (currentPage < totalPages) setCurrentPage((prevPage) => prevPage + 1);
@@ -86,6 +97,21 @@ const TrainingAndDevelopment = () => {
         <Sidebar />
         <div style={mainContentStyle}>
           <h1 style={titleStyle}>Training and Development</h1>
+
+          {/* Search Input */}
+          <input
+            type="text"
+            placeholder="Search by name or date..."
+            value={searchQuery}
+            onChange={handleSearchChange}
+            style={{
+              width: '30%',
+              padding: '10px',
+              marginBottom: '20px',
+              borderRadius: '4px',
+              border: '1px solid #ccc',
+            }}
+          />
 
           {/* Training Program Table */}
           <table style={tableStyle}>
@@ -115,29 +141,29 @@ const TrainingAndDevelopment = () => {
 
           {/* Pagination Controls */}
           <div style={paginationStyle}>
-  <button
-    onClick={handlePreviousPage}
-    style={paginationButtonStyle}
-    disabled={currentPage === 1}
-  >
-    Previous
-  </button>
-  <span style={{ fontSize: '14px' }}>Page {currentPage} of {totalPages}</span>
-  <button
-    onClick={handleNextPage}
-    style={paginationButtonStyle}
-    disabled={currentPage === totalPages}
-  >
-    Next
-  </button>
-</div>
-
+            <button
+              onClick={handlePreviousPage}
+              style={paginationButtonStyle}
+              disabled={currentPage === 1}
+            >
+              Previous
+            </button>
+            <span style={{ fontSize: '14px' }}>Page {currentPage} of {totalPages}</span>
+            <button
+              onClick={handleNextPage}
+              style={paginationButtonStyle}
+              disabled={currentPage === totalPages}
+            >
+              Next
+            </button>
+          </div>
         </div>
       </div>
     </div>
   );
 };
-// Styles (same as in the original code)
+
+// Styles
 const containerStyle = {
   display: 'flex',
   minHeight: '100vh',
@@ -183,12 +209,12 @@ const tdStyle = {
 };
 
 const paginationStyle = {
-  position: 'absolute', // Position the pagination absolutely within the parent container
-  bottom: '20px',       // Distance from the bottom of the page
-  right: '20px',        // Distance from the right of the page
-  display: 'flex',      // Align buttons and text in a row
-  gap: '10px',          // Space between buttons and text
-  alignItems: 'center', // Align text and buttons vertically in the center
+  position: 'absolute',
+  bottom: '20px',
+  right: '20px',
+  display: 'flex',
+  gap: '10px',
+  alignItems: 'center',
 };
 
 const paginationButtonStyle = {
@@ -199,14 +225,7 @@ const paginationButtonStyle = {
   color: '#fff',
   cursor: 'pointer',
   fontWeight: 'bold',
-  fontSize: '14px', // Set a consistent font size
+  fontSize: '14px',
 };
+
 export default TrainingAndDevelopment;
-
-
-
-
-
-
-
-
