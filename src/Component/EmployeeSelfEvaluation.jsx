@@ -16,7 +16,7 @@ const EmployeeSelfEvaluation = () => {
   const [evaluationData, setEvaluationData] = useState([]); // State for storing get response
   const [comments, setComments] = useState(''); // State for comments
   const [fetchEvaluationData, setfetchEvaluationData] = useState(null);
-  const { authData } = useContext(AuthContext);
+  const { authData, clearTokens } = useContext(AuthContext);
 
   useEffect(() => {
     // GET request to fetch evaluation data

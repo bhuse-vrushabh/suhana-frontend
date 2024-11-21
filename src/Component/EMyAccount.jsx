@@ -25,6 +25,10 @@ const InputField = ({ label, name, value, onChange, disabled = false, containerC
 };
  
 const PersonalDetailsForm = () => {
+  const { authData, clearTokens } = useContext(AuthContext);
+  console.log(authData);
+  const [isEditing, setIsEditing] = useState(true);
+  const [error, setError] = useState('');
   const [employeeData, setEmployeeData] = useState({
     full_name: '',
    // middlename: '',
@@ -37,10 +41,6 @@ const PersonalDetailsForm = () => {
     joining_date: '',
   });
  
-  const [isEditing, setIsEditing] = useState(true);
-  const [error, setError] = useState('');
-  const { authData } = useContext(AuthContext);
- 
  
   useEffect(() => {
  
@@ -51,6 +51,7 @@ const PersonalDetailsForm = () => {
       const response = await axios.get('http://127.0.0.1:8000/api/employees/', {
         headers: {
           'Authorization': `Bearer ${authData.accessToken}`,
+          'Content-Type': 'application/json',
         },
       });
  
