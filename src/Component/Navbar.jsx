@@ -1,14 +1,18 @@
-import React, { useState } from 'react';
+import React, { useState,useContext } from 'react';
 import './Navbar.css'; // Ensure this path is correct
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useNavigate, Link } from 'react-router-dom';
 import { faBell, faUser } from '@fortawesome/free-solid-svg-icons';
 
 import suhana from './Suhana1.png';
-import navbell from './Assets/navbell.svg'
+import navbell from './Assets/navbell.svg';
+import { AuthContext } from "../Component/AuthContext"; // Ensure the path is correct
 //import { Link } from 'react-router-dom';
+import Swal from 'sweetalert2';
+
 
 function Nav() {
+  const { clearAuthData } = useContext(AuthContext); // Access clearAuthData from context
   const [isNotificationOpen, setIsNotificationOpen] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const navigate = useNavigate();
@@ -25,11 +29,26 @@ function Nav() {
 
   // Logout function
   const handleLogout = () => {
-    // Clear any stored authentication tokens, session data, etc.
-    localStorage.removeItem('token'); // example for token
-    // Redirect to login page
-    navigate('/EmployeeLogin');
+    Swal.fire({
+      title: 'Are you sure you want to logout?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Yes, logout!',
+      cancelButtonText: 'Cancel',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        // Clear any stored authentication tokens, session data, etc.
+        clearAuthData(); // Clears cookies and context
+  
+        // Display success message
+        Swal.fire('Logged out!', 'You have been logged out successfully.', 'success').then(() => {
+          // Redirect to login page
+          navigate('/EmployeeLogin');
+        });
+      }
+    });
   };
+  
 
   return (
     <nav className="navbar">
@@ -71,9 +90,7 @@ function Nav() {
                     </Link>
                   </li>
                   <li>
-                  <Link to="/EmployeeLogin" onClick={handleLogout} className="logout-btn">
-                    Logout
-                  </Link>
+                  <li onClick={handleLogout}>Logout</li>
                 </li>
                 </ul>
             </div>

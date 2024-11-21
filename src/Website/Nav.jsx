@@ -141,7 +141,7 @@
 
 
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect,useContext } from 'react';
 import './Nav.css';
 import axios from 'axios'; // Import axios
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -149,8 +149,12 @@ import { faBell, faUser } from '@fortawesome/free-solid-svg-icons';
 import myImage from './Assets/suhanaui.png';
 import bellIcon from './Assets/bell.svg';
 import { useNavigate } from 'react-router-dom';
+import { AuthContext } from "../Component/AuthContext"; // Ensure the path is correct
+import Swal from 'sweetalert2';
+
 
 function Nav({ user }) {
+  const { clearAuthData } = useContext(AuthContext); // Access clearAuthData from context
   const [isNotificationOpen, setIsNotificationOpen] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [notifications, setNotifications] = useState([]); // State for notifications
@@ -204,9 +208,22 @@ function Nav({ user }) {
 
   // Function to handle logout
   const handleLogout = () => {
-    localStorage.removeItem('token'); // Clear token on logout
-    navigate('/EmployeeLogin');
+    Swal.fire({
+      title: 'Are you sure you want to logout?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Yes, logout!',
+      cancelButtonText: 'Cancel',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        Swal.fire('Logged out!', 'You have been logged out successfully.', 'success').then(() => {
+          clearAuthData(); // Clears cookies and context
+          navigate('/EmployeeLogin'); // Redirect to EmployeeLogin
+        });
+      }
+    });
   };
+  
   const handlemyaccount = () => {
     // localStorage.removeItem('token'); // Clear token on logout
     navigate('/A_profile');

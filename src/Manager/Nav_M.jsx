@@ -141,7 +141,7 @@
 
 
 
-import React, { useState } from 'react';
+import React, { useState,useContext } from 'react';
 import "./Nav_M.css";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBell, faUser, faHome, faSignOutAlt, faCog ,faUserCircle} from '@fortawesome/free-solid-svg-icons';
@@ -150,8 +150,10 @@ import bell from "../Manager/bell.svg";
 import Swal from 'sweetalert2';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { AuthContext } from "../Component/AuthContext"; // Ensure the path is correct
 
 function Nav_M({ user }) {
+  const { clearAuthData } = useContext(AuthContext); // Access clearAuthData from context
   const [isNotificationOpen, setIsNotificationOpen] = useState(false);
   const [notifications, setNotifications] = useState([]);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -215,7 +217,7 @@ function Nav_M({ user }) {
     }).then((result) => {
       if (result.isConfirmed) {
         Swal.fire('Logged out!', 'You have been logged out successfully.', 'success').then(() => {
-          
+          clearAuthData(); // Clears cookies and context
           navigate('/');
         });
       }
