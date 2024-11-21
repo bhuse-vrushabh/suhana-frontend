@@ -30,7 +30,7 @@ const ManagerEvaluation = () => {
   const [editMode, setEditMode] = useState(false);
 
   // Fetch employees data from API on component load
-  // Fetch employees data with ID and name from API on component load
+ 
   useEffect(() => {
     const fetchEmployees = async () => {
       try {
@@ -178,7 +178,7 @@ const ManagerEvaluation = () => {
 
         <div>
           <div className="card-header">
-            <h2>{editMode ? "Edit Evaluation" : " Evaluation"}</h2>
+            <h6>{editMode ? "Edit Evaluation" : " Evaluation"}</h6>
           </div>
           <div className="card-M">
             <form onSubmit={updateEmployeeEvaluation}>

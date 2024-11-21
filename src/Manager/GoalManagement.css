@@ -5,6 +5,16 @@
   border-radius: 8px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
+h5 {
+  font-size: 1.5rem; 
+  font-weight: bold; 
+  text-align: center; 
+  color: #D5661A;
+  margin: 20px 0; 
+  letter-spacing: 1px; 
+  margin-top: 0;
+  margin-bottom: 10px;
+}
 
 /* Form Title */
 .form-title {
@@ -105,7 +115,7 @@
 }
 
 .goals-table-m th {
-  background-color: #007bff;
+  background-color: #D25E12;
   color: #fff;
   font-weight: 600;
 }
@@ -122,30 +132,16 @@
 }
 
 .edit-btn-m, .delete-btn-m {
-  padding: 8px;
-  font-size: 16px;
-  color: #fff;
+  background: none;
   border: none;
-  border-radius: 4px;
   cursor: pointer;
-  transition: background-color 0.3s;
+  font-size: 18px;
+  color: #555;
+  transition: color 0.3s;
 }
 
-.edit-btn-m {
-  background-color: #28a745;
-}
 
-.edit-btn-m:hover {
-  background-color: #218838;
-}
 
-.delete-btn-m {
-  background-color: #dc3545;
-}
-
-.delete-btn-m:hover {
-  background-color: #c82333;
-}
 /* Pagination container */
 .pagination-m {
   display: flex;
@@ -157,8 +153,8 @@
 
 /* Pagination buttons (for page numbers) */
 .pagination-btn-m {
-  background-color: #3209e8;
-  color:#ccc;
+  background-color: #D25E12;
+  color: #fff;
   border: 1px solid #ccc;
   padding: 8px 16px;
   font-size: 14px;

@@ -26,10 +26,15 @@
   border-radius: 8px 8px 0 0;
   margin-top: -48px;
 }
-h2 {
-  text-align: center;
+h6 {
+  font-size: 1.5rem; 
+  font-weight: bold; 
+  text-align: center; 
   color: #D5661A;
-  margin-bottom: 20px;
+  margin: 20px 0; 
+  letter-spacing: 1px; 
+ 
+  margin-bottom: 10px;
 }
 /* Form Styles */
 .form-row_m {
