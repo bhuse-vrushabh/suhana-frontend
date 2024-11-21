@@ -1,21 +1,25 @@
 /* Container and Main Sections */
 .personal-details-container {
   display: flex;
-  flex-direction: column;
+  justify-content: center;
+  /*flex-direction: column;*/
   align-items: center;
+  height: 100%;
   padding: 20px;
   background-color: #FEFAEE;
 }
  
 .personal-details-main {
   width: 100%;
-  max-width: 800px;
+  max-width: 600px;
   padding: 20px;
   background-color: #ffffff;
   border-radius: 8px;
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-  margin-left: 80px;
-  margin-top: 20px;
+  margin-top: 60px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.15);
+  
+  /* margin-left: 80px;
+  margin-top: 20px; */
 }
  
 .personal-details-heading {
@@ -29,9 +33,13 @@
 /* Row Styling */
 .personal-details-row {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   gap: 15px;
+  max-width: 1200px;
+  width: 100%;
+  margin: 0 auto;
   margin-bottom: 15px;
+ 
 }
  
 /* Input Field Containers */
@@ -40,7 +48,7 @@
 .contact-number-container,  .gender-container, .emergency-contact-container, .dob-container, .joining-date-container{
   display: flex;
   flex-direction: column;
-  width: 30%;
+  width: 53%;
 }
  
 label {
@@ -57,6 +65,7 @@ label {
   border: 1px solid #ccc;
   border-radius: 4px;
   color: #333;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.15);
 }
  
 .editable-input:focus {

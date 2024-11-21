@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState, useContext } from "react";
 import './Dashboard.css';
 import Highcharts from 'highcharts';
@@ -10,9 +11,9 @@ import performance from './Assets/performance.svg';
 import leave from './Assets/leave.svg';
 import learning from './Assets/learning.svg';
 import { AuthContext } from "../Component/AuthContext";
-
+ 
 BellCurve(Highcharts);
-
+ 
 const bellCurveOptions = (data, isPerformance = false) => ({
   title: {
     text: isPerformance ? 'Performance Score (Bell Curve with Bar)' : 'Bell Curve',
@@ -59,7 +60,7 @@ const bellCurveOptions = (data, isPerformance = false) => ({
     },
   ],
 });
-
+ 
 const KpiCards = () => {
   const { authData, clearTokens } = useContext(AuthContext);
   console.log(authData);
@@ -68,7 +69,7 @@ const KpiCards = () => {
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
   const [learningProgress] = useState(75); // Static value for Learning Progress
-
+ 
   const fetchAttendanceData = async () => {
     const token = localStorage.getItem('accessToken');
     // if (!token) {
@@ -76,7 +77,7 @@ const KpiCards = () => {
     //   clearTokens();
     //   return;
     // }
-
+ 
     try {
       const response = await fetch('http://127.0.0.1:8000/api/annual_attendance_rate/2024/', {
         method: "GET",
@@ -102,18 +103,18 @@ const KpiCards = () => {
       setLoading(false);
     }
   };
-
+ 
   useEffect(() => {
     fetchAttendanceData();
   }, [authData.accessToken]);
-
+ 
   const leaveBalance = 8;
   const performanceScore = 85;
-
+ 
   const handleCardClick = (cardType) => {
     setSelectedCard(cardType);
   };
-
+ 
   return (
     <div className="dashboard">
       <Sidebar />
@@ -132,7 +133,7 @@ const KpiCards = () => {
             </p>
             <p>You've attended 70% of the sessions this month. Great job!</p>
           </div>
-
+ 
           <div
             className={`kpi-card ${selectedCard === 'performance' ? 'selected' : ''}`}
             onClick={() => handleCardClick('performance')}
@@ -142,7 +143,7 @@ const KpiCards = () => {
             <p className="kpi-value">{performanceScore}%</p>
             <p>Your performance is rated at 85% for this quarter.</p>
           </div>
-
+ 
           <div
             className={`kpi-card ${selectedCard === 'leaveBalance' ? 'selected' : ''}`}
             onClick={() => handleCardClick('leaveBalance')}
@@ -152,7 +153,7 @@ const KpiCards = () => {
             <p className="kpi-value">{leaveBalance} Days</p>
             <p>You have 8 leave days remaining. Plan your time off wisely!</p>
           </div>
-
+ 
           <div
             className={`kpi-card ${selectedCard === 'learning' ? 'selected' : ''}`}
             onClick={() => handleCardClick('learning')}
@@ -163,7 +164,7 @@ const KpiCards = () => {
             <p>You have completed {learningProgress}% of your training modules.</p>
           </div>
         </div>
-
+ 
         {/* Conditionally Render the Chart */}
         <div className="chart-container-emp">
           {selectedCard === 'attendance' && (
@@ -192,7 +193,7 @@ const KpiCards = () => {
                   type="range"
                   min="1"
                   max="100"
-                  value={learningProgress} 
+                  value={learningProgress}
                   disabled // Make the slider static
                   className="slider-large"
                 />
@@ -207,13 +208,7 @@ const KpiCards = () => {
     </div>
   );
 };
-
+ 
 export default KpiCards;
-
-
-
-
-
-
-
-
+ 
+ 
