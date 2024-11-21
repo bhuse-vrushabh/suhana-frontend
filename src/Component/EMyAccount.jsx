@@ -195,6 +195,8 @@ const PersonalDetailsForm = () => {
               disabled={!isEditing}
               containerClass="full-name-container"
             />
+            </div>
+            <div className="personal-details-row">
              <InputField
               label="Employee ID"
               name="employee_id"
@@ -214,6 +216,8 @@ const PersonalDetailsForm = () => {
               disabled={!isEditing}
               containerClass="contact-number-container"
             />
+            </div>
+            <div className="personal-details-row">
             <InputField
               label="Gender"
               name="gender"
@@ -234,6 +238,8 @@ const PersonalDetailsForm = () => {
               disabled={!isEditing}
               containerClass="joining-date-container"
             />
+            </div>
+            <div className="personal-details-row">
             <InputField
               label="DOB"
               name="dob"
