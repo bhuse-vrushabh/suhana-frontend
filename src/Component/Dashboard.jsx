@@ -285,6 +285,7 @@ const bellCurveOptions = (data, isPerformance = false) => ({
 
 const KpiCards = () => {
   const { authData, clearTokens } = useContext(AuthContext);
+  console.log(authData);
   const [selectedCard, setSelectedCard] = useState(null);
   const [attendanceData, setAttendanceData] = useState(null);
   const [error, setError] = useState(null);
@@ -293,25 +294,25 @@ const KpiCards = () => {
 
   const fetchAttendanceData = async () => {
     const token = localStorage.getItem('accessToken');
-    if (!token) {
-      console.error("No token found. Redirecting to login.");
-      clearTokens();
-      return;
-    }
+    // if (!token) {
+    //   console.error("No token found. Redirecting to login.");
+    //   clearTokens();
+    //   return;
+    // }
 
     try {
       const response = await fetch('http://127.0.0.1:8000/api/annual_attendance_rate/2024/', {
         method: "GET",
         headers: {
-          'Authorization': `Bearer ${token}`,
+          'Authorization': `Bearer ${authData.accessToken}`,
           "Content-Type": "application/json",
         },
       });
       if (!response.ok) {
-        if (response.status === 401) {
-          console.log("Token expired. Redirecting to login...");
-          clearTokens();
-        }
+        // if (response.status === 401) {
+        //   console.log("Token expired. Redirecting to login...");
+        //   clearTokens();
+        // }
         throw new Error("Network response was not ok");
       }
       const data = await response.json();
