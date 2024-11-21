@@ -288,7 +288,7 @@ function TrainingDevelopmentPage() {
                     <Nav_M />
                     <div>
                         <section id="assign">
-                            <h2>Training</h2>
+                            <h4>Training</h4>
                             <form className="goal-form-M" onSubmit={handleAssignProgram}>
                                 <div className="form-group-M-inline">
                                     {/* Employee Name and Program Name */}

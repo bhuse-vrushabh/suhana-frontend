@@ -26,50 +26,70 @@ const GoalManagement = () => {
   const [editIndex, setEditIndex] = useState(null);
   const [error, setError] = useState('');
   const [currentPage, setCurrentPage] = useState(1); // State to track the current page
-
+  const [loading, setLoading] = useState(true);
   const itemsPerPage = 10; // Number of items per page
 
   useEffect(() => {
-    const fetchEmployees = async () => {
+    const fetchData = async () => {
       try {
-        const response = await axios.get('http://127.0.0.1:8000/api/employees/', {
+        // Fetch goals data
+        const goalsResponse = await axios.get("http://127.0.0.1:8000/api/goals/", {
           headers: {
-            Authorization: `Bearer ${authData.accessToken}`, // Use token from context
+            Authorization: `Bearer ${authData.accessToken}`,
             "Content-Type": "application/json",
           },
         });
 
-        // console.log("this is employee " ,employees);
+        // Fetch employees data
+        const employeesResponse = await axios.get(
+          'http://127.0.0.1:8000/api/employees/',
+          {
+            headers: {
+              Authorization: `Bearer ${authData.accessToken}`,
+              "Content-Type": "application/json",
+            },
+          }
+        );
 
-        if (response.status === 200) {
-          setEmployees(response.data); // Assuming the response is an array of employees
-        }
-      } catch (error) {
-        console.error('Error fetching employees:', error);
-      }
-    };
+        const goalsData = goalsResponse.data;
+        const employeesData = employeesResponse.data;
 
-    const fetchGoals = async () => {
-      try {
-        const response = await axios.get('http://127.0.0.1:8000/api/goals/', {
-          headers: {
-            Authorization: `Bearer ${authData.accessToken}`,
-            'Content-Type': 'application/json',
-          },
+        console.log("Goals Data:", goalsData);
+        console.log("Employees Data:", employeesData);
+
+        console.log("Goals Data Before Mapping:", goalsData);
+
+        const enrichedGoals = goalsData.map((goal) => {
+          console.log("Processing Goal:", goal);
+        
+          const employeeId = goal.employee_id || "unknown";
+          const employee = employeesData.find(
+            (emp) => String(emp.employee_id) === String(employeeId)
+          );
+        
+          if (!goal.employee_id) {
+            console.warn(`Missing employee_id in goal:`, goal);
+          }
+        
+          return {
+            ...goal,
+            employeeName: employee ? employee.name : "Unknown Employee",
+          };
         });
+        
+        
 
-          
-        if (response.status === 200) {
-          setGoals(response.data);
-        }
+        setGoals(enrichedGoals);
+        setEmployees(employeesData);
+        setLoading(false);
       } catch (error) {
-        console.error('Error fetching goals:', error);
+        console.error("Error fetching data:", error);
+        setLoading(false);
       }
     };
 
-    fetchEmployees();
-    fetchGoals();
-  }, []);
+    fetchData();
+  }, [authData]);
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData({
@@ -245,6 +265,9 @@ const GoalManagement = () => {
   const handlePageChange = (pageNumber) => {
     setCurrentPage(pageNumber);
   };
+  if (loading) {
+    return <div>Loading...</div>;
+  }
   return (
     <div>
       <div className="main-wrapper">
@@ -252,7 +275,7 @@ const GoalManagement = () => {
         <div className="main-wrapper_n">
           <Nav_M />
           <div>
-            <h2 className="form-title">{isEditing ? 'Edit Employee Task' : ' Task'}</h2>
+            <h5>{isEditing ? 'Edit Employee Task' : ' Task'}</h5>
             <form className="goal-form-m" onSubmit={handleSubmit}>
               <div className="form-row-m">
                 <div className="form-group-m">
@@ -366,7 +389,7 @@ const GoalManagement = () => {
           </div>
 
           <div className="goals-table-section-m">
-            <h2 className="form-title">Tasks List</h2>
+            <h5>Tasks List</h5>
             {goals.length > 0 ? (
               <table className="goals-table-m">
                 <thead>
@@ -378,15 +401,17 @@ const GoalManagement = () => {
                     <th>Start Date</th>
                     <th>End Date</th>
                     <th>Status</th>
-                    <th>Employee ID</th>
+                    
                     <th>Action</th> {/* Display employee's ID */}
                   </tr>
                 </thead>
                 <tbody>
                   {paginatedGoals.map((goal, index) => {
                     // If employee_id is a number in one and string in the other, use == for comparison
-                    const employee = employees.find((emp) => String(emp.employee_id) === String(goal.employee_id));
-
+                    const employee = employees.find(
+                      (emp) => String(emp.employee_id) === String(goal.employee_id)
+                    );
+                    
                     return (
                       <tr key={goal.id}>
 
@@ -396,14 +421,12 @@ const GoalManagement = () => {
                         <td>{goal.start_date}</td>
                         <td>{goal.end_date}</td>
                         <td>{goal.status}</td>
-                        <td>{employee && employee.employee_id ? employee.employee_id : ''}</td>
-
-
-                        <td>
-                          <button onClick={() => handleEdit(index)} className="edit-btn">
+                        
+                        <td className='action-button-m'>
+                          <button onClick={() => handleEdit(index)} className="edit-btn-m">
                             <FontAwesomeIcon icon={faEdit} />
                           </button>
-                          <button onClick={() => handleDelete(index)} className="delete-btn">
+                          <button onClick={() => handleDelete(index)} className="delete-btn-m">
                             <FontAwesomeIcon icon={faTrash} />
                           </button>
                         </td>

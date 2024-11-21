@@ -10,6 +10,16 @@
   margin-top: 15px;
 }
 
+h4 {
+  font-size: 1.5rem; 
+  font-weight: bold; 
+  text-align: center; 
+  color: #D5661A;
+  margin: 20px 0; 
+  letter-spacing: 1px; 
+  margin-top: 0;
+  margin-bottom: 10px;
+}
 /* Form styling */
 .goal-form-M {
   background-color: #fff;
@@ -98,9 +108,9 @@
 }
 
 .assigned-programs-table-M th {
-  background-color:red;
+  background-color: #D25E12;
   font-weight: bold;
-  color: #555;
+  color: white;
 }
 
 
@@ -135,8 +145,8 @@
 
 /* Pagination buttons */
 .pagination-button-M {
-  background-color: #fe0606;
-  color: #333;
+  background-color: #D25E12;
+  color:  white;
   border: 1px solid #ccc;
   padding: 8px 16px;
   font-size: 14px;

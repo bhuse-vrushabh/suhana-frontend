@@ -157,14 +157,14 @@ const CreateProfile = () => {
               <label>Contact Number:
                 <input type="tel" name="contactNumber" value={formData.contactNumber} onChange={handleInputChange} required />
               </label>
+              <div className="form-group-Manager"></div>
               <label>Joining Date:
                 <input type="date" name="joiningDate" value={formData.joiningDate} onChange={handleInputChange} required />
               </label>
-            </div>
-            <div className="form-group-Manager">
-              <label>Profile Image URL:
+           
+              {/* <label>Profile Image URL:
                 <input type="url" name="profile_Image" value={formData.profile_Image} onChange={handleInputChange} />
-              </label>
+              </label> */}
               <label>Gender:
                 <select name="gender" value={formData.gender} onChange={handleInputChange} required>
                   <option value="">Select Gender</option>
