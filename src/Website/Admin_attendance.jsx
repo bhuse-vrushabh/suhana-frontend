@@ -1,11 +1,14 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState,useContext } from "react";
 import './Admin_attendance.css';
 import Sidebar from "./Sidebar_A";
 import Nav from "./Nav";
+import { AuthContext } from "../Component/AuthContext";
 
 //**************************************In this file i have write the feedback which is given to of simply cheklist file code ***********************/
 
 const Admin_attendance = () => {
+    const { authData } = useContext(AuthContext);
+    console.log("this is the data passed through context",authData)
     const [feedbackData, setFeedbackData] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -18,8 +21,9 @@ const Admin_attendance = () => {
                 const response = await fetch('http://127.0.0.1:8000/api/feedback/', {
                     method: 'GET',
                     headers: {
-                        'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzMyMTc0MTk2LCJpYXQiOjE3Mjk1ODIxOTYsImp0aSI6IjQ5YjEwNzdkZTI3MjRhZjViMjMyNjZjMWQ3NzVlNjAzIiwidXNlcl9pZCI6NX0.qVAJOCBhYdiHLIU0i4S5RXegi3XEf24xpjCqoP_laQM'
-                    }
+                        'Authorization': `Bearer ${authData.accessToken}`, // Include the token in the request headers  
+                          "Content-Type": "application/json",
+                        },
                 });
 
                 if (!response.ok) {
