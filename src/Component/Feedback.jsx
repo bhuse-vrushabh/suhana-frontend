@@ -1,11 +1,14 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import './Feedback.css';
 import swal from 'sweetalert2';
 import Sidebar from "./Sidebar";
 import Navbar from "./Navbar";
+import { AuthContext } from "../Component/AuthContext";
  
 const Feedback = () => {
+  const { authData, clearTokens } = useContext(AuthContext);
+  console.log(authData);
   const [feedbackType, setFeedbackType] = useState('employee');
   const [selectedManager, setSelectedManager] = useState('');
   const [feedbackContent, setFeedbackContent] = useState('');
@@ -19,7 +22,8 @@ const Feedback = () => {
       try {
         const response = await axios.get('http://127.0.0.1:8000/api/list_managers/', {
           headers: {
-            'Authorization': `Bearer ${accessToken}`,
+            'Authorization': `Bearer ${authData.accessToken}`,
+          "Content-Type": "application/json",
           },
         });
         setManagers(response.data.managers);
@@ -57,8 +61,8 @@ const Feedback = () => {
     try {
       await axios.post('http://127.0.0.1:8000/api/employeetomanager_feedback/', payload, {
         headers: {
-          'Authorization': `Bearer ${accessToken}`,
-          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${authData.accessToken}`,
+          "Content-Type": "application/json",
         },
       });
       swal.fire({
