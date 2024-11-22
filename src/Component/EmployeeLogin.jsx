@@ -1,4 +1,3 @@
-
 import React, { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
@@ -31,7 +30,6 @@ const EmployeeLogin = () => {
     if (!password) {
       passwordError = "Password is required.";
     }
-
     // If there are any error messages, set them and stop further execution
     if (emailError || passwordError) {
       setLoading(false);
@@ -260,7 +258,7 @@ const EmployeeLogin = () => {
                 </button>
               </div>
               <a href="#" className="loginlinks" onClick={handleForgotPassword}>
-                Forgot password?
+                Forgot password? Don't worry click here!!
               </a>
             </form>
           </div>

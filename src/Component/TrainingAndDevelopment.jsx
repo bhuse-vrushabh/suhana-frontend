@@ -1,78 +1,71 @@
+
 import React, { useState, useEffect, useContext } from 'react';
 import Sidebar from './Sidebar';
 import Navbar from './Navbar';
-import { AuthContext } from "../Component/AuthContext";
+import { AuthContext } from '../Component/AuthContext';
+
+let debounceTimeout; // To manage debouncing
 
 const TrainingAndDevelopment = () => {
   const { authData } = useContext(AuthContext);
-  console.log(authData);
   const [programs, setPrograms] = useState([]);
-  const [selectedProgram, setSelectedProgram] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
-  const [searchQuery, setSearchQuery] = useState(""); // State for search input
-  const programsPerPage = 5;
+  const [searchQuery, setSearchQuery] = useState('');
+  const programsPerPage = 4;
 
-  useEffect(() => {
-    const fetchPrograms = async () => {
-      try {
-        const response = await fetch('http://127.0.0.1:8000/api/training/', {
-          method: 'GET',
-          headers: {
-            'Authorization': `Bearer ${authData.accessToken}`,
-            'Content-Type': 'application/json',
-          },
-        });
-        if (!response.ok) {
-          throw new Error(`Error: ${response.status} - ${response.statusText}`);
-        }
-        const data = await response.json();
-        const formattedPrograms = data.map((program) => ({
-          id: program.id,
-          name: program.name,
-          description: program.description,
-          startDate: program.start_date,
-          endDate: program.end_date,
-          status: program.status,
-        }));
+  // Fetch training programs
+  const fetchPrograms = async (query = '') => {
+    setLoading(true);
+    try {
+      const queryParam = query ? `?name=${query}` : '';
+      const response = await fetch(`http://127.0.0.1:8000/api/training/${queryParam}`, {
+        method: 'GET',
+        headers: {
+          Authorization: `Bearer ${authData.accessToken}`,
+          'Content-Type': 'application/json',
+        },
+      });
 
-        setPrograms(formattedPrograms);
-        setLoading(false);
-      } catch (error) {
-        console.error('Error fetching training programs:', error);
-        setError(error.message);
-        setLoading(false);
+      if (!response.ok) {
+        throw new Error(`Error: ${response.status} - ${response.statusText}`);
       }
-    };
-    fetchPrograms();
-  }, [authData.accessToken]);
 
-  const handleProgramClick = (program) => {
-    setSelectedProgram(program);
+      const data = await response.json();
+      const formattedPrograms = data.map((program) => ({
+        id: program.id,
+        name: program.name,
+        description: program.description,
+        startDate: program.start_date,
+        endDate: program.end_date,
+        status: program.status,
+      }));
+
+      setPrograms(formattedPrograms);
+    } catch (error) {
+      console.error('Error fetching training programs:', error);
+      setError(error.message);
+    } finally {
+      setLoading(false);
+    }
   };
 
-  const handleSearchChange = (e) => {
-    setSearchQuery(e.target.value);
-  };
+  
+  useEffect(() => {
+    if (debounceTimeout) clearTimeout(debounceTimeout);
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    alert('Form Submitted Successfully!');
-    console.log('Form Submitted:', selectedProgram);
-  };
+    // Debounce the API call
+    debounceTimeout = setTimeout(() => {
+      fetchPrograms(searchQuery);
+    }, 500); // Adjust the debounce delay as needed
+  }, [searchQuery]);
 
-  const filteredPrograms = programs.filter(
-    (program) =>
-      program.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      program.startDate.includes(searchQuery)
-  );
-
+  // Pagination calculations
   const indexOfLastProgram = currentPage * programsPerPage;
   const indexOfFirstProgram = indexOfLastProgram - programsPerPage;
-  const currentPrograms = filteredPrograms.slice(indexOfFirstProgram, indexOfLastProgram);
-
-  const totalPages = Math.ceil(filteredPrograms.length / programsPerPage);
+  const currentPrograms = programs.slice(indexOfFirstProgram, indexOfLastProgram);
+  const totalPages = Math.ceil(programs.length / programsPerPage);
 
   const handleNextPage = () => {
     if (currentPage < totalPages) setCurrentPage((prevPage) => prevPage + 1);
@@ -80,6 +73,10 @@ const TrainingAndDevelopment = () => {
 
   const handlePreviousPage = () => {
     if (currentPage > 1) setCurrentPage((prevPage) => prevPage - 1);
+  };
+
+  const handleSearchChange = (e) => {
+    setSearchQuery(e.target.value);
   };
 
   if (loading) {
@@ -101,7 +98,7 @@ const TrainingAndDevelopment = () => {
           {/* Search Input */}
           <input
             type="text"
-            placeholder="Search by name or date..."
+            placeholder="Search by name..."
             value={searchQuery}
             onChange={handleSearchChange}
             style={{
@@ -127,7 +124,7 @@ const TrainingAndDevelopment = () => {
             </thead>
             <tbody>
               {currentPrograms.map((program) => (
-                <tr key={program.id} onClick={() => handleProgramClick(program)}>
+                <tr key={program.id}>
                   <td style={tdStyle}>{program.id}</td>
                   <td style={tdStyle}>{program.name}</td>
                   <td style={tdStyle}>{program.description}</td>
@@ -148,7 +145,9 @@ const TrainingAndDevelopment = () => {
             >
               Previous
             </button>
-            <span style={{ fontSize: '14px' }}>Page {currentPage} of {totalPages}</span>
+            <span style={{ fontSize: '14px' }}>
+              Page {currentPage} of {totalPages}
+            </span>
             <button
               onClick={handleNextPage}
               style={paginationButtonStyle}
