@@ -1,37 +1,48 @@
-import React, { useEffect, useState,useContext } from "react";
-import './Admin_attendance.css';
-import Sidebar from "./Sidebar_A";
-import Nav from "./Nav";
+import React, { useEffect, useState, useContext } from "react";
+import "./Admin_attendance.css";
+import Sidebar from "./Sidebar_A"; // Assuming Sidebar component exists
 import { AuthContext } from "../Component/AuthContext";
 
-//**************************************In this file i have write the feedback which is given to of simply cheklist file code ***********************/
-
-const Admin_attendance = () => {
+const AdminAttendance = () => {
     const { authData } = useContext(AuthContext);
-    console.log("this is the data passed through context",authData)
-    const [feedbackData, setFeedbackData] = useState([]);
+    const [feedbackData, setFeedbackData] = useState({ managerFeedback: [], employeeFeedback: [] });
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+
     const [currentPage, setCurrentPage] = useState(1);
-    const itemsPerPage = 4; // Show 4 items per page
+    const feedbackPerPage = 2; // Number of feedbacks to show per category per page
 
     useEffect(() => {
         const fetchFeedbackData = async () => {
             try {
-                const response = await fetch('http://127.0.0.1:8000/api/feedback/', {
+                const response = await fetch('http://127.0.0.1:8000/api/manager_employee_feedback/', {
                     method: 'GET',
                     headers: {
-                        'Authorization': `Bearer ${authData.accessToken}`, // Include the token in the request headers  
-                          "Content-Type": "application/json",
-                        },
+                        'Authorization': `Bearer ${authData.accessToken}`,
+                        "Content-Type": "application/json",
+                    },
                 });
 
                 if (!response.ok) {
-                    throw new Error('Network response was not ok');
+                    throw new Error("Failed to fetch feedback data");
                 }
 
                 const data = await response.json();
-                setFeedbackData(data);
+                const managerFeedback = data.manager_feedback_to_emp.map(item => ({
+                    rating: item.rating,
+                    feedback: item.feedback,
+                    employee_name: item.employee_name,
+                    manager_name: item.manager_name,
+                }));
+
+                const employeeFeedback = data.emp_to_manager_feedback.map(item => ({
+                    feedback_text: item.feedback_text,
+                    rating: item.rating,
+                    employee_name: item.employee_name,
+                    manager_name: item.manager_name,
+                }));
+
+                setFeedbackData({ managerFeedback, employeeFeedback });
             } catch (error) {
                 setError(error.message);
             } finally {
@@ -40,15 +51,23 @@ const Admin_attendance = () => {
         };
 
         fetchFeedbackData();
-    }, []);
+    }, [authData]);
 
-    // Pagination calculations
-    const totalPages = Math.ceil(feedbackData.length / itemsPerPage);
-    const startIndex = (currentPage - 1) * itemsPerPage;
-    const currentPageData = feedbackData.slice(startIndex, startIndex + itemsPerPage);
+    const handlePrevious = () => {
+        if (currentPage > 1) setCurrentPage(currentPage - 1);
+    };
 
-    const handlePageChange = (page) => {
-        setCurrentPage(page);
+    const handleNext = () => {
+        const totalPages = Math.ceil(
+            Math.max(feedbackData.managerFeedback.length, feedbackData.employeeFeedback.length) / feedbackPerPage
+        );
+        if (currentPage < totalPages) setCurrentPage(currentPage + 1);
+    };
+
+    const paginateFeedback = (feedbackArray) => {
+        const startIndex = (currentPage - 1) * feedbackPerPage;
+        const endIndex = startIndex + feedbackPerPage;
+        return feedbackArray.slice(startIndex, endIndex);
     };
 
     if (loading) return <div>Loading...</div>;
@@ -56,86 +75,65 @@ const Admin_attendance = () => {
 
     return (
         <div className="admin-container-fluid">
-            <div className="admin-profile-info-row mb-1"></div>
             <div className="admin-wrapper">
                 <Sidebar />
-                <div className="admin-head mt-4" id="Admin_attendance">
-                    <div className="Admin_attendance">
-                        <h2 id="admin-management-title" className="text-center text-primary">Feedback</h2>
+                <div className="admin-head" id="Admin_attendance">
+                    <h1 id="admin-management-title">Feedback Management</h1>
 
-                        <div className="admin-feedback-section mt-4">
-                            <h3 className="text-center mb-4 text-secondary">Feedback Details</h3>
-                            <div className="admin-table-container">
-                                <div className="feedback-card-container">
-                                    {currentPageData.map((feedback, index) => (
-                                        <div className="feedback-card shadow-sm p-4 mb-4 bg-white rounded" key={index}>
-                                            <h4 className="text-info mb-3">{feedback.title}</h4>
-                                            <div className="table">
-                                                <div className="table-row">
-                                                    <div className="table-header">Feedback</div>
-                                                    <div className="table-data">{feedback.feedback_text}</div>
-                                                </div>
-                                                <div className="table-row">
-                                                    <div className="table-header">Feedback Type</div>
-                                                    <div className="table-data">{feedback.feedback_type}</div>
-                                                </div>
-                                                <div className="table-row">
-                                                    <div className="table-header">Rating</div>
-                                                    <div className="table-data">
-                                                        <span>{feedback.rating}</span>
-                                                    </div>
-                                                </div>
-                                                {/* <div className="table-row">
-                                                    <div className="table-header">Department</div>
-                                                    <div className="table-data">{feedback.department}</div>
-                                                </div>
-                                                <div className="table-row">
-                                                    <div className="table-header">Status</div>
-                                                    <div className="table-data">{feedback.feedback_status}</div>
-                                                </div> */}
-                                                {feedback.response && (
-                                                    <div className="table-row">
-                                                        <div className="table-header">Response</div>
-                                                        <div className="table-data">{feedback.response}</div>
-                                                    </div>
-                                                )}
-                                            </div>
-                                        </div>
-                                    ))}
+                    <div className="feedback-section">
+                        <h3 style={{ color: "#F3741E" }} className="text-center">
+                            Manager Feedback to Employees
+                        </h3>
+
+                        <div className="feedback-card-container">
+                            {paginateFeedback(feedbackData.managerFeedback).map((item, index) => (
+                                <div key={index} className="feedback-card">
+                                    <p><strong>Manager:</strong> {item.manager_name}</p>
+                                    <p><strong>Employee:</strong> {item.employee_name}</p>
+                                    <p><strong>Feedback:</strong> {item.feedback}</p>
+                                    <p className="rating-badge rating-5">
+                                        <strong>Rating:</strong> {item.rating}
+                                    </p>
                                 </div>
-                            </div>
-                        </div>
-
-                        <div className="admin-record-count mt-4 text-sm text-center text-muted">
-                            Showing {currentPageData.length} of {feedbackData.length} records
-                        </div>
-
-                        {/* Pagination Controls */}
-                        <div className="pagination-controls mt-3 text-center">
-                            <button
-                                onClick={() => handlePageChange(currentPage - 1)}
-                                disabled={currentPage === 1}
-                                className="custom-btn"
-                            >
-                                Previous
-                            </button>
-                            {Array.from({ length: totalPages }, (_, i) => (
-                                <button
-                                    key={i}
-                                    onClick={() => handlePageChange(i + 1)}
-                                    className={`custom-btn ${currentPage === i + 1 ? 'active-page' : ''}`}
-                                >
-                                    {i + 1}
-                                </button>
                             ))}
-                            <button
-                                onClick={() => handlePageChange(currentPage + 1)}
-                                disabled={currentPage === totalPages}
-                                className="custom-btn"
-                            >
-                                Next
-                            </button>
                         </div>
+
+                        <h3 style={{ color: "#F3741E" }} className="text-center">
+                        Employees Feedback to Manager
+                        </h3>
+
+                        <div className="feedback-card-container">
+                            {paginateFeedback(feedbackData.employeeFeedback).map((item, index) => (
+                                <div key={index} className="feedback-card">
+                                    <p><strong>Employee:</strong> {item.employee_name}</p>
+                                    <p><strong>Manager:</strong> {item.manager_name}</p>
+                                    <p><strong>Feedback:</strong> {item.feedback_text}</p>
+                                    <p className="rating-badge rating-5">
+                                        <strong>Rating:</strong> {item.rating}
+                                    </p>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+
+                    <div className="pagination-controls">
+                        <button className="custom-btn" onClick={handlePrevious} disabled={currentPage === 1}>
+                            Previous
+                        </button>
+                        <span className="current-page">Page {currentPage}</span>
+                        <button
+                            className="custom-btn"
+                            onClick={handleNext}
+                            disabled={
+                                currentPage >=
+                                Math.ceil(
+                                    Math.max(feedbackData.managerFeedback.length, feedbackData.employeeFeedback.length) /
+                                    feedbackPerPage
+                                )
+                            }
+                        >
+                            Next
+                        </button>
                     </div>
                 </div>
             </div>
@@ -143,4 +141,4 @@ const Admin_attendance = () => {
     );
 };
 
-export default Admin_attendance;
+export default AdminAttendance;
