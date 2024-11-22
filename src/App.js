@@ -43,6 +43,9 @@ import EmployeeProfile from './Component/EmployeeProfile';
 import ReportsAnalytics from './Component/ReportsAnalytics';
 import TrainingAndDevelopment from './Component/TrainingAndDevelopment';
 import Navbar from './Component/Navbar';
+import ETask from './Component/ETask';
+
+
 // import Sidebarr from './Manager/Sidebarr';
 import FeedBackForm_M from './Manager/FeedBackForm_M';
 import PersonalDetailsForm from './Component/EMyAccount';
@@ -113,7 +116,7 @@ function App() {
         <Route path="/EmployeeProfile" element={<EmployeeProfile />} />
         <Route path="/TrainingAndDevelopment" element={<TrainingAndDevelopment />} />
         <Route path="/ReportsAnalytics" element={<ReportsAnalytics />} />
-
+        <Route path="/ETask" element={<ETask/>} />
         <Route path="/Feedback" element={<Feedback />} />
         <Route path="/PersonalDetailsForm" element={<PersonalDetailsForm/>}/>
       </Routes>

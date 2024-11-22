@@ -1,0 +1,118 @@
+/* General Wrapper */
+.Emain-wrapper {
+    display: flex;
+    background-color: #f4f4f4;
+    height: 100vh;
+  }
+  
+  /* Sidebar */
+ 
+  
+  /* Main Content */
+  .main-wrapper_E {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    background-color: #FEFAEE;
+    padding: 20px;
+  }
+  
+ 
+  
+  /* Task List Section */
+  .goals-table-section-E {
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    margin-top: 70px;
+    margin-left: 70px;
+    width: 100%;
+
+  }
+  
+  .goals-table-section-E h5 {
+    font-size: 22px;
+    margin-bottom: 15px;
+    color: #34495e;
+  }
+  
+  /* Table Styling */
+  .goals-table-E {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+  }
+  
+  .goals-table-E th, .goals-table-E td {
+    text-align: left;
+    padding: 12px;
+    border: 1px solid #ddd;
+  }
+  
+  .goals-table-E th {
+    background-color: #D5661A;
+    color: #fff;
+  }
+  
+  .goals-table-E tr:nth-child(even) {
+    background-color: #f9f9f9;
+  }
+  
+  .goals-table-E tr:hover {
+    background-color: #f1f1f1;
+  }
+  
+  /* Action Button */
+  .action-button-E {
+    display: flex;
+    gap: 10px;
+  }
+  
+  .edit-btn-m {
+    background-color: #D5661A;
+    color: #fff;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .edit-btn-m:hover {
+    background-color: #D5661A;
+  }
+  
+  /* Pagination */
+  .pagination-E {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+    gap: 5px;
+  }
+  
+  .pagination-btn-E {
+    padding: 8px 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #ffffff;
+    color: #D5661A;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
+  }
+  
+  .pagination-btn-E:hover {
+    background-color: #D5661A;
+    color: #fff;
+  }
+  
+  .pagination-btn-E.active {
+    background-color: #D5661A;
+    color: #fff;
+    font-weight: bold;
+  }
+  
+  .pagination-btn-E.prev-next-btn {
+    font-weight: bold;
+  }
+  

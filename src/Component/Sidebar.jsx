@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import {FontAwesomeIcon  } from "@fortawesome/react-fontawesome";
 import {
-  faX,
+  faEdit,
   faTasks,
   faBook,
   faComments,
@@ -91,6 +91,17 @@ const Sidebar = () => {
             <p>Training</p>
           </div>
         </li>
+
+        <li className="sidebar-item" onClick={() => navigate("/ETask")}>
+          <div>
+            <a href="#" className="sidebar-link">
+              <FontAwesomeIcon icon={faEdit} className="icon-black" />
+              <span className="icon-text">Task</span>
+            </a>
+            <p>Task</p>
+          </div>
+        </li>
+
 
         <li className="sidebar-item" onClick={() => navigate("/EmployeeSelfEvaluation")}>
           <div>
