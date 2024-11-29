@@ -7,14 +7,11 @@ import Navbar from "./Navbar";
 import { AuthContext } from "../Component/AuthContext";
  
 const Feedback = () => {
-  const { authData, clearTokens } = useContext(AuthContext);
-  console.log(authData);
-  const [feedbackType, setFeedbackType] = useState('employee');
+  const { authData } = useContext(AuthContext);
   const [selectedManager, setSelectedManager] = useState('');
   const [feedbackContent, setFeedbackContent] = useState('');
   const [overallRating, setOverallRating] = useState(0);
   const [managers, setManagers] = useState([]);
-  const accessToken = localStorage.getItem('accessToken');
  
   // Fetch managers list on component mount
   useEffect(() => {
@@ -23,7 +20,7 @@ const Feedback = () => {
         const response = await axios.get('http://127.0.0.1:8000/api/list_managers/', {
           headers: {
             'Authorization': `Bearer ${authData.accessToken}`,
-          "Content-Type": "application/json",
+            "Content-Type": "application/json",
           },
         });
         setManagers(response.data.managers);
@@ -37,12 +34,12 @@ const Feedback = () => {
       }
     };
     fetchManagers();
-  }, [accessToken]);
+  }, [authData.accessToken]);
  
   // Handle feedback submission
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!feedbackContent || !overallRating) {
+    if (!feedbackContent || !overallRating || !selectedManager) {
       swal.fire({
         icon: 'error',
         title: 'Incomplete Submission',
@@ -52,10 +49,10 @@ const Feedback = () => {
     }
  
     const payload = {
-      feedback_type: feedbackType === 'employee' ? 'Self Feedback' : 'Manager Feedback',
+      feedback_type: 'Manager Feedback',
       feedback_text: feedbackContent,
       rating: parseInt(overallRating),
-      ...(feedbackType === 'manager' && { to_user_id: selectedManager }),
+      manager_id: selectedManager,
     };
  
     try {
@@ -98,74 +95,37 @@ const Feedback = () => {
         <div className="review-feedback-page">
           <h1 className="feedback-title">Feedback Form</h1>
           <form onSubmit={handleSubmit} className="feedback-form">
-            {/* Feedback Type Selection */}
+            {/* Manager Selection */}
             <div className="form-group">
-              <label htmlFor="feedbackTypeSelect">Select Feedback Type:</label>
+              <label htmlFor="managerSelect">Select Manager:</label>
               <select
-                id="feedbackTypeSelect"
-                value={feedbackType}
-                onChange={(e) => {
-                  setFeedbackType(e.target.value);
-                  setFeedbackContent('');
-                  setOverallRating(0);
-                  setSelectedManager('');
-                }}
+                id="managerSelect"
+                value={selectedManager}
+                onChange={(e) => setSelectedManager(e.target.value)}
                 required
                 className="select"
               >
-                <option value="employee">Self Feedback</option>
-                <option value="manager">Manager Feedback</option>
+                <option value="" disabled>Select a manager</option>
+                {managers.map((manager) => (
+                  <option key={manager.manager_id} value={manager.manager_id}>
+                    {manager.full_name}
+                  </option>
+                ))}
               </select>
             </div>
  
-            {/* Conditional Feedback Content for Employee Feedback */}
-            {feedbackType === 'employee' && (
-              <div className="form-group">
-                <label htmlFor="feedbackContent">Feedback:</label>
-                <textarea
-                  id="feedbackContent"
-                  value={feedbackContent}
-                  onChange={(e) => setFeedbackContent(e.target.value)}
-                  placeholder="Provide your feedback..."
-                  required
-                  className="textarea"
-                />
-              </div>
-            )}
- 
-            {/* Conditional Manager Selection and Feedback Content for Manager Feedback */}
-            {feedbackType === 'manager' && (
-              <>
-                <div className="form-group">
-                  <label htmlFor="managerSelect">Select Manager:</label>
-                  <select
-                    id="managerSelect"
-                    value={selectedManager}
-                    onChange={(e) => setSelectedManager(e.target.value)}
-                    required
-                    className="select"
-                  >
-                    <option value="" disabled>Select a manager</option>
-                    {managers.map((manager) => (
-                      <option key={manager.user_id} value={manager.user_id}>
-                        {manager.full_name}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-                <div className="form-group">
-                  <label htmlFor="feedbackContent">Feedback:</label>
-                  <textarea
-                    id="feedbackContent"
-                    value={feedbackContent}
-                    onChange={(e) => setFeedbackContent(e.target.value)}
-                    placeholder="Provide your feedback..."
-                    required
-                    className="textarea"
-                  />
-                </div>
-              </>
-            )}
+            {/* Feedback Content */}
+            <div className="form-group">
+              <label htmlFor="feedbackContent">Feedback:</label>
+              <textarea
+                id="feedbackContent"
+                value={feedbackContent}
+                onChange={(e) => setFeedbackContent(e.target.value)}
+                placeholder="Provide your feedback..."
+                required
+                className="textarea"
+              />
+            </div>
  
             {/* Star Rating Component */}
             <div className="form-group">
@@ -195,7 +155,6 @@ const Feedback = () => {
 };
  
 export default Feedback;
- 
  
  
  
