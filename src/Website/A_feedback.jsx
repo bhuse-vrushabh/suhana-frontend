@@ -410,7 +410,7 @@
 // export default A_feedback;
 
 
- 
+
 import React, { useState, useEffect, useContext } from 'react';
 import './FeedbackPage.css';
 import Sidebar from "./Sidebar_A";
@@ -419,11 +419,11 @@ import axios from 'axios';
 import { AuthContext } from "../Component/AuthContext";
 import Swal from 'sweetalert2';
 
- 
+
 const A_feedback = (selectedId) => {
   const { authData } = useContext(AuthContext);
   console.log("this is the data passed through context", authData);
- 
+
   // State management for feedback and form data
   const [role, setRole] = useState('colleagues'); // Track selected role
   const [colleagueFeedback, setColleagueFeedback] = useState('');
@@ -433,25 +433,25 @@ const A_feedback = (selectedId) => {
   const [dropdownValue, setDropdownValue] = useState();
   const [starRating, setStarRating] = useState();
   const [inputText, setInputText] = useState('');
- 
+
   const [selectedOptionEmp, setSelectedOptionEmp] = useState('');
   const [selectedOptionManager, setSelectedOptionManager] = useState('');
   const [overallRatingManager, setOverallRatingManager] = useState(0);
   console.log("this is the star rating", starRating)
 
   // Clear fields when the role changes
-useEffect(() => {
-  setColleagueFeedback('');
-  setInputText('');
-  setManagerFeedback('');
-  setDropdownValue('');
-  setStarRating(0);
-  setSelectedOptionEmp('');
-  setSelectedOptionManager('');
-  setOverallRatingEMP(0);
-  setOverallRatingManager(0);
-}, [role]);
- 
+  useEffect(() => {
+    setColleagueFeedback('');
+    setInputText('');
+    setManagerFeedback('');
+    setDropdownValue('');
+    setStarRating(0);
+    setSelectedOptionEmp('');
+    setSelectedOptionManager('');
+    setOverallRatingEMP(0);
+    setOverallRatingManager(0);
+  }, [role]);
+
   const handleDropdownChange = (e) => {
     const selectedId = Number(e.target.value);
     setDropdownValue(selectedId); // Update the state with the selected employee ID
@@ -476,10 +476,10 @@ useEffect(() => {
         console.error('Error fetching employees:', error);
       }
     };
- 
+
     fetchEmployees();
   }, [authData.accessToken]);
- 
+
   // Fetch manager list
   const [manager, setManager] = useState([]);
   useEffect(() => {
@@ -499,15 +499,15 @@ useEffect(() => {
         console.error('Error fetching manager:', error);
       }
     };
- 
+
     fetchManager();
   }, [authData.accessToken]);
- 
+
   // Submit feedback
   const handleSubmit = async (e) => {
     e.preventDefault();
     setSubmitted(true);
-  
+
     try {
       if (role === 'colleagues') {
         const payload = {
@@ -515,9 +515,9 @@ useEffect(() => {
           rating: overallRatingEMP,
           feedback: inputText,
         };
-  
+
         console.log("Submitting colleague feedback payload:", payload);
-  
+
         const response = await axios.post(
           'http://127.0.0.1:8000/api/admin_employee/',
           payload,
@@ -528,9 +528,9 @@ useEffect(() => {
             },
           }
         );
-  
+
         console.log("Colleague feedback submitted successfully:", response.data);
-  
+
         Swal.fire({
           title: 'Success!',
           text: 'Employee feedback submitted successfully.',
@@ -543,9 +543,9 @@ useEffect(() => {
           rating: overallRatingManager,
           feedback: managerFeedback,
         };
-  
+
         console.log("Submitting manager feedback payload:", payload);
-  
+
         const response = await axios.post(
           'http://127.0.0.1:8000/api/admin_manager/',
           payload,
@@ -556,9 +556,9 @@ useEffect(() => {
             },
           }
         );
-  
+
         console.log("Manager feedback submitted successfully:", response.data);
-  
+
         Swal.fire({
           title: 'Success!',
           text: 'Manager feedback submitted successfully.',
@@ -568,7 +568,7 @@ useEffect(() => {
       }
     } catch (error) {
       console.error("Error submitting feedback:", error);
-  
+
       Swal.fire({
         title: 'Error!',
         text: 'There was an issue submitting your feedback. Please try again later.',
@@ -577,25 +577,25 @@ useEffect(() => {
       });
     }
   };
-  
- 
- 
+
+
+
   const [overallRatingEMP, setOverallRatingEMP] = useState(0);
- 
+
   const handleStarRatingChange = (rating) => {
     console.log("Selected Rating:", rating);
   };
- 
+
   const handleInputTextChange = (e) => {
     setInputText(e.target.value);
   };
- 
+
   const [employee, setEmployee] = useState("");//here add handle employee
- 
+
   const handleemployee = (employee) => {
     console.log("selected employee:", employee)
   }
- 
+
   // Render component JSX
   return (
     <div className='feedback-page'>
@@ -604,10 +604,10 @@ useEffect(() => {
       </div>
       <div className="wrapper">
         <Sidebar />
- 
+
         <div className="A-review-feedback-page" id="unique-review-feedback-page">
           <h1 id="unique-feedback-title">Employee Feedback</h1>
- 
+
           {/* Radio buttons to select role */}
           <div style={{ display: 'flex', gap: '1rem', marginBottom: '1rem' }}>
             <label>
@@ -631,14 +631,14 @@ useEffect(() => {
               Manager
             </label>
           </div>
- 
+
           <form onSubmit={handleSubmit}>
             {/* Employee feedback section */}
             {role === 'colleagues' && (
               <>
                 <div className="form-group_A" id="unique-colleague-feedback">
                   <label htmlFor="colleagueFeedback">Feedback for Employee:</label>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', justifyContent: 'space-between' }}>
+                  <div  className="star_responsive"style={{ display: 'flex', alignItems: 'center', gap: '1rem', justifyContent: 'space-between' }}>
                     <div>
                       <select
                         id="options"
@@ -690,7 +690,7 @@ useEffect(() => {
                 </div>
               </>
             )}
- 
+
             {/* Manager feedback section */}
             {role === 'manager' && (
               <>
@@ -735,17 +735,17 @@ useEffect(() => {
                 </div>
               </>
             )}
- 
+
             <div className='feedBackbutton'>
               <button type="submit" id="unique-submit-button">Submit Review</button>
             </div>
           </form>
- 
+
           {/* {submitted && <p className="success-message" id="unique-success-message">Thank you for your feedback!</p>} */}
         </div>
       </div>
     </div>
   );
 };
- 
+
 export default A_feedback;
