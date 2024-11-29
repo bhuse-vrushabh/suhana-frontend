@@ -9,7 +9,8 @@ import { AuthContext } from "../Component/AuthContext";
 
 function Registraion() {
     const { authData } = useContext(AuthContext);
-    console.log("this is the data passed through context",authData)
+    console.log("this is the data passed through context", authData);
+
     const [employees, setEmployees] = useState([]);
     const [formData, setFormData] = useState({
         username: "",
@@ -22,46 +23,96 @@ function Registraion() {
         dateOfJoining: ""
     });
     const [editIndex, setEditIndex] = useState(null);
+
     const roleOptions = ["manager", "employee"];
     const departmentOptions = ["HR", "Sales", "Engineering", "Marketing"];
-    const today = new Date().toISOString().split("T")[0];
-
-    const token = localStorage.getItem('') // Use your token
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
         setFormData({ ...formData, [name]: value });
     };
 
-    const handleSubmit = (e) => {
+    const validateForm = () => {
+        if (!formData.email) return "Email is required.";
+        if (!emailRegex.test(formData.email)) return "Please enter a valid email.";
+        if (!formData.username) return "Username is required.";
+        if (!formData.role) return "Role is required. Please select a role.";
+        if (!roleOptions.includes(formData.role)) return "Invalid role selected.";
+        return null;
+    };
+
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        if (editIndex !== null) {
-            const updatedEmployees = [...employees];
-            updatedEmployees[editIndex] = formData;
-            setEmployees(updatedEmployees);
-            setEditIndex(null);
-        } else {
-            setEmployees([...employees, formData]);
+
+        // Perform form validation
+        const validationError = validateForm();
+        if (validationError) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Validation Error',
+                text: validationError
+            });
+            return;
         }
 
-        setFormData({
-            username: "",
-            email: "",
-            password: "",
-            role: "",
-            gender: "",
-            department: "",
-            position: "",
-            dateOfJoining: ""
-        });
+        try {
+            const response = await axios.post('http://127.0.0.1:8000/api/create_user/', {
+                email: formData.email,
+                username: formData.username,
+                role: formData.role
+            }, {
+                headers: {
+                    'Authorization': `Bearer ${authData.accessToken}`,
+                    'Content-Type': 'application/json',
+                },
+            });
 
-        // Swal.fire({
-        //     icon: 'success',
-        //     title: 'Success',
-        //     text: ' profile created successfully!',
-        //     timer: 1500,
-        //     showConfirmButton: false
-        // });
+            Swal.fire({
+                icon: 'success',
+                title: 'Success',
+                text: 'Profile created successfully!',
+                timer: 1500,
+                showConfirmButton: false
+            });
+
+            // Add new employee to the list
+            if (editIndex !== null) {
+                const updatedEmployees = [...employees];
+                updatedEmployees[editIndex] = formData;
+                setEmployees(updatedEmployees);
+                setEditIndex(null);
+            } else {
+                setEmployees([...employees, formData]);
+            }
+
+            setFormData({
+                username: "",
+                email: "",
+                password: "",
+                role: "",
+                gender: "",
+                department: "",
+                position: "",
+                dateOfJoining: ""
+            });
+
+        } catch (error) {
+            if (error.response && error.response.status === 400) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: 'User already exists.'
+                });
+            } else {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: 'There was an error creating the user.'
+                });
+            }
+            console.error("There was an error creating the user:", error);
+        }
     };
 
     const handleEdit = (index) => {
@@ -86,49 +137,6 @@ function Registraion() {
             }
         });
     };
-
-    const registerUser = async () => {
-        const { email, username, role } = formData;  // Destructure formData
-        try {
-            const response = await axios.post('http://127.0.0.1:8000/api/create_user/', {
-                email: formData.email,
-                username: formData.username,
-                role: formData.role
-            }, {
-                headers: {
-                    'Authorization': `Bearer ${authData.accessToken}`, // Include the token in the request headers
-                    'Content-Type': 'application/json',
-                  },
-            });
-
-                    // Show success message if the user is created successfully
-        Swal.fire({
-            icon: 'success',
-            title: 'Success',
-            text: 'Admin profile created/updated successfully!',
-            timer: 1500,
-            showConfirmButton: false
-        });
-
-            console.log(response.data); // handle successful response
-        } catch (error) {
-            if (error.response && error.response.status === 400) { // Check for 'user already exists' status
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Error',
-                    text: 'User already exists!'
-                });
-            } else {
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Error',
-                    text: 'There was an error registering the user.'
-                });
-            }
-            console.error("There was an error registering the user:", error); // handle error
-        }
-    };
-    
 
     return (
         <>
@@ -180,7 +188,7 @@ function Registraion() {
                                     </label>
                                 </div>
                             </div>
-                            <button onClick={registerUser} type="submit" className="create-btn">
+                            <button type="submit" className="create-btn">
                                 {editIndex !== null ? "Update" : "Create"}
                             </button>
                         </form>

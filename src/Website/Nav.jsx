@@ -188,6 +188,27 @@ function Nav({ user }) {
     setIsDropdownOpen(!isDropdownOpen);
   };
 
+  // Close notification when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      // Close the notification panel if clicking outside the notification or notification button
+      if (isNotificationOpen && !event.target.closest('.notification-wrapper') && !event.target.closest('.A_notification-btn')) {
+        setIsNotificationOpen(false);
+      }
+
+      // Close the user dropdown if clicking outside the dropdown or user button
+      if (isDropdownOpen && !event.target.closest('.dropdown-wrapper') && !event.target.closest('.A_user-btn')) {
+        setIsDropdownOpen(false);
+      }
+    };
+
+    document.addEventListener('click', handleClickOutside);
+
+    return () => {
+      document.removeEventListener('click', handleClickOutside);
+    };
+  },  [isNotificationOpen, isDropdownOpen]);
+
   // Fallback for user if not provided
   const userName = user?.name || 'Admin';
   const userRole = user?.role || 'Admin';

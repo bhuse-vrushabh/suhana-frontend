@@ -62,25 +62,25 @@ function A_profile(data) {
       // Fetch updated data after saving
       await fetchProfileData();
       setIsEditing(false); // Exit edit mode
-    // Display success message with SweetAlert2 after 1500ms delay
-    Swal.fire({
-      icon: 'success',
-      title: 'Profile updated successfully!',
-      timer: 1500,
-      showConfirmButton: false,
-    });
-  } catch (error) {
-    setError(error.message);
-    Swal.fire({
-      icon: 'error',
-      title: 'Oops...',
-      text: 'Failed to update profile!',
-    });
-  }
-};
+      // Display success message with SweetAlert2 after 1500ms delay
+      Swal.fire({
+        icon: 'success',
+        title: 'Profile updated successfully!',
+        timer: 1500,
+        showConfirmButton: false,
+      });
+    } catch (error) {
+      setError(error.message);
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Failed to update profile!',
+      });
+    }
+  };
 
 
-  
+
 
 
 
@@ -137,13 +137,13 @@ function A_profile(data) {
                         <input  className="A_profile_intp" type="password" id="password" value="********" readOnly /> */}
 
             <div>
-            <div className='A_profile_edit'>
-                                {isEditing ? (
-                                    <button className='A_profile_edit_btnn' onClick={handleSaveProfile}>Save Profile</button>
-                                ) : (
-                                    <button className='A_profile_edit_btnn' onClick={() => setIsEditing(true)}>Edit Profile</button>
-                                )}
-                            </div>
+              <div className='A_profile_edit'>
+                {isEditing ? (
+                  <button className='A_profile_edit_btnn' onClick={handleSaveProfile}>Save Profile</button>
+                ) : (
+                  <button className='A_profile_edit_btnn' onClick={() => setIsEditing(true)}>Edit Profile</button>
+                )}
+              </div>
             </div>
           </div>
         </div>
