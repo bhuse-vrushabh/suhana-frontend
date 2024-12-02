@@ -90,6 +90,71 @@ const GoalManagement = () => {
 
     fetchData();
   }, [authData]);
+  // Create goal (POST API)
+  const createGoal = async (formattedData) => {
+    try {
+      const response = await axios.post(
+        "http://127.0.0.1:8000/api/setgoals/", 
+        formattedData,
+        {
+          headers: {
+            Authorization: `Bearer ${authData.accessToken}`,
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      if (response.status === 201 || response.status === 200) {
+        setGoals((prevGoals) => [...prevGoals, response.data]);
+        Swal.fire("Success", "Task added successfully!", "success");
+      }
+    } catch (error) {
+      handleApiError(error);
+    }
+  };
+
+  // Update goal (PATCH API)
+  const updateGoal = async (goalId, formattedData) => {
+    try {
+      console.log("Goal ID:", goalId);
+      console.log("Formatted Data:", formattedData);
+      const response = await axios.patch(
+        `http://127.0.0.1:8000/api/performance-goals/${formattedData.employee_id}/${goalId}/update/`,
+        formattedData,
+        {
+          headers: {
+            Authorization: `Bearer ${authData.accessToken}`,
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      if (response.status === 200 || response.status === 201) {
+        const updatedGoals = goals.map((goal) =>
+          goal.id === goalId ? { ...goal, ...formattedData } : goal
+        );
+        setGoals(updatedGoals);
+        Swal.fire("Success", "Task updated successfully!", "success");
+      }
+    } catch (error) {
+      handleApiError(error);
+    }
+  };
+
+  // Handle API error
+  const handleApiError = (error) => {
+    if (error.response) {
+      const errorDetails = error.response.data;
+      if (errorDetails.employee_id) {
+        Swal.fire("Error", `Employee ID error: ${errorDetails.employee_id}`, "error");
+      } else {
+        const errorMessage = Object.values(errorDetails).flat().join(", ");
+        Swal.fire("Error", errorMessage || "There was an issue saving the task. Please try again.", "error");
+      }
+    } else {
+      Swal.fire("Error", "An unexpected error occurred.", "error");
+    }
+  };
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData({
@@ -97,25 +162,13 @@ const GoalManagement = () => {
       [name]: value,
     });
   };
-  const handleEdit = (index) => {
-    setIsEditing(true);
-    setEditIndex(index);
-    setFormData({
-      employee_id: goals[index].employee_id,
-      description: goals[index].description,
-      weightage: goals[index].weightage,
-      startDate: goals[index].start_date,
-      endDate: goals[index].end_date,
-      status: goals[index].status,
-    });
-  };
-
+ 
   const handleSubmit = async (e) => {
     e.preventDefault();
     const today = new Date();
     today.setHours(0, 0, 0, 0);
 
-    // Validate weightage
+    // Validate weightage and date logic
     if (formData.startDate) {
       const start = new Date(formData.startDate);
       if (start < today) {
@@ -133,7 +186,7 @@ const GoalManagement = () => {
       }
     }
 
-    setError("");
+    setError(""); // Clear any previous error
 
     const formattedData = {
       employee_id: parseInt(formData.employee_id, 10),
@@ -153,48 +206,15 @@ const GoalManagement = () => {
 
     try {
       if (isEditing) {
-        // Make a PATCH request to update the goal
-        const response = await axios.patch(
-          `http://127.0.0.1:8000/api/performance-goals/5/51/update/`,
-          formattedData,
-          {
-            headers: {
-              Authorization: `Bearer ${authData.accessToken}`,
-              "Content-Type": "application/json",
-            },
-          }
-        );
-
-        if (response.status === 200 || response.status === 201) {
-          // Update the existing goal in the array
-          const updatedGoals = goals.map((goal, index) =>
-            index === editIndex ? response.data : goal
-          );
-          setGoals(updatedGoals);
-          setIsEditing(false);
-          setEditIndex(null);
-          Swal.fire("Success", "Task updated successfully!", "success");
-        }
+        const goalToEdit = goals[editIndex]; // Find the goal to edit based on the index
+        await updateGoal(goalToEdit.id, formattedData); // Use PATCH API
+        setIsEditing(false); // Reset edit mode
+        setEditIndex(null); // Clear the edit index
       } else {
-        // Add a new goal
-        const response = await axios.post(
-          "http://127.0.0.1:8000/api/setgoals/",
-          formattedData,
-          {
-            headers: {
-              Authorization: `Bearer ${authData.accessToken}`,
-              "Content-Type": "application/json",
-            },
-          }
-        );
-
-        if (response.status === 201 || response.status === 200) {
-          setGoals((prevGoals) => [...prevGoals, response.data]);
-          Swal.fire("Success", "Task added successfully!", "success");
-        }
+        await createGoal(formattedData); // Use POST API
       }
 
-      // Reset the form
+      // Reset the form after submission
       setFormData({
         employee_id: "",
         description: "",
@@ -204,22 +224,25 @@ const GoalManagement = () => {
         status: "",
       });
     } catch (error) {
-      if (error.response) {
-        console.error("Error data:", error.response.data);
-        const errorDetails = error.response.data;
-
-        if (errorDetails.employee_id) {
-          Swal.fire("Error", `Employee ID error: ${errorDetails.employee_id}`, "error");
-        } else {
-          const errorMessage = Object.values(errorDetails).flat().join(", ");
-          Swal.fire("Error", errorMessage || "There was an issue saving the task. Please try again.", "error");
-        }
-      } else {
-        console.error("Error message:", error.message);
-        Swal.fire("Error", "An unexpected error occurred.", "error");
-      }
+      console.error("Error during form submission:", error);
     }
   };
+
+  const handleEdit = (index) => {
+    const goal = goals[index];
+    setFormData({
+      employee_id: goal.employee_id,
+      description: goal.description,
+      weightage: goal.weightage,
+      startDate: goal.start_date,
+      endDate: goal.end_date,
+      status: goal.status,
+    });
+    setIsEditing(true);
+    setEditIndex(index);
+  };
+
+ 
 
 
 
@@ -237,7 +260,7 @@ const GoalManagement = () => {
     }).then(async (result) => {
       if (result.isConfirmed) {
         try {
-          await axios.delete(`http://127.0.0.1:8000/api/goals/2/`, {
+          await axios.delete(`http://127.0.0.1:8000/api/performance-goals/${goals.id}/`, {
             headers: {
               Authorization: `Bearer ${authData.accessToken}`, // Use token from context
               "Content-Type": "application/json",
@@ -396,12 +419,13 @@ const GoalManagement = () => {
                   <tr>
 
                     <th>ID</th> {/* Display employee's ID */}
+                   
                     <th>Description</th>
                     <th>Weightage</th>
                     <th>Start Date</th>
                     <th>End Date</th>
                     <th>Status</th>
-                    
+                    <th>Employee ID</th> {/* New Employee ID Column */} 
                     <th>Action</th> {/* Display employee's ID */}
                   </tr>
                 </thead>
@@ -416,17 +440,18 @@ const GoalManagement = () => {
                       <tr key={goal.id}>
 
                         <td>{goal.id}</td>
+                     
                         <td>{goal.description}</td>
                         <td>{goal.weightage}</td>
                         <td>{goal.start_date}</td>
                         <td>{goal.end_date}</td>
                         <td>{goal.status}</td>
-                        
+                        <td>{goal.employee}</td> {/* Display Employee ID */}
                         <td className='action-button-m'>
-                          <button onClick={() => handleEdit(index)} className="edit-btn-m">
+                        <button onClick={() => handleEdit(index)} className="edit-btn-mm">
                             <FontAwesomeIcon icon={faEdit} />
                           </button>
-                          <button onClick={() => handleDelete(index)} className="delete-btn-m">
+                          <button onClick={() => handleDelete(index)} className="delete-btn-mm">
                             <FontAwesomeIcon icon={faTrash} />
                           </button>
                         </td>
