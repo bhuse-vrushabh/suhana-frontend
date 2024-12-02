@@ -12,6 +12,17 @@ const Feedback = () => {
   const [feedbackContent, setFeedbackContent] = useState('');
   const [overallRating, setOverallRating] = useState(0);
   const [managers, setManagers] = useState([]);
+
+   // Define the feedbacktitle style
+   const feedbacktitle = {
+    textAlign: 'center',
+    fontSize: '2rem',
+    fontWeight: 'bold',
+    color: '#d90606',
+    marginBottom: '20px',
+    marginTop: '25px',
+    marginLeft: '20px',
+  };
  
   // Fetch managers list on component mount
   useEffect(() => {
@@ -93,7 +104,7 @@ const Feedback = () => {
       <div className="container">
         <Sidebar />
         <div className="review-feedback-page">
-          <h1 className="feedback-title">Feedback Form</h1>
+          <h1 style={feedbacktitle}>Feedback Form</h1>
           <form onSubmit={handleSubmit} className="feedback-form">
             {/* Manager Selection */}
             <div className="form-group">
