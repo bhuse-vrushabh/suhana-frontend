@@ -62,7 +62,16 @@ const CreateProfile = () => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
-
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = () => {
+        setFormData({ ...formData, profile_Image: reader.result });
+      };
+      reader.readAsDataURL(file); // Convert file to base64 string
+    }
+  };
   const handleSubmit = async (e) => {
     e.preventDefault();
     const payload = {
@@ -151,6 +160,10 @@ const CreateProfile = () => {
           <form onSubmit={handleSubmit} className="employee-form-Manager">
             {/* Form fields */}
             <div className="form-group-Manager">
+              
+              
+              
+              
               <label>Full Name:
                 <input type="text" name="fullName" value={formData.fullName} onChange={handleInputChange} required />
               </label>
@@ -179,7 +192,25 @@ const CreateProfile = () => {
               <label>Date of Birth:
                 <input type="date" name="dob" value={formData.dob} onChange={handleInputChange} required />
               </label>
+              <label>Profile Image:
+                <input
+                  type="file"
+                  name="profile_Image"
+                  accept="image/*"
+                  onChange={handleFileChange}
+                />
+              </label>
+              {formData.profile_Image && (
+                <div className="image-preview">
+                  <img
+                    src={formData.profile_Image}
+                    alt="Profile Preview"
+                    style={{ width: "100px", height: "100px" }}
+                  />
+                </div>
+              )}
             </div>
+            
             <button type="submit" className="submit-btn-Manager">
               {profileExists ? "Save " : "Create Profile"}
             </button>
