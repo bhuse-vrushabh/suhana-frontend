@@ -180,6 +180,13 @@ input[type="checkbox"]:focus {
 
   .feedback-title {
     font-size: 24px;
+    text-Align: center;
+    font-size: 2rem;
+    font-weight: bold;
+    color: #d90606;
+    margin-bottom: 20px;
+    margin-top: 40px;
+    margin-left: 20px;
   }
 
   .rating-options {
