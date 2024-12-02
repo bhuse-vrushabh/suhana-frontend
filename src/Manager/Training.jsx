@@ -34,7 +34,7 @@ function TrainingDevelopmentPage() {
     const [currentPage, setCurrentPage] = useState(1);
     const entriesPerPage = 10; // Show 10 entries per page
     const [employeeError, setEmployeeError] = useState('');
-
+    const [searchTerm, setSearchTerm] = useState(""); // State for search input
     // Fetch employee data and training assignments from the API
     
     useEffect(() => {
@@ -290,6 +290,31 @@ function TrainingDevelopmentPage() {
         });
         setDateError('');
     };
+    const handleSearchChange = async (e) => {
+        const searchQuery = e.target.value;
+        setSearchTerm(searchQuery);
+
+        if (searchQuery.trim() === "") {
+            // If search is cleared, fetch all assignments
+            
+        } else {
+            // Call the search API
+            try {
+                const response = await axios.get(`http://127.0.0.1:8000/api/training/?name=${searchQuery}`, {
+                    headers: {
+                        Authorization: `Bearer ${authData.accessToken}`,
+                        "Content-Type": "application/json",
+                    },
+                });
+
+                if (response.status === 200) {
+                    setAssignments(response.data);
+                }
+            } catch (error) {
+                console.error("Error performing search:", error);
+            }
+        }
+    };
 
     const totalPages = Math.ceil(assignments.length / entriesPerPage);
 
@@ -387,7 +412,16 @@ function TrainingDevelopmentPage() {
                             </form>
 
                         </section>
-
+                        <section id="search-section-M">
+                            
+                            <input
+                                type="text"
+                                placeholder="Search by program name"
+                                value={searchTerm}
+                                onChange={handleSearchChange}
+                                className="search-input-M"
+                            />
+                        </section>
 
                         <section id="assigned-training">
                             {assignments.length > 0 ? (
@@ -400,7 +434,7 @@ function TrainingDevelopmentPage() {
                                             <th>Start Date</th>
                                             <th>End Date</th>
                                             <th>Status</th>
-                                           
+                                           <th>Employee id</th>
                                             <th>Actions</th>
                                         </tr>
                                     </thead>
@@ -419,6 +453,7 @@ function TrainingDevelopmentPage() {
                                                     <td>{assignment.start_date}</td> 
                                                     <td>{assignment.end_date}</td> 
                                                     <td>{assignment.status}</td> 
+                                                    <td>{assignment.employee}</td>
                                                    
                                                     <td className="action-buttons-M">
                                                         <button onClick={() => handleEditAssignment(index)} className="edit-button-M">

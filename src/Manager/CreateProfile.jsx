@@ -21,7 +21,7 @@ const CreateProfile = () => {
   });
   const [profileExists, setProfileExists] = useState(false);
   const [profileId, setProfileId] = useState(null);
-
+  const [managerId, setManagerId] = useState(null); // Store manager ID
   // Fetch the manager's profile on component mount
   useEffect(() => {
     fetchManagerProfile();
