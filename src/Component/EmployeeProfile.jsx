@@ -37,7 +37,7 @@ const EmployeeProfile = () => {
     fontWeight: 'bold',
     color: '#d90606',
     marginBottom: '20px',
-    marginTop: '40px',
+    marginTop: '60px',
     marginLeft: '20px',
   };
   const [performanceHistory, setPerformanceHistory] = useState([
